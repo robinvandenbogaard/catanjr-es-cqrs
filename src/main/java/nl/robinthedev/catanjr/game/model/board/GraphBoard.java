@@ -5,8 +5,13 @@ import java.util.Map;
 import nl.robinthedev.catanjr.game.model.SiteId;
 
 class GraphBoard implements Board {
-  private final Map<String, LandTile> landTiles = new HashMap<>();
-  private final Map<Integer, FortSite> fortSites = new HashMap<>();
+  private final Map<String, LandTile> landTiles;
+  private final Map<Integer, FortSite> fortSites;
+
+  GraphBoard() {
+    this.landTiles = new HashMap<>();
+    this.fortSites = new HashMap<>();
+  }
 
   public void addLandTile(String id, ResourceType resourceType, RequiredDiceRoll requiredDiceRoll) {
     landTiles.put(id, LandTile.of(resourceType, requiredDiceRoll));
@@ -55,5 +60,21 @@ class GraphBoard implements Board {
       case PLAYER4 -> BoardPlayer.PLAYER4;
       case CAPTAIN -> throw new IllegalStateException("captain can't own forts");
     };
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    GraphBoard that = (GraphBoard) o;
+    return landTiles.equals(that.landTiles) && fortSites.equals(that.fortSites);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = landTiles.hashCode();
+    result = 31 * result + fortSites.hashCode();
+    return result;
   }
 }

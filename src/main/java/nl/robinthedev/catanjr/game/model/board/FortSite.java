@@ -7,12 +7,15 @@ import java.util.Set;
 
 class FortSite {
   private final int id;
-  private final List<ShipSite> neighbours = new ArrayList<>();
-  private final Set<LandTile> landTiles = new HashSet<>();
-  private Occupant occupant = Occupant.EMPTY;
+  private final List<ShipSite> neighbours;
+  private final Set<LandTile> landTiles;
+  private Occupant occupant;
 
   public FortSite(int id) {
     this.id = id;
+    this.neighbours = new ArrayList<>();
+    this.landTiles = new HashSet<>();
+    this.occupant = Occupant.EMPTY;
   }
 
   public void connectTo(LandTile landTile) {
@@ -27,20 +30,6 @@ class FortSite {
     other.neighbours.add(bridge);
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    FortSite fortSite = (FortSite) o;
-    return id == fortSite.id;
-  }
-
-  @Override
-  public int hashCode() {
-    return id;
-  }
-
   public void setOccupant(Occupant occupant, FortSite betweenFort) {
     this.occupant = occupant;
     var shipSite =
@@ -53,5 +42,19 @@ class FortSite {
 
   public Occupant getOccupant() {
     return occupant;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    FortSite fortSite = (FortSite) o;
+    return id == fortSite.id;
+  }
+
+  @Override
+  public int hashCode() {
+    return id;
   }
 }
