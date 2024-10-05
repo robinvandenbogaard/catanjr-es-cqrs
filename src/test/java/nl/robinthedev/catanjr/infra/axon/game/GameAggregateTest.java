@@ -29,14 +29,17 @@ class GameAggregateTest {
     fixture
         .givenNoPriorActivity()
         .when(new CreateNewGame(GAME_ID, ACCOUNT_PLAYER_1, JOHN, ACCOUNT_PLAYER_2, WICK))
-        .expectEvents(
-            new GameCreatedEvent(
-                GAME_ID,
-                new GameDTO(
-                    new PlayerDTO(ACCOUNT_PLAYER_1, JOHN, new InventoryDTO(0, 0, 1, 0, 1)),
-                    new PlayerDTO(ACCOUNT_PLAYER_2, WICK, new InventoryDTO(0, 0, 1, 0, 1)),
-                    new InventoryDTO(17, 17, 15, 17, 15),
-                    new InventoryDTO(1, 1, 1, 1, 1))))
+        .expectEvents(getGameCreatedEvent())
         .expectSuccessfulHandlerExecution();
+  }
+
+  private static GameCreatedEvent getGameCreatedEvent() {
+    return new GameCreatedEvent(
+        GAME_ID,
+        new GameDTO(
+            new PlayerDTO(ACCOUNT_PLAYER_1, JOHN, new InventoryDTO(0, 0, 1, 0, 1)),
+            new PlayerDTO(ACCOUNT_PLAYER_2, WICK, new InventoryDTO(0, 0, 1, 0, 1)),
+            new InventoryDTO(17, 17, 15, 17, 15),
+            new InventoryDTO(1, 1, 1, 1, 1)));
   }
 }
