@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: catanjr
+axon:
+  serializer:
+    events: jackson
+    general: jackson
+    messages: jackson
+  axonserver:
+    servers: localhost
+    client-id: catanjr
+
+logging:
+  level:
+    org.springframework.web.reactive: DEBUG
+    org.springframework.http.server.reactive: DEBUG
+    reactor.netty: DEBUG
+    io.netty.handler: DEBUG
+    org.springframework.web.socket: DEBUG
+    org.springframework.web.socket.handler: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,websocket
