@@ -2,9 +2,8 @@ package nl.robinthedev.catanjr.infra.axon.persistence;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
+import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.game.service.Games;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

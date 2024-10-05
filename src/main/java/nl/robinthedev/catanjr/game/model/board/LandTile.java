@@ -1,7 +1,5 @@
 package nl.robinthedev.catanjr.game.model.board;
 
-
-
 class LandTile {
   private final ResourceType resourceType;
   private final RequiredDiceRoll requiredDiceRoll;

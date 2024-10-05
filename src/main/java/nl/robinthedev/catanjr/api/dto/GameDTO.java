@@ -2,8 +2,11 @@ package nl.robinthedev.catanjr.api.dto;
 
 import nl.robinthedev.catanjr.game.model.Game;
 
-public record GameDTO(PlayerDTO firstPlayer, PlayerDTO secondPlayer, InventoryDTO bankInventory,
-                      InventoryDTO buoyInventory) {
+public record GameDTO(
+    PlayerDTO firstPlayer,
+    PlayerDTO secondPlayer,
+    InventoryDTO bankInventory,
+    InventoryDTO buoyInventory) {
   public static GameDTO of(Game game) {
     var firstPlayer = PlayerDTO.of(game.firstPlayer());
     var secondPlayer = PlayerDTO.of(game.secondPlayer());

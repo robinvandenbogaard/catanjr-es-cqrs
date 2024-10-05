@@ -2,7 +2,6 @@ package nl.robinthedev.catanjr.game.model;
 
 import java.util.Objects;
 import java.util.Optional;
-
 import nl.robinthedev.catanjr.game.model.board.Board;
 import nl.robinthedev.catanjr.game.model.coco.CocoTiles;
 import nl.robinthedev.catanjr.game.model.player.Player;
@@ -14,7 +13,8 @@ public record Game(
     Players players,
     BuoyInventory buoyInventory,
     BankInventory bankInventory,
-    CocoTiles cocoTiles, Board board) {
+    CocoTiles cocoTiles,
+    Board board) {
   public Game {
     Objects.requireNonNull(players);
     Objects.requireNonNull(buoyInventory);
@@ -32,11 +32,12 @@ public record Game(
   }
 
   public Optional<Owner> ownerOf(SiteId shipSite) {
-    var player =  board.getOwner(shipSite);
-    return Optional.ofNullable(switch(player) {
-      case NONE, PLAYER3, PLAYER4 -> null;
-      case PLAYER1 -> new Owner(firstPlayer().id());
-      case PLAYER2 -> new Owner(secondPlayer().id());
-    });
+    var player = board.getOwner(shipSite);
+    return Optional.ofNullable(
+        switch (player) {
+          case NONE, PLAYER3, PLAYER4 -> null;
+          case PLAYER1 -> new Owner(firstPlayer().id());
+          case PLAYER2 -> new Owner(secondPlayer().id());
+        });
   }
 }

@@ -2,11 +2,10 @@ package nl.robinthedev.catanjr.application.rest;
 
 import java.util.Map;
 import java.util.UUID;
-
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
+import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.query.GetGameQuery;
-import nl.robinthedev.catanjr.api.dto.GameDTO;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.queryhandling.QueryGateway;
 import org.slf4j.Logger;
@@ -51,7 +50,8 @@ class GameController {
   @GetMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
   public Flux<ServerSentEvent<String>> subcribeToGame(@PathVariable("id") UUID id) {
     var gameId = new GameId(id);
-    var queryResult = queryGateway.subscriptionQuery(new GetGameQuery(gameId), GameDTO.class, GameDTO.class);
+    var queryResult =
+        queryGateway.subscriptionQuery(new GetGameQuery(gameId), GameDTO.class, GameDTO.class);
     return queryResult
         .initialResult()
         .concatWith(queryResult.updates())

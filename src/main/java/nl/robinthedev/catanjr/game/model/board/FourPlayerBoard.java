@@ -1,7 +1,7 @@
 package nl.robinthedev.catanjr.game.model.board;
 
-import static nl.robinthedev.catanjr.game.model.board.ResourceType.*;
 import static nl.robinthedev.catanjr.game.model.board.RequiredDiceRoll.*;
+import static nl.robinthedev.catanjr.game.model.board.ResourceType.*;
 
 public class FourPlayerBoard {
   public static Board create() {

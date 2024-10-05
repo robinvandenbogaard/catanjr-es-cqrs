@@ -1,9 +1,8 @@
 package nl.robinthedev.catanjr.game.model.board;
 
-import nl.robinthedev.catanjr.game.model.SiteId;
-
 import java.util.HashMap;
 import java.util.Map;
+import nl.robinthedev.catanjr.game.model.SiteId;
 
 class GraphBoard implements Board {
   private final Map<String, LandTile> landTiles = new HashMap<>();
@@ -23,7 +22,7 @@ class GraphBoard implements Board {
 
   private void surround(String landTile, boolean circular, int[] fortSitesToConnect) {
     FortSite previous = null;
-    for(int i = 0; i < fortSitesToConnect.length; i++) {
+    for (int i = 0; i < fortSitesToConnect.length; i++) {
       var current = getFortById(fortSitesToConnect[i]);
       current.connectTo(landTiles.get(landTile));
       if (previous != null) {
@@ -39,7 +38,7 @@ class GraphBoard implements Board {
   }
 
   private FortSite getFortById(int id) {
-    return fortSites.computeIfAbsent(id, key ->new FortSite(id));
+    return fortSites.computeIfAbsent(id, key -> new FortSite(id));
   }
 
   public void setOccupant(Occupant occupant, int fortSite, int betweenFort) {

@@ -9,5 +9,4 @@ public class CatanjrApplication {
   public static void main(String[] args) {
     SpringApplication.run(CatanjrApplication.class, args);
   }
-
 }
