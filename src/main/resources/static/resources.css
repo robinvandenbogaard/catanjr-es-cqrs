@@ -1,0 +1,40 @@
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list-group-item {
+    padding: 10px 30px
+}
+
+li.gold::before {
+    background-image: url('resources/goldbar.svg');
+}
+
+li.pineapple::before {
+    background-image: url('resources/pineapple.svg');
+}
+
+li.sheep::before {
+    background-image: url('resources/sheep.svg');
+}
+
+li.sword::before {
+    background-image: url('resources/sword.svg');
+}
+
+li.wood::before {
+    background-image: url('resources/wood.svg');
+}
+
+li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

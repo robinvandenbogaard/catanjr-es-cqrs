@@ -1,0 +1,8 @@
+<svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <ellipse cx="75" cy="90" rx="30" ry="40" fill="#FFD700" stroke="#DAA520" stroke-width="3"/>
+    <!-- Leaves -->
+    <path d="M75,30 L85,50 L75,45 L65,50 Z" fill="#228B22"/>
+    <path d="M75,30 L95,55 L75,45 L55,55 Z" fill="#228B22"/>
+    <path d="M75,20 L105,55 L75,45 L45,55 Z" fill="#228B22"/>
+</svg>

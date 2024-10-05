@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Catan Jr</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resources.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap">
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="gameWs" hx-ext="sse" sse-connect="/game/e09883fb-aa87-4f6d-a0a3-1caff0aeced8" sse-swap="message" hx-swap="innerHTML" class="container-large">
+    <div class="row">
+        <div class="col-sm-3">
+            <div id="player1" class="panel panel-info">
+                <div class="panel-heading">Player 1: {{ player.id.username.value }}</div>
+                <div class="panel-body">
+                    <h4 class="list-group-heading">Inventory</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item wood">{{ player.inventory.wood.value }}</li>
+                        <li class="list-group-item gold">{{ player.inventory.gold.value }}</li>
+                        <li class="list-group-item pineapple">{{ player.inventory.pineApple.value }}</li>
+                        <li class="list-group-item sheep">{{ player.inventory.sheep.value }}</li>
+                        <li class="list-group-item sword">{{ player.inventory.sword.value }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div id="bouy" class="panel panel-info">
+                <div class="panel-heading">Buoys</div>
+                <div class="panel-body">
+                    <h4 class="list-group-heading">Inventory</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item wood">{{ buoy.wood.value }}</li>
+                        <li class="list-group-item gold">{{ buoy.gold.value }}</li>
+                        <li class="list-group-item pineapple">{{ buoy.pineApple.value }}</li>
+                        <li class="list-group-item sheep">{{ buoy.sheep.value }}</li>
+                        <li class="list-group-item sword">{{ buoy.sword.value }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div id="player2" class="panel panel-info">
+                <div class="panel-heading">Player 2: {{ player.id.username.value }}</div>
+                <div class="panel-body">
+                    <h4 class="list-group-heading">Inventory</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item wood">{{ player.inventory.wood.value }}</li>
+                        <li class="list-group-item gold">{{ player.inventory.gold.value }}</li>
+                        <li class="list-group-item pineapple">{{ player.inventory.pineApple.value }}</li>
+                        <li class="list-group-item sheep">{{ player.inventory.sheep.value }}</li>
+                        <li class="list-group-item sword">{{ player.inventory.sword.value }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9">
+            <h1>board</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="bank" class="panel panel-warning">
+                <div class="panel-heading">Bank</div>
+                <div class="panel-body">
+                    <h4 class="list-group-heading">Inventory</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item wood">{{ bank.wood.value }}</li>
+                        <li class="list-group-item gold">{{ bank.gold.value }}</li>
+                        <li class="list-group-item pineapple">{{ bank.pineApple.value }}</li>
+                        <li class="list-group-item sheep">{{ bank.sheep.value }}</li>
+                        <li class="list-group-item sword">{{ bank.sword.value }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- htmx -->
+<script src="https://unpkg.com/htmx.org@1.9.12"
+        integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
+        crossorigin="anonymous"></script>
+<!-- Include the SSE extension for htmx -->
+<script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/sse.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
