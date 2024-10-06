@@ -177,6 +177,25 @@ class GameAggregateTest {
         .expectSuccessfulHandlerExecution();
   }
 
+  @Test
+  void cannot_roll_multiple_times_for_the_same_player() {
+    diceRoller.nextRollIs(5);
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.FIVE, ACCOUNT_PLAYER_1))
+        .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
+        .expectException(IllegalStateException.class);
+  }
+
+  @Test
+  void player2_cannot_roll_at_start_of_game() {
+    diceRoller.nextRollIs(5);
+    fixture
+        .given(getGameCreatedEvent())
+        .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_2))
+        .expectException(IllegalStateException.class);
+  }
+
   private static GameCreatedEvent getGameCreatedEvent() {
     return new GameCreatedEvent(
         GAME_ID,

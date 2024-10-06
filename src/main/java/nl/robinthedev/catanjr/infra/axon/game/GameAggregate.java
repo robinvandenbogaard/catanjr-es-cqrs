@@ -17,6 +17,7 @@ import nl.robinthedev.catanjr.game.model.GameFactory;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
 import nl.robinthedev.catanjr.game.model.player.PlayerId;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
+import nl.robinthedev.catanjr.game.model.round.Round;
 import nl.robinthedev.catanjr.game.service.DiceRoller;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -31,6 +32,7 @@ public class GameAggregate {
   @AggregateIdentifier GameId gameId;
 
   private Game game;
+  private Round round;
 
   public GameAggregate() {
     // Required by axon
@@ -55,14 +57,21 @@ public class GameAggregate {
         GameFactory.of(
             PlayerId.from(firstPlayer.accountId(), firstPlayer.username()),
             PlayerId.from(secondPlayer.accountId(), secondPlayer.username()));
+    this.round =
+        Round.firstRound(
+            AccountId.of(firstPlayer.accountId()), AccountId.of(secondPlayer.accountId()));
   }
 
   @CommandHandler
   void handle(RollDice command, DiceRoller roller) {
+    if (!round.allowedToRoll(AccountId.of(command.accountPlayerId())))
+      throw new IllegalStateException("You are not allowed to make a dice roll in this round.");
+
     var diceRoll = roller.roll();
+    var diceRollReport = game.diceRolled(diceRoll);
+
     apply(new DiceRolled(gameId, diceRoll, command.accountPlayerId()));
 
-    var diceRollReport = game.diceRolled(diceRoll);
     diceRollReport.forPlayers(
         playerReport ->
             apply(
@@ -71,6 +80,7 @@ public class GameAggregate {
                     playerReport.accountId(),
                     InventoryDTO.of(playerReport.currentInventory()),
                     InventoryDTO.of(playerReport.newInventory()))));
+
     diceRollReport.forBank(
         bankReport ->
             apply(
@@ -85,6 +95,11 @@ public class GameAggregate {
     game =
         game.updateIventory(
             AccountId.of(event.accountPlayerId()), toPlayerInventory(event.newInventory()));
+  }
+
+  @EventSourcingHandler
+  void on(DiceRolled event) {
+    round = round.diceRolled();
   }
 
   private PlayerInventory toPlayerInventory(InventoryDTO inventory) {
