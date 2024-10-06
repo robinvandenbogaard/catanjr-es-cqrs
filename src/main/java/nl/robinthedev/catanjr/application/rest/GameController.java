@@ -61,7 +61,7 @@ class GameController {
 
   private String toHtml(GameDTO game) {
     return PebbleTemplate.processTemplate(
-        "game",
+        "2pgame",
         Map.of(
             "firstPlayer",
             game.firstPlayer(),
@@ -70,6 +70,8 @@ class GameController {
             "buoy",
             game.buoyInventory(),
             "bank",
-            game.bankInventory()));
+            game.bankInventory(),
+            "shipYardColors",
+            BoardState.asMap(game.shipYards())));
   }
 }

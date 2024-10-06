@@ -1,0 +1,59 @@
+<svg width="1024" height="768" viewBox="0 0 476 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Define the hexagon shape once -->
+    <defs>
+        <polygon id="hex-sword" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: steelblue;"/>
+        <polygon id="hex-sheep" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: green;"/>
+        <polygon id="hex-gold" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: gold;"/>
+        <polygon id="hex-wood" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: saddlebrown;"/>
+        <polygon id="hex-pineapple" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: orange;"/>
+        <circle id="circle-shape-2" r="8" transform="translate(12,-5)"/>
+        <circle id="circle-shape-3" r="8" transform="translate(12,10)"/>
+        <circle id="circle-shape-4" r="8" transform="translate(0,15)"/>
+    </defs>
+
+    <!-- Group to contain the hexagons -->
+    <g id="hex" transform="translate(0, 0)">
+        <use href="#hex-sword" transform="translate(0, 25)"/>
+        <use href="#hex-sheep" transform="translate(125, 25)"/>
+        <use href="#hex-wood" transform="translate(250, 25)"/>
+    </g>
+    <g id="hex" transform="translate(63, 100)">
+        <use href="#hex-pineapple" transform="translate(0, 25)"/>
+        <use href="#hex-gold" transform="translate(125, 25)"/>
+        <use href="#hex-pineapple" transform="translate(250, 25)"/>
+    </g>
+    <g id="hex" transform="translate(126, 200)">
+        <use href="#hex-wood" transform="translate(0, 25)"/>
+        <use href="#hex-sheep" transform="translate(125, 25)"/>
+        <use href="#hex-sword" transform="translate(250, 25)"/>
+    </g>
+
+    <g id="row1-circles">
+        <use href="#circle-shape-2" id="2" fill="{{ shipYardColors['2'] }}" transform="translate(100, 50)"/>
+        <use href="#circle-shape-2" id="7" fill="{{ shipYardColors['7'] }}" transform="translate(225, 50)"/>
+    </g>
+    <g id="row2-circles">
+        <use href="#circle-shape-3" id="3" fill="{{ shipYardColors['3'] }}" transform="translate(100, 100)"/>
+        <use href="#circle-shape-4" id="1" fill="{{ shipYardColors['1'] }}" transform="translate(50, 125)"/>
+
+        <use href="#circle-shape-3" id="8" fill="{{ shipYardColors['8'] }}" transform="translate(225, 100)"/>
+        <use href="#circle-shape-4" id="5" fill="{{ shipYardColors['5'] }}" transform="translate(175, 125)"/>
+
+        <use href="#circle-shape-3" id="13" fill="{{ shipYardColors['13'] }}" transform="translate(350, 100)"/>
+        <use href="#circle-shape-4" id="11" fill="{{ shipYardColors['11'] }}" transform="translate(300, 125)"/>
+    </g>
+    <g id="row3-circles" transform="translate(63, 100)">
+        <use href="#circle-shape-3" id="6" fill="{{ shipYardColors['6'] }}" transform="translate(100, 100)"/>
+        <use href="#circle-shape-4" id="4" fill="{{ shipYardColors['4'] }}" transform="translate(50, 125)"/>
+
+        <use href="#circle-shape-3" id="12" fill="{{ shipYardColors['12'] }}" transform="translate(225, 100)"/>
+        <use href="#circle-shape-4" id="9" fill="{{ shipYardColors['9'] }}" transform="translate(175, 125)"/>
+
+        <use href="#circle-shape-3" id="16" fill="{{ shipYardColors['16'] }}" transform="translate(350, 100)"/>
+        <use href="#circle-shape-4" id="14" fill="{{ shipYardColors['14'] }}" transform="translate(300, 125)"/>
+    </g>
+    <g id="row4-circles" transform="translate(126, 200)">
+        <use href="#circle-shape-3" id="10" fill="{{ shipYardColors['10'] }}" transform="translate(100, 100)"/>
+        <use href="#circle-shape-3" id="15" fill="{{ shipYardColors['15'] }}" transform="translate(225, 100)"/>
+    </g>
+</svg>

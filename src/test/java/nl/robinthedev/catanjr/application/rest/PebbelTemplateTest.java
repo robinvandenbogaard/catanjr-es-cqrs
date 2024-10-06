@@ -11,9 +11,9 @@ class PebbelTemplateTest {
   void renders_properties_from_template_file() {
     assertThat(
             PebbleTemplate.processTemplate(
-                "pebbleTemplateTest", Map.of("target", new ExampleData("myValue"))))
-        .isEqualTo("<h1>myValue</h1>");
+                "pebbleTemplateTest", Map.of("target", new ExampleData("myValue", "myAttribute"))))
+        .isEqualTo("<h1 style=\"myAttribute\">myValue</h1>");
   }
 
-  record ExampleData(String property) {}
+  record ExampleData(String property, String attribute) {}
 }
