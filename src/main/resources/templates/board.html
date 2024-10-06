@@ -1,20 +1,24 @@
-<svg width="1024" height="768" viewBox="0 0 476 300">
-    <!-- Hexagonal Tiles with Proper Offset Rows and Spacing -->
+<svg width="1024" height="768" viewBox="0 0 476 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Define the hexagon shape once -->
+    <defs>
+        <polygon id="hex-shape" points="0,25 50,0 100,25 100,75 50,100 0,75"/>
+    </defs>
+
+    <!-- Group to contain the hexagons -->
     <g id="hex">
-        <!-- First row of hexagons with 25px spacing, shifted 50px up -->
-        <polygon points="0,25 50,-0 100,25 100,75 50,100 0,75" fill="#FFD700"/>
-        <polygon points="125,25 175,-0 225,25 225,75 175,100 125,75" fill="#C0C0C0"/>
-        <polygon points="250,25 300,-0 350,25 350,75 300,100 250,75" fill="#8B4513"/>
+        <!-- First row of hexagons with correct positions -->
+        <use href="#hex-shape" style="fill: gold;" transform="translate(0, 25)"/>
+        <use href="#hex-shape" style="fill: silver;" transform="translate(125, 25)"/>
+        <use href="#hex-shape" style="fill: saddlebrown;" transform="translate(250, 25)"/>
 
-        <!-- Second row of hexagons with 25px spacing, shifted 50px up -->
-        <polygon points="63,125 113,100 163,125 163,175 113,200 63,175" fill="#008000"/>
-        <polygon points="188,125 238,100 288,125 288,175 238,200 188,175" fill="#FFA500"/>
-        <polygon points="313,125 363,100 413,125 413,175 363,200 313,175" fill="#4682B4"/>
+        <!-- Second row of hexagons with correct offset -->
+        <use href="#hex-shape" style="fill: green;" transform="translate(63, 125)"/>
+        <use href="#hex-shape" style="fill: orange;" transform="translate(188, 125)"/>
+        <use href="#hex-shape" style="fill: steelblue;" transform="translate(313, 125)"/>
 
-        <!-- Third row of hexagons with 25px spacing, shifted 50px up -->
-        <polygon points="126,225 176,200 226,225 226,275 176,300 126,275" fill="#8B4513"/>
-        <polygon points="251,225 301,200 351,225 351,275 301,300 251,275" fill="#C0C0C0"/>
-        <polygon points="376,225 426,200 476,225 476,275 426,300 376,275" fill="#FFD700"/>
+        <!-- Third row of hexagons with correct offset -->
+        <use href="#hex-shape" style="fill: saddlebrown;" transform="translate(126, 225)"/>
+        <use href="#hex-shape" style="fill: silver;" transform="translate(251, 225)"/>
+        <use href="#hex-shape" style="fill: gold;" transform="translate(376, 225)"/>
     </g>
 </svg>
-
