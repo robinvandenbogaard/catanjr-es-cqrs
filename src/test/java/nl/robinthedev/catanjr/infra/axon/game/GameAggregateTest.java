@@ -92,6 +92,91 @@ class GameAggregateTest {
         .expectSuccessfulHandlerExecution();
   }
 
+  @Test
+  void first_player_rolls_2() {
+    diceRoller.nextRollIs(2);
+    fixture
+        .given(getGameCreatedEvent())
+        .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
+        .expectEvents(
+            new DiceRolled(GAME_ID, DiceRoll.TWO, ACCOUNT_PLAYER_1),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 0, 1, 1, 1)),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_2,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 0, 1, 0, 2)),
+            new BankInventoryChanged(
+                GAME_ID,
+                new InventoryDTO(17, 17, 15, 17, 15),
+                new InventoryDTO(17, 17, 15, 16, 14)))
+        .expectSuccessfulHandlerExecution();
+  }
+
+  @Test
+  void first_player_rolls_3() {
+    diceRoller.nextRollIs(3);
+    fixture
+        .given(getGameCreatedEvent())
+        .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
+        .expectEvents(
+            new DiceRolled(GAME_ID, DiceRoll.THREE, ACCOUNT_PLAYER_1),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 0, 2, 0, 1)),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_2,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 1, 1, 0, 1)),
+            new BankInventoryChanged(
+                GAME_ID,
+                new InventoryDTO(17, 17, 15, 17, 15),
+                new InventoryDTO(17, 16, 14, 17, 15)))
+        .expectSuccessfulHandlerExecution();
+  }
+
+  @Test
+  void first_player_rolls_4() {
+    diceRoller.nextRollIs(4);
+    fixture
+        .given(getGameCreatedEvent())
+        .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
+        .expectEvents(
+            new DiceRolled(GAME_ID, DiceRoll.FOUR, ACCOUNT_PLAYER_1),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 1, 1, 0, 1)),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_2,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 0, 2, 0, 1)),
+            new BankInventoryChanged(
+                GAME_ID,
+                new InventoryDTO(17, 17, 15, 17, 15),
+                new InventoryDTO(17, 16, 14, 17, 15)))
+        .expectSuccessfulHandlerExecution();
+  }
+
+  @Test
+  void first_player_rolls_5() {
+    diceRoller.nextRollIs(5);
+    fixture
+        .given(getGameCreatedEvent())
+        .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
+        .expectEvents(new DiceRolled(GAME_ID, DiceRoll.FIVE, ACCOUNT_PLAYER_1))
+        .expectSuccessfulHandlerExecution();
+  }
+
   private static GameCreatedEvent getGameCreatedEvent() {
     return new GameCreatedEvent(
         GAME_ID,

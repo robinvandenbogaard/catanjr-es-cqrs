@@ -18,6 +18,20 @@ class LandTile {
     return new LandTile(resourceType, requiredDiceRoll);
   }
 
+  public boolean gainsOnRoll(DiceRoll diceRoll) {
+    return requiredDiceRoll.gainsOn(diceRoll);
+  }
+
+  public GainedResources oneResource() {
+    return switch (resourceType) {
+      case SWORD -> GainedResources.swords(1);
+      case GOLD -> GainedResources.gold(1);
+      case PINEAPPLE -> GainedResources.pineApple(1);
+      case SHEEP -> GainedResources.sheep(1);
+      case WOOD -> GainedResources.wood(1);
+    };
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -35,19 +49,5 @@ class LandTile {
     result = 31 * result + requiredDiceRoll.hashCode();
     result = 31 * result + occupant.hashCode();
     return result;
-  }
-
-  public boolean gainsOnRoll(DiceRoll diceRoll) {
-    return requiredDiceRoll.gainsOn(diceRoll);
-  }
-
-  public GainedResources oneResource() {
-    return switch (resourceType) {
-      case SWORD -> GainedResources.swords(1);
-      case GOLD -> GainedResources.gold(1);
-      case PINEAPPLE -> GainedResources.pineApple(1);
-      case SHEEP -> GainedResources.sheep(1);
-      case WOOD -> GainedResources.wood(1);
-    };
   }
 }

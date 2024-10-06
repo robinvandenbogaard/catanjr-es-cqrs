@@ -12,10 +12,10 @@ enum RequiredDiceRoll {
   public boolean gainsOn(DiceRoll diceRoll) {
     return switch (this) {
       case ONE -> diceRoll.equals(DiceRoll.ONE);
-      case TWO -> false;
-      case THREE -> false;
-      case FOUR -> false;
-      case FIVE -> false;
+      case TWO -> diceRoll.equals(DiceRoll.TWO);
+      case THREE -> diceRoll.equals(DiceRoll.THREE);
+      case FOUR -> diceRoll.equals(DiceRoll.FOUR);
+      case FIVE -> diceRoll.equals(DiceRoll.FIVE);
     };
   }
 }
