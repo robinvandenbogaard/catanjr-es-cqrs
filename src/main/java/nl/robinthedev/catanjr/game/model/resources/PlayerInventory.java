@@ -2,7 +2,8 @@ package nl.robinthedev.catanjr.game.model.resources;
 
 import java.util.Objects;
 
-public record PlayerInventory(Wood wood, Gold gold, PineApple pineApple, Sheep sheep, Sword sword) {
+public record PlayerInventory(Wood wood, Gold gold, PineApple pineApple, Sheep sheep, Sword sword)
+    implements ResourceCollection {
   public PlayerInventory {
     Objects.requireNonNull(wood);
     Objects.requireNonNull(gold);
@@ -22,7 +23,7 @@ public record PlayerInventory(Wood wood, Gold gold, PineApple pineApple, Sheep s
         new Sword(sword));
   }
 
-  public PlayerInventory add(GainedResources resources) {
+  public PlayerInventory add(ResourceCollection resources) {
     return new PlayerInventory(
         wood.add(resources.wood()),
         gold.add(resources.gold()),

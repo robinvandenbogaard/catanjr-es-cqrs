@@ -2,7 +2,8 @@ package nl.robinthedev.catanjr.game.model.resources;
 
 import java.util.Objects;
 
-public record GainedResources(Wood wood, Gold gold, PineApple pineApple, Sheep sheep, Sword sword) {
+public record GainedResources(Wood wood, Gold gold, PineApple pineApple, Sheep sheep, Sword sword)
+    implements ResourceCollection {
   public static final GainedResources EMPTY = GainedResources.of(0, 0, 0, 0, 0);
 
   public GainedResources {
@@ -42,12 +43,12 @@ public record GainedResources(Wood wood, Gold gold, PineApple pineApple, Sheep s
     return GainedResources.of(wood, 0, 0, 0, 0);
   }
 
-  public GainedResources add(GainedResources other) {
+  public GainedResources add(ResourceCollection other) {
     return new GainedResources(
-        wood.add(other.wood),
-        gold.add(other.gold),
-        pineApple.add(other.pineApple),
-        sheep.add(other.sheep),
-        sword.add(other.sword));
+        wood.add(other.wood()),
+        gold.add(other.gold()),
+        pineApple.add(other.pineApple()),
+        sheep.add(other.sheep()),
+        sword.add(other.sword()));
   }
 }

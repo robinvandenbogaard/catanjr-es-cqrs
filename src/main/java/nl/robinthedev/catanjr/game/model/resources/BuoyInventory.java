@@ -2,7 +2,8 @@ package nl.robinthedev.catanjr.game.model.resources;
 
 import java.util.Objects;
 
-public record BuoyInventory(Wood wood, Gold gold, PineApple pineApple, Sheep sheep, Sword sword) {
+public record BuoyInventory(Wood wood, Gold gold, PineApple pineApple, Sheep sheep, Sword sword)
+    implements ResourceCollection {
   public static final BuoyInventory INITIAL = BuoyInventory.of(1, 1, 1, 1, 1);
 
   public BuoyInventory {
