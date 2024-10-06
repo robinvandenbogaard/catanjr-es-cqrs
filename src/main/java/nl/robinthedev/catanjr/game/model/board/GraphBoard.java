@@ -2,7 +2,9 @@ package nl.robinthedev.catanjr.game.model.board;
 
 import java.util.HashMap;
 import java.util.Map;
+import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.game.model.SiteId;
+import nl.robinthedev.catanjr.game.model.resources.GainedResources;
 
 class GraphBoard implements Board {
   private final Map<String, LandTile> landTiles;
@@ -60,6 +62,15 @@ class GraphBoard implements Board {
       case PLAYER4 -> BoardPlayer.PLAYER4;
       case CAPTAIN -> throw new IllegalStateException("captain can't own forts");
     };
+  }
+
+  @Override
+  public GainedResources getResources(DiceRoll diceRoll, BoardPlayer player) {
+    var occupant = Occupant.of(player);
+    return fortSites.values().stream()
+        .filter(site -> site.belongsTo(occupant))
+        .map(site -> site.getResources(diceRoll))
+        .reduce(GainedResources.EMPTY, GainedResources::add);
   }
 
   @Override

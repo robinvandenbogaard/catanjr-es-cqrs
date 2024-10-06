@@ -3,13 +3,20 @@ package nl.robinthedev.catanjr.infra.axon.game;
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
+import nl.robinthedev.catanjr.api.command.RollDice;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
+import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.dto.PlayerDTO;
+import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
+import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import nl.robinthedev.catanjr.game.model.Game;
 import nl.robinthedev.catanjr.game.model.GameFactory;
+import nl.robinthedev.catanjr.game.model.player.AccountId;
 import nl.robinthedev.catanjr.game.model.player.PlayerId;
+import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
+import nl.robinthedev.catanjr.game.service.DiceRoller;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateCreationPolicy;
@@ -47,6 +54,37 @@ public class GameAggregate {
         GameFactory.of(
             PlayerId.from(firstPlayer.accountId(), firstPlayer.username()),
             PlayerId.from(secondPlayer.accountId(), secondPlayer.username()));
-    ;
+  }
+
+  @CommandHandler
+  void handle(RollDice command, DiceRoller roller) {
+    var diceRoll = roller.roll();
+    apply(new DiceRolled(gameId, diceRoll, command.accountPlayerId()));
+
+    var diceRollReport = game.diceRolled(diceRoll);
+    diceRollReport.forPlayers(
+        playerReport ->
+            apply(
+                new PlayerInventoryChanged(
+                    gameId,
+                    playerReport.accountId(),
+                    InventoryDTO.of(playerReport.currentInventory()),
+                    InventoryDTO.of(playerReport.newInventory()))));
+  }
+
+  @EventSourcingHandler
+  void on(PlayerInventoryChanged event) {
+    game =
+        game.updateIventory(
+            AccountId.of(event.accountPlayerId()), toPlayerInventory(event.newInventory()));
+  }
+
+  private PlayerInventory toPlayerInventory(InventoryDTO inventory) {
+    return PlayerInventory.of(
+        inventory.wood(),
+        inventory.gold(),
+        inventory.pineApple(),
+        inventory.sheep(),
+        inventory.sword());
   }
 }

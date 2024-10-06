@@ -1,13 +1,17 @@
 package nl.robinthedev.catanjr.game.model;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.game.model.board.Board;
 import nl.robinthedev.catanjr.game.model.coco.CocoTiles;
+import nl.robinthedev.catanjr.game.model.player.AccountId;
 import nl.robinthedev.catanjr.game.model.player.Player;
 import nl.robinthedev.catanjr.game.model.player.Players;
 import nl.robinthedev.catanjr.game.model.resources.BankInventory;
 import nl.robinthedev.catanjr.game.model.resources.BuoyInventory;
+import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
 
 public record Game(
     Players players,
@@ -39,5 +43,28 @@ public record Game(
           case PLAYER1 -> new Owner(firstPlayer().id());
           case PLAYER2 -> new Owner(secondPlayer().id());
         });
+  }
+
+  public DiceRollReport diceRolled(DiceRoll diceRoll) {
+    List<PlayerReport> playerReports =
+        players().stream()
+            .map(
+                player -> {
+                  var currentInventory = player.inventory();
+                  var gainedResources = board.getResources(diceRoll, player.nr());
+                  return new PlayerReport(
+                      player.accountId(), currentInventory, currentInventory.add(gainedResources));
+                })
+            .toList();
+    return new DiceRollReport(playerReports);
+  }
+
+  public Game updateIventory(AccountId accountId, PlayerInventory inventory) {
+    return new Game(
+        players.updateInventory(accountId, inventory),
+        buoyInventory,
+        bankInventory,
+        cocoTiles,
+        board);
   }
 }

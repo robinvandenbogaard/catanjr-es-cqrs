@@ -8,4 +8,8 @@ public record Gold(int value) {
   public Gold minus(Gold other) {
     return new Gold(value - other.value);
   }
+
+  public Gold add(Gold other) {
+    return new Gold(value + other.value);
+  }
 }

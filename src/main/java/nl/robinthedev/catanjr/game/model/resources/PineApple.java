@@ -8,4 +8,8 @@ public record PineApple(int value) {
   public PineApple minus(PineApple other) {
     return new PineApple(value - other.value);
   }
+
+  public PineApple add(PineApple other) {
+    return new PineApple(value + other.value);
+  }
 }

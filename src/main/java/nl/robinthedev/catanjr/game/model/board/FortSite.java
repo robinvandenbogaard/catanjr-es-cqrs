@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import nl.robinthedev.catanjr.api.dto.DiceRoll;
+import nl.robinthedev.catanjr.game.model.resources.GainedResources;
 
 class FortSite {
   private final int id;
@@ -42,6 +44,18 @@ class FortSite {
 
   public Occupant getOccupant() {
     return occupant;
+  }
+
+  public boolean belongsTo(Occupant occupant) {
+    return this.occupant == occupant;
+  }
+
+  public GainedResources getResources(DiceRoll diceRoll) {
+    return landTiles.stream()
+        .filter(tile -> tile.gainsOnRoll(diceRoll))
+        .map(LandTile::oneResource)
+        .findFirst()
+        .orElse(GainedResources.EMPTY);
   }
 
   @Override

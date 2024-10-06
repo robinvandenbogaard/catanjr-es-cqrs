@@ -8,4 +8,8 @@ public record Sword(int value) {
   public Sword minus(Sword other) {
     return new Sword(value - other.value);
   }
+
+  public Sword add(Sword other) {
+    return new Sword(value + other.value);
+  }
 }

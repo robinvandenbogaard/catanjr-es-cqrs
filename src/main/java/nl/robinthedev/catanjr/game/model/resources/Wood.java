@@ -8,4 +8,8 @@ public record Wood(int value) {
   public Wood minus(Wood other) {
     return new Wood(value - other.value);
   }
+
+  public Wood add(Wood other) {
+    return new Wood(value + other.value);
+  }
 }

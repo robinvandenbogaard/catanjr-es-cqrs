@@ -8,4 +8,8 @@ public record Sheep(int value) {
   public Sheep minus(Sheep other) {
     return new Sheep(value - other.value);
   }
+
+  public Sheep add(Sheep other) {
+    return new Sheep(value + other.value);
+  }
 }

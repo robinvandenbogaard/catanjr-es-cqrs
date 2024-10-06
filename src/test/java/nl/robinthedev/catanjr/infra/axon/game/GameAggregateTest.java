@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
+import nl.robinthedev.catanjr.api.command.RollDice;
+import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.dto.OwnerDTO;
 import nl.robinthedev.catanjr.api.dto.PlayerDTO;
 import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
+import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
+import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,9 +48,13 @@ class GameAggregateTest {
     INITIAL_COLOR_MAP.add(new ShipYardDTO("16", OwnerDTO.NONE));
   }
 
+  private ManipulatableDiceRoller diceRoller;
+
   @BeforeEach
   void setUp() {
     fixture = new AggregateTestFixture<>(GameAggregate.class);
+    diceRoller = new ManipulatableDiceRoller();
+    fixture.registerInjectableResource(diceRoller);
   }
 
   @Test
@@ -55,6 +63,27 @@ class GameAggregateTest {
         .givenNoPriorActivity()
         .when(new CreateNewGame(GAME_ID, ACCOUNT_PLAYER_1, JOHN, ACCOUNT_PLAYER_2, WICK))
         .expectEvents(getGameCreatedEvent())
+        .expectSuccessfulHandlerExecution();
+  }
+
+  @Test
+  void first_player_rolls_1() {
+    diceRoller.nextRollIs(1);
+    fixture
+        .given(getGameCreatedEvent())
+        .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
+        .expectEvents(
+            new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 0, 1, 0, 2)),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_2,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 0, 1, 1, 1)))
         .expectSuccessfulHandlerExecution();
   }
 

@@ -7,4 +7,8 @@ public record AccountId(UUID value) {
   public AccountId {
     Objects.requireNonNull(value);
   }
+
+  public static AccountId of(UUID uuid) {
+    return new AccountId(uuid);
+  }
 }
