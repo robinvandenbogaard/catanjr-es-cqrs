@@ -8,6 +8,7 @@ import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.dto.PlayerDTO;
+import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
@@ -70,6 +71,13 @@ public class GameAggregate {
                     playerReport.accountId(),
                     InventoryDTO.of(playerReport.currentInventory()),
                     InventoryDTO.of(playerReport.newInventory()))));
+    diceRollReport.forBank(
+        bankReport ->
+            apply(
+                new BankInventoryChanged(
+                    gameId,
+                    InventoryDTO.of(bankReport.currentInventory()),
+                    InventoryDTO.of(bankReport.newInventory()))));
   }
 
   @EventSourcingHandler

@@ -5,6 +5,8 @@ import java.util.Objects;
 public record BankInventory(Wood wood, Gold gold, PineApple pineApple, Sheep sheep, Sword sword)
     implements ResourceCollection {
   public static final BankInventory FULL = BankInventory.of(18, 18, 18, 18, 18);
+  public static final BankInventory EMPTY = BankInventory.of(0, 0, 0, 0, 0);
+  ;
 
   public BankInventory {
     Objects.requireNonNull(wood);

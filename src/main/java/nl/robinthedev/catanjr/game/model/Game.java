@@ -1,6 +1,5 @@
 package nl.robinthedev.catanjr.game.model;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
@@ -46,17 +45,22 @@ public record Game(
   }
 
   public DiceRollReport diceRolled(DiceRoll diceRoll) {
-    List<PlayerReport> playerReports =
+    var playerReports =
         players().stream()
             .map(
                 player -> {
                   var currentInventory = player.inventory();
                   var gainedResources = board.getResources(diceRoll, player.nr());
                   return new PlayerReport(
-                      player.accountId(), currentInventory, currentInventory.add(gainedResources));
+                      player.accountId(),
+                      currentInventory,
+                      gainedResources,
+                      currentInventory.add(gainedResources));
                 })
             .toList();
-    return new DiceRollReport(playerReports);
+    var bankReport = BankReport.of(playerReports, bankInventory);
+
+    return new DiceRollReport(playerReports, bankReport);
   }
 
   public Game updateIventory(AccountId accountId, PlayerInventory inventory) {
