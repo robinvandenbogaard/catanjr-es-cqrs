@@ -1,6 +1,10 @@
 <div id="player1" class="panel panel-info">
     <div class="panel-heading">Player 1: {{ firstPlayer.username }}</div>
     <div class="panel-body">
+        <div class="button-bar">
+            <button class="btn btn-primary" id="endTurnBtnP1" hx-post="game/endTurnP1" hx-swap="none">End Turn</button>
+            <button class="btn btn-primary" id="rollDiceBtnP1" hx-post="game/rollp1" hx-swap="none">Roll Dice</button>
+        </div>
         <h4 class="list-group-heading">Inventory</h4>
         <ul class="list-group">
             <li class="list-group-item wood">{{ firstPlayer.inventory.wood }}</li>
