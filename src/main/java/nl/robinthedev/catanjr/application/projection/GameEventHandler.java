@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.infra.axon.projection;
+package nl.robinthedev.catanjr.application.projection;
 
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.event.BankInventoryChanged;

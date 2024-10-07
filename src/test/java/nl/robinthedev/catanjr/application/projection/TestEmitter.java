@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.infra.axon.projection;
+package nl.robinthedev.catanjr.application.projection;
 
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
@@ -10,7 +10,7 @@ import org.axonframework.queryhandling.SubscriptionQueryMessage;
 import org.axonframework.queryhandling.SubscriptionQueryUpdateMessage;
 import org.axonframework.queryhandling.UpdateHandlerRegistration;
 
-public class TestEmitter implements QueryUpdateEmitter {
+class TestEmitter implements QueryUpdateEmitter {
   @Override
   public <U> void emit(
       @Nonnull Predicate<SubscriptionQueryMessage<?, ?, U>> filter,

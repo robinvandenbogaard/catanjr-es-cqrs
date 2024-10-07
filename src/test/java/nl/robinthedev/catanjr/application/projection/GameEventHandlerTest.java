@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.infra.axon.projection;
+package nl.robinthedev.catanjr.application.projection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
