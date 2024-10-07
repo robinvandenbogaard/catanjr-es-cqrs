@@ -22,4 +22,21 @@ public record GameDTO(
         ShipYardDTO.from2PlayerGame(game.board()));
   }
 
+  public GameDTO setFirstPlayerInventory(InventoryDTO newInventory) {
+    return new GameDTO(
+        firstPlayer.updateInventory(newInventory),
+        secondPlayer,
+        bankInventory,
+        buoyInventory,
+        shipYards);
+  }
+
+  public GameDTO setSecondPlayerInventory(InventoryDTO newInventory) {
+    return new GameDTO(
+        firstPlayer,
+        secondPlayer.updateInventory(newInventory),
+        bankInventory,
+        buoyInventory,
+        shipYards);
+  }
 }

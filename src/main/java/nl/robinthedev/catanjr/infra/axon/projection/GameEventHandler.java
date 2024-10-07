@@ -1,6 +1,8 @@
 package nl.robinthedev.catanjr.infra.axon.projection;
 
+import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
+import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import nl.robinthedev.catanjr.api.query.GetGameQuery;
 import nl.robinthedev.catanjr.game.service.Games;
 import org.axonframework.eventhandling.EventHandler;
@@ -21,6 +23,16 @@ class GameEventHandler {
   @EventHandler
   void on(GameCreatedEvent event) {
     games.save(event.gameId(), event.game());
-    emitter.emit(GetGameQuery.class, query -> query.gameId().equals(event.gameId()), event.game());
+    emitUpdate(event.gameId());
+  }
+
+  private void emitUpdate(GameId gameId) {
+    emitter.emit(GetGameQuery.class, query -> query.gameId().equals(gameId), games.get(gameId));
+  }
+
+  @EventHandler
+  void on(PlayerInventoryChanged event) {
+    games.updatePlayerInventory(event.gameId(), event.accountPlayerId(), event.newInventory());
+    emitUpdate(event.gameId());
   }
 }

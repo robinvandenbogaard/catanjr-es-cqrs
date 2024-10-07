@@ -10,4 +10,8 @@ public record PlayerDTO(UUID accountId, String username, InventoryDTO inventory)
         player.id().username().value(),
         InventoryDTO.of(player.inventory()));
   }
+
+  public PlayerDTO updateInventory(InventoryDTO newInventory) {
+    return new PlayerDTO(accountId, username, newInventory);
+  }
 }
