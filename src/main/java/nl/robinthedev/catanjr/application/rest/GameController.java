@@ -3,6 +3,7 @@ package nl.robinthedev.catanjr.application.rest;
 import java.util.Map;
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
+import nl.robinthedev.catanjr.api.command.RollDice;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.query.GetGameQuery;
@@ -42,9 +43,27 @@ class GameController {
     var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
     var accountId1 = UUID.fromString("069f188b-607d-4760-a81f-35e7478e176c");
     var accountId2 = UUID.fromString("d8bccdd1-abd3-4545-87da-eb9113222c68");
-    commandGateway.send(new CreateNewGame(gameId, accountId1, "Robin", accountId2, "Jim"));
+    commandGateway.sendAndWait(new CreateNewGame(gameId, accountId1, "Robin", accountId2, "Jim"));
     log.info("Created new game {}", gameId);
     return gameId;
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping("rollp1")
+  public void rollDiceP1() {
+    var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
+    var accountId1 = UUID.fromString("069f188b-607d-4760-a81f-35e7478e176c");
+    commandGateway.sendAndWait(new RollDice(gameId, accountId1));
+    log.info("Rolled dice for p1 {}", gameId);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping("rollp2")
+  public void rollDiceP2() {
+    var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
+    var accountId2 = UUID.fromString("d8bccdd1-abd3-4545-87da-eb9113222c68");
+    commandGateway.sendAndWait(new RollDice(gameId, accountId2));
+    log.info("Rolled dice for p2 {}", gameId);
   }
 
   @GetMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
