@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import nl.robinthedev.catanjr.api.dto.OwnerDTO;
 import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
 
-public class BoardState {
+class BoardState {
   public static Map<String, String> asMap(List<ShipYardDTO> shipYards) {
     return shipYards.stream()
         .collect(Collectors.toMap(ShipYardDTO::id, item -> toColor(item.owner())));
