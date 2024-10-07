@@ -18,6 +18,7 @@ import nl.robinthedev.catanjr.game.model.Game;
 import nl.robinthedev.catanjr.game.model.GameFactory;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
 import nl.robinthedev.catanjr.game.model.player.PlayerId;
+import nl.robinthedev.catanjr.game.model.resources.BankInventory;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
 import nl.robinthedev.catanjr.game.model.round.Round;
 import nl.robinthedev.catanjr.game.service.DiceRoller;
@@ -100,6 +101,11 @@ public class GameAggregate {
   }
 
   @EventSourcingHandler
+  void on(BankInventoryChanged event) {
+    game = game.updateBankIventory(toBankInventory(event.newInventory()));
+  }
+
+  @EventSourcingHandler
   void on(DiceRolled event) {
     round = round.diceRolled();
   }
@@ -120,6 +126,15 @@ public class GameAggregate {
 
   private PlayerInventory toPlayerInventory(InventoryDTO inventory) {
     return PlayerInventory.of(
+        inventory.wood(),
+        inventory.gold(),
+        inventory.pineApple(),
+        inventory.sheep(),
+        inventory.sword());
+  }
+
+  private BankInventory toBankInventory(InventoryDTO inventory) {
+    return BankInventory.of(
         inventory.wood(),
         inventory.gold(),
         inventory.pineApple(),

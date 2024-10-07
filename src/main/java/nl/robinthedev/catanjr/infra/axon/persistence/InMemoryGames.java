@@ -36,7 +36,7 @@ class InMemoryGames implements Games {
       game = game.setSecondPlayerInventory(newInventory);
     }
     games.put(gameId, game);
-    log.info("Player inventory updated: {}", playerAccount);
+    log.info("Player inventory updated: {} to {}", playerAccount, newInventory);
   }
 
   @Override
@@ -44,6 +44,6 @@ class InMemoryGames implements Games {
     var game = games.get(gameId);
     game = game.setBankInventory(newInventory);
     games.put(gameId, game);
-    log.info("Bank inventory updated");
+    log.info("Bank inventory updated {}", newInventory);
   }
 }

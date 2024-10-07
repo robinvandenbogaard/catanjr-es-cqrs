@@ -39,7 +39,7 @@ class GameEventHandler {
 
   @EventHandler
   public void on(BankInventoryChanged event) {
-    games.updateBankInventory(event.gameId(), event.current());
+    games.updateBankInventory(event.gameId(), event.newInventory());
     emitUpdate(event.gameId());
   }
 }

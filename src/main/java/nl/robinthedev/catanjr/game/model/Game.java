@@ -71,4 +71,8 @@ public record Game(
         cocoTiles,
         board);
   }
+
+  public Game updateBankIventory(BankInventory bankInventory) {
+    return new Game(players, buoyInventory, bankInventory, cocoTiles, board);
+  }
 }
