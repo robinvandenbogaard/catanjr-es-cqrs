@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.infra.axon.query;
+package nl.robinthedev.catanjr.application.query;
 
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.query.GetGameQuery;
