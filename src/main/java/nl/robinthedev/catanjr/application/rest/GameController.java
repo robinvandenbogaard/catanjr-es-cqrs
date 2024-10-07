@@ -82,7 +82,7 @@ class GameController {
     var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
     var accountId2 = UUID.fromString("d8bccdd1-abd3-4545-87da-eb9113222c68");
     commandGateway.sendAndWait(new EndTurn(gameId, accountId2));
-    log.info("Turn ended for p1 {}", gameId);
+    log.info("Turn ended for p2 {}", gameId);
   }
 
   @GetMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
