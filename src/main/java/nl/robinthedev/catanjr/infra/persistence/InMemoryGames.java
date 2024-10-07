@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.infra.axon.persistence;
+package nl.robinthedev.catanjr.infra.persistence;
 
 import java.util.Map;
 import java.util.UUID;

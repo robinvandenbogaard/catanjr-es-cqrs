@@ -10,7 +10,7 @@ import nl.robinthedev.catanjr.api.dto.PlayerDTO;
 import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
-import nl.robinthedev.catanjr.infra.axon.persistence.TestInMemoryGames;
+import nl.robinthedev.catanjr.infra.persistence.TestInMemoryGames;
 import org.junit.jupiter.api.Test;
 
 class GameEventHandlerTest {
