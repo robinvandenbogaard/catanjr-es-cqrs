@@ -3,6 +3,7 @@ package nl.robinthedev.catanjr.infra.axon.game;
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
+import nl.robinthedev.catanjr.api.command.EndTurn;
 import nl.robinthedev.catanjr.api.command.RollDice;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
@@ -12,6 +13,7 @@ import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
+import nl.robinthedev.catanjr.api.event.TurnEnded;
 import nl.robinthedev.catanjr.game.model.Game;
 import nl.robinthedev.catanjr.game.model.GameFactory;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
@@ -100,6 +102,20 @@ public class GameAggregate {
   @EventSourcingHandler
   void on(DiceRolled event) {
     round = round.diceRolled();
+  }
+
+  @CommandHandler
+  void handle(EndTurn command) {
+    if (!round.allowedToEndTurn(AccountId.of(command.accountPlayerId())))
+      throw new IllegalStateException(
+          "You are not allowed to end your turn yet, please roll first.");
+
+    apply(new TurnEnded(gameId, round.nextPlayer()));
+  }
+
+  @EventSourcingHandler
+  void on(TurnEnded event) {
+    round = round.turnEnded(new AccountId(event.nextPlayer()));
   }
 
   private PlayerInventory toPlayerInventory(InventoryDTO inventory) {

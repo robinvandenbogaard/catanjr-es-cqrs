@@ -1,5 +1,6 @@
 package nl.robinthedev.catanjr.game.model.round;
 
+import java.util.UUID;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
 
 public final class Round {
@@ -19,11 +20,33 @@ public final class Round {
     return new Round(firstPlayer, secondPlayer, firstPlayer, Actions.THROW_DICE_ONLY);
   }
 
-  public boolean allowedToRoll(AccountId accountPlayerId) {
-    return current.equals(accountPlayerId) && actions.actions().contains(Action.THROW_DICE);
+  public boolean allowedToRoll(AccountId playerAccountId) {
+    return isAllowed(playerAccountId, Action.THROW_DICE);
   }
 
   public Round diceRolled() {
     return new Round(p1, p2, current, actions.diceRolled());
+  }
+
+  public boolean allowedToEndTurn(AccountId playerAccountId) {
+    return isAllowed(playerAccountId, Action.END_TURN);
+  }
+
+  private boolean isAllowed(AccountId playerAccountId, Action action) {
+    return current.equals(playerAccountId) && actions.contains(action);
+  }
+
+  public UUID nextPlayer() {
+    return current.equals(p1) ? p2.value() : p1.value();
+  }
+
+  public Round turnEnded(AccountId newPlayerAccountId) {
+    AccountId current;
+    if (p1.equals(newPlayerAccountId)) {
+      current = p1;
+    } else {
+      current = p2;
+    }
+    return new Round(p1, p2, current, Actions.THROW_DICE_ONLY);
   }
 }

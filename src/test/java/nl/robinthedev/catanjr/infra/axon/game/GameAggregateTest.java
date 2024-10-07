@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
+import nl.robinthedev.catanjr.api.command.EndTurn;
 import nl.robinthedev.catanjr.api.command.RollDice;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
@@ -16,6 +17,7 @@ import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
+import nl.robinthedev.catanjr.api.event.TurnEnded;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -194,6 +196,34 @@ class GameAggregateTest {
         .given(getGameCreatedEvent())
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_2))
         .expectException(IllegalStateException.class);
+  }
+
+  @Test
+  void player1_can_not_end_turn_if_dice_needs_to_be_rolled() {
+    fixture
+        .given(getGameCreatedEvent())
+        .when(new EndTurn(GAME_ID, ACCOUNT_PLAYER_1))
+        .expectException(IllegalStateException.class);
+  }
+
+  @Test
+  void player1_can_end_turn_after_dice_roll() {
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.FIVE, ACCOUNT_PLAYER_1))
+        .when(new EndTurn(GAME_ID, ACCOUNT_PLAYER_1))
+        .expectEvents(new TurnEnded(GAME_ID, ACCOUNT_PLAYER_2));
+  }
+
+  @Test
+  void player2_can_can_roll_dice_if_first_turn_ended() {
+    diceRoller.nextRollIs(5);
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.FIVE, ACCOUNT_PLAYER_1))
+        .andGiven(new TurnEnded(GAME_ID, ACCOUNT_PLAYER_2))
+        .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_2))
+        .expectEvents(new DiceRolled(GAME_ID, DiceRoll.FIVE, ACCOUNT_PLAYER_2));
   }
 
   private static GameCreatedEvent getGameCreatedEvent() {
