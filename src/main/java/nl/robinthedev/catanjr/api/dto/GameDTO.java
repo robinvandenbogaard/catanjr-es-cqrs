@@ -39,4 +39,8 @@ public record GameDTO(
         buoyInventory,
         shipYards);
   }
+
+  public GameDTO setBankInventory(InventoryDTO newInventory) {
+    return new GameDTO(firstPlayer, secondPlayer, newInventory, buoyInventory, shipYards);
+  }
 }

@@ -11,4 +11,6 @@ public interface Games {
   GameDTO get(GameId gameId);
 
   void updatePlayerInventory(GameId gameId, UUID playerAccount, InventoryDTO newInventory);
+
+  void updateBankInventory(GameId gameId, InventoryDTO newInventory);
 }

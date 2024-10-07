@@ -38,4 +38,12 @@ class InMemoryGames implements Games {
     games.put(gameId, game);
     log.info("Player inventory updated: {}", playerAccount);
   }
+
+  @Override
+  public void updateBankInventory(GameId gameId, InventoryDTO newInventory) {
+    var game = games.get(gameId);
+    game = game.setBankInventory(newInventory);
+    games.put(gameId, game);
+    log.info("Bank inventory updated");
+  }
 }

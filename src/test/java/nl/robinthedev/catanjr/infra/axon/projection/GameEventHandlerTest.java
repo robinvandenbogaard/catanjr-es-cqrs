@@ -7,6 +7,7 @@ import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.dto.PlayerDTO;
+import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import nl.robinthedev.catanjr.infra.axon.persistence.TestInMemoryGames;
@@ -78,5 +79,18 @@ class GameEventHandlerTest {
                 null,
                 null,
                 null));
+  }
+
+  @Test
+  void updateBankInventory() {
+    var game = new GameDTO(null, null, new InventoryDTO(18, 18, 18, 18, 18), null, null);
+    var gameId = new GameId(UUID.randomUUID());
+    games.save(gameId, game);
+
+    gameEventHandler.on(
+        new BankInventoryChanged(gameId, null, new InventoryDTO(16, 16, 16, 16, 16)));
+
+    assertThat(games.get(gameId))
+        .isEqualTo(new GameDTO(null, null, new InventoryDTO(16, 16, 16, 16, 16), null, null));
   }
 }
