@@ -5,7 +5,7 @@ import nl.robinthedev.catanjr.game.service.DiceRoller;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RandomDiceRoll implements DiceRoller {
+class RandomDiceRoll implements DiceRoller {
   @Override
   public DiceRoll roll() {
     return DiceRoll.valueOf(1 + (int) (Math.random() * DiceRoll.values().length));
