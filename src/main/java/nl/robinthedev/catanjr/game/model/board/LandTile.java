@@ -6,7 +6,7 @@ import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 class LandTile {
   private final ResourceType resourceType;
   private final RequiredDiceRoll requiredDiceRoll;
-  private Occupant occupant;
+  private final Occupant occupant;
 
   private LandTile(ResourceType resourceType, RequiredDiceRoll requiredDiceRoll) {
     this.resourceType = resourceType;
