@@ -28,22 +28,22 @@ public record BankInventory(Wood wood, Gold gold, PineApple pineApple, Sheep she
         new Sword(sword));
   }
 
-  public BankInventory minus(ResourceCollection inventory) {
+  public BankInventory minus(ResourceChanges changes) {
     return new BankInventory(
-        wood.minus(inventory.wood()),
-        gold.minus(inventory.gold()),
-        pineApple.minus(inventory.pineApple()),
-        sheep.minus(inventory.sheep()),
-        sword.minus(inventory.sword()));
+        wood.minus(changes.asWood()),
+        gold.minus(changes.asGold()),
+        pineApple.minus(changes.asPineApple()),
+        sheep.minus(changes.asSheep()),
+        sword.minus(changes.asSword()));
   }
 
-  public BankInventory minus(ResourceChanges inventory) {
+  public BankInventory add(ResourceChanges changes) {
     return new BankInventory(
-        wood.minus(inventory.wood()),
-        gold.minus(inventory.gold()),
-        pineApple.minus(inventory.pineApple()),
-        sheep.minus(inventory.sheep()),
-        sword.minus(inventory.sword()));
+        wood.add(changes.asWood()),
+        gold.add(changes.asGold()),
+        pineApple.add(changes.asPineApple()),
+        sheep.add(changes.asSheep()),
+        sword.add(changes.asSword()));
   }
 
   public Set<ResourceType> getExceedingResources(ResourceChanges totalResources) {

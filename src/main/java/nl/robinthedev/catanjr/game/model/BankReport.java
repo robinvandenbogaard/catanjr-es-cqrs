@@ -7,11 +7,14 @@ import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 public record BankReport(BankInventory currentInventory, BankInventory newInventory) {
 
   public static BankReport of(List<PlayerReport> playerReports, BankInventory bankInventory) {
-    var resourcesToTakeFrombank =
+    var allPlayerResourceChanges =
         playerReports.stream()
             .map(PlayerReport::resourceChanges)
             .reduce(ResourceChanges.EMPTY, ResourceChanges::add);
-    var newBankInventory = bankInventory.minus(resourcesToTakeFrombank);
+    var newBankInventory =
+        bankInventory
+            .minus(allPlayerResourceChanges.additions())
+            .add(allPlayerResourceChanges.subtractions());
     return new BankReport(bankInventory, newBankInventory);
   }
 

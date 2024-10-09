@@ -51,7 +51,7 @@ public record Game(
 
     var allResourcesToTakeFrombank =
         payout.stream()
-            .map(PlayerPayout::resources)
+            .map(PlayerPayout::resourceChanges)
             .reduce(ResourceChanges.EMPTY, ResourceChanges::add);
 
     var exceeded = bankInventory.getExceedingResources(allResourcesToTakeFrombank);

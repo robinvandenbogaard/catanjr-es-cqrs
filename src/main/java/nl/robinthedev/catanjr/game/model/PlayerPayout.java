@@ -7,7 +7,7 @@ import nl.robinthedev.catanjr.game.model.board.ResourceType;
 import nl.robinthedev.catanjr.game.model.player.Player;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
-record PlayerPayout(Player player, ResourceChanges resources) {
+record PlayerPayout(Player player, ResourceChanges resourceChanges) {
 
   public static PlayerPayout of(Player player, Board board, DiceRoll diceRoll) {
     var gainedResources = board.getResources(diceRoll, player.nr());
@@ -15,7 +15,7 @@ record PlayerPayout(Player player, ResourceChanges resources) {
   }
 
   public PlayerPayout confiscate(Set<ResourceType> exceeded) {
-    var newGains = resources();
+    var newGains = resourceChanges();
     for (var type : exceeded) {
       newGains =
           switch (type) {
@@ -31,7 +31,8 @@ record PlayerPayout(Player player, ResourceChanges resources) {
 
   public PlayerReport asReport() {
     var currentInventory = player.inventory();
-    var newInventory = currentInventory.add(resources);
-    return new PlayerReport(player.accountId(), currentInventory, resources, newInventory);
+    var newInventory =
+        currentInventory.add(resourceChanges.additions()).minus(resourceChanges.subtractions());
+    return new PlayerReport(player.accountId(), currentInventory, resourceChanges, newInventory);
   }
 }

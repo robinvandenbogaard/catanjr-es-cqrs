@@ -9,6 +9,7 @@ import nl.robinthedev.catanjr.game.model.player.PlayerId;
 import nl.robinthedev.catanjr.game.model.player.Players;
 import nl.robinthedev.catanjr.game.model.resources.BankInventory;
 import nl.robinthedev.catanjr.game.model.resources.BuoyInventory;
+import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 public class GameFactory {
   public static Game of(PlayerId playerOne, PlayerId playerTwo) {
@@ -22,9 +23,9 @@ public class GameFactory {
         players,
         buoyInventory,
         BankInventory.FULL
-            .minus(player1.inventory())
-            .minus(player2.inventory())
-            .minus(buoyInventory),
+            .minus(ResourceChanges.allOf(player1.inventory()))
+            .minus(ResourceChanges.allOf(player2.inventory()))
+            .minus(ResourceChanges.allOf(buoyInventory)),
         CocoTiles.INITIAL,
         board);
   }

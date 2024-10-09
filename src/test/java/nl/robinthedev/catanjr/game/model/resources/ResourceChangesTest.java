@@ -42,4 +42,16 @@ class ResourceChangesTest {
     var addition = ResourceChanges.of(1, 2, 3, 4, 5);
     assertThat(gainedResources.add(addition)).isEqualTo(ResourceChanges.of(2, 3, 4, 5, 6));
   }
+
+  @Test
+  void additions() {
+    var gainedResources = ResourceChanges.of(-1, 1, 2, 0, -3);
+    assertThat(gainedResources.additions()).isEqualTo(ResourceChanges.of(0, 1, 2, 0, 0));
+  }
+
+  @Test
+  void subtractions() {
+    var gainedResources = ResourceChanges.of(-1, 0, 2, 1, -3);
+    assertThat(gainedResources.subtractions()).isEqualTo(ResourceChanges.of(1, 0, 0, 0, 3));
+  }
 }

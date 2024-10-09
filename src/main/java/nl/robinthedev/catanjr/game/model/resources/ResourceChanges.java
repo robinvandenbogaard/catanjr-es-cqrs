@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public record ResourceChanges(
     Integer wood, Integer gold, Integer pineApple, Integer sheep, Integer sword) {
+
   public static final ResourceChanges EMPTY = ResourceChanges.of(0, 0, 0, 0, 0);
 
   public ResourceChanges {
@@ -38,6 +39,15 @@ public record ResourceChanges(
     return ResourceChanges.of(wood, 0, 0, 0, 0);
   }
 
+  public static ResourceChanges allOf(ResourceCollection inventory) {
+    return ResourceChanges.of(
+        inventory.wood().value(),
+        inventory.gold().value(),
+        inventory.pineApple().value(),
+        inventory.sheep().value(),
+        inventory.sword().value());
+  }
+
   public ResourceChanges add(ResourceChanges other) {
     return new ResourceChanges(
         wood + other.wood(),
@@ -65,5 +75,47 @@ public record ResourceChanges(
 
   public ResourceChanges withWood(int newWood) {
     return ResourceChanges.of(newWood, gold, pineApple, sheep, sword);
+  }
+
+  public Wood asWood() {
+    return new Wood(wood);
+  }
+
+  public Gold asGold() {
+    return new Gold(gold);
+  }
+
+  public PineApple asPineApple() {
+    return new PineApple(pineApple);
+  }
+
+  public Sheep asSheep() {
+    return new Sheep(sheep);
+  }
+
+  public Sword asSword() {
+    return new Sword(sword);
+  }
+
+  public ResourceChanges additions() {
+    return new ResourceChanges(
+        positive(wood), positive(gold), positive(pineApple), positive(sheep), positive(sword));
+  }
+
+  public ResourceChanges subtractions() {
+    return new ResourceChanges(
+        negativeAbs(wood),
+        negativeAbs(gold),
+        negativeAbs(pineApple),
+        negativeAbs(sheep),
+        negativeAbs(sword));
+  }
+
+  private static int positive(Integer value) {
+    return Math.max(0, value);
+  }
+
+  private static int negativeAbs(Integer value) {
+    return Math.abs(Math.min(0, value));
   }
 }

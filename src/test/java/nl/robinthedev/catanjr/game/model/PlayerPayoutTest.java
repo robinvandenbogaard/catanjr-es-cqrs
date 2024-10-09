@@ -23,7 +23,7 @@ class PlayerPayoutTest {
   public static Stream<Arguments> confiscation() {
     return Stream.of(
         Arguments.of(
-            Named.of("No resources from player inventory will be confiscated", Set.of()),
+            Named.of("No resourceChanges from player inventory will be confiscated", Set.of()),
             ResourceChanges.of(1, 1, 1, 1, 1)),
         Arguments.of(
             Named.of("All 10 wood from player inventory will be confiscated", Set.of(WOOD)),

@@ -23,12 +23,21 @@ public record PlayerInventory(Wood wood, Gold gold, PineApple pineApple, Sheep s
         new Sword(sword));
   }
 
-  public PlayerInventory add(ResourceChanges resources) {
+  public PlayerInventory add(ResourceChanges changes) {
     return new PlayerInventory(
-        wood.add(resources.wood()),
-        gold.add(resources.gold()),
-        pineApple.add(resources.pineApple()),
-        sheep.add(resources.sheep()),
-        sword.add(resources.sword()));
+        wood.add(changes.asWood()),
+        gold.add(changes.asGold()),
+        pineApple.add(changes.asPineApple()),
+        sheep.add(changes.asSheep()),
+        sword.add(changes.asSword()));
+  }
+
+  public PlayerInventory minus(ResourceChanges changes) {
+    return new PlayerInventory(
+        wood.minus(changes.asWood()),
+        gold.minus(changes.asGold()),
+        pineApple.minus(changes.asPineApple()),
+        sheep.minus(changes.asSheep()),
+        sword.minus(changes.asSword()));
   }
 }
