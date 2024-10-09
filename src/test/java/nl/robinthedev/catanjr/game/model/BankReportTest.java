@@ -1,13 +1,12 @@
 package nl.robinthedev.catanjr.game.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import java.util.UUID;
 import nl.robinthedev.catanjr.game.model.resources.BankInventory;
-import nl.robinthedev.catanjr.game.model.resources.GainedResources;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
+import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 import org.junit.jupiter.api.Test;
 
 class BankReportTest {
@@ -24,7 +23,7 @@ class BankReportTest {
         new PlayerReport(
             UUID.randomUUID(),
             PlayerInventory.INITIAL,
-            GainedResources.wood(1),
+            ResourceChanges.wood(1),
             PlayerInventory.of(2, 0, 0, 0, 1));
     var bankReport = BankReport.of(List.of(playerReport), BankInventory.FULL);
     assertThat(bankReport.inventoryChanged()).isTrue();
@@ -38,13 +37,13 @@ class BankReportTest {
         new PlayerReport(
             UUID.randomUUID(),
             PlayerInventory.INITIAL,
-            GainedResources.wood(1),
+            ResourceChanges.wood(1),
             PlayerInventory.of(2, 0, 0, 0, 1));
     var playerReport2 =
         new PlayerReport(
             UUID.randomUUID(),
             PlayerInventory.INITIAL,
-            GainedResources.sheep(1),
+            ResourceChanges.sheep(1),
             PlayerInventory.of(2, 0, 0, 0, 1));
     var bankReport = BankReport.of(List.of(playerReport1, playerReport2), BankInventory.FULL);
     assertThat(bankReport.inventoryChanged()).isTrue();

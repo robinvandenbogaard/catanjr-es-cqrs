@@ -11,6 +11,7 @@ import nl.robinthedev.catanjr.game.model.player.Players;
 import nl.robinthedev.catanjr.game.model.resources.BankInventory;
 import nl.robinthedev.catanjr.game.model.resources.BuoyInventory;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
+import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 public record Game(
     Players players,

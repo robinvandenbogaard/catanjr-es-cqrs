@@ -1,7 +1,7 @@
 package nl.robinthedev.catanjr.game.model.board;
 
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
-import nl.robinthedev.catanjr.game.model.resources.GainedResources;
+import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 class LandTile {
   private final ResourceType resourceType;
@@ -22,13 +22,13 @@ class LandTile {
     return requiredDiceRoll.gainsOn(diceRoll);
   }
 
-  public GainedResources oneResource() {
+  public ResourceChanges oneResource() {
     return switch (resourceType) {
-      case SWORD -> GainedResources.swords(1);
-      case GOLD -> GainedResources.gold(1);
-      case PINEAPPLE -> GainedResources.pineApple(1);
-      case SHEEP -> GainedResources.sheep(1);
-      case WOOD -> GainedResources.wood(1);
+      case SWORD -> ResourceChanges.swords(1);
+      case GOLD -> ResourceChanges.gold(1);
+      case PINEAPPLE -> ResourceChanges.pineApple(1);
+      case SHEEP -> ResourceChanges.sheep(1);
+      case WOOD -> ResourceChanges.wood(1);
     };
   }
 

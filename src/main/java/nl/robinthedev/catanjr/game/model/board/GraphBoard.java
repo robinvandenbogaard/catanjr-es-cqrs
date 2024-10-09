@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.game.model.SiteId;
-import nl.robinthedev.catanjr.game.model.resources.GainedResources;
+import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 class GraphBoard implements Board {
   private final Map<String, LandTile> landTiles;
@@ -65,12 +65,12 @@ class GraphBoard implements Board {
   }
 
   @Override
-  public GainedResources getResources(DiceRoll diceRoll, BoardPlayer player) {
+  public ResourceChanges getResources(DiceRoll diceRoll, BoardPlayer player) {
     var occupant = Occupant.of(player);
     return fortSites.values().stream()
         .filter(site -> site.belongsTo(occupant))
         .map(site -> site.getResources(diceRoll))
-        .reduce(GainedResources.EMPTY, GainedResources::add);
+        .reduce(ResourceChanges.EMPTY, ResourceChanges::add);
   }
 
   @Override

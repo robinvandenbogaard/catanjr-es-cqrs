@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
-import nl.robinthedev.catanjr.game.model.resources.GainedResources;
+import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 class FortSite {
   private final int id;
@@ -50,12 +50,12 @@ class FortSite {
     return this.occupant == occupant;
   }
 
-  public GainedResources getResources(DiceRoll diceRoll) {
+  public ResourceChanges getResources(DiceRoll diceRoll) {
     return landTiles.stream()
         .filter(tile -> tile.gainsOnRoll(diceRoll))
         .map(LandTile::oneResource)
         .findFirst()
-        .orElse(GainedResources.EMPTY);
+        .orElse(ResourceChanges.EMPTY);
   }
 
   @Override
