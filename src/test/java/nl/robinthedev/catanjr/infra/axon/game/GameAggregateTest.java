@@ -1,11 +1,14 @@
 package nl.robinthedev.catanjr.infra.axon.game;
 
+import static nl.robinthedev.catanjr.api.dto.ResourceTypeDTO.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
 import nl.robinthedev.catanjr.api.command.EndTurn;
 import nl.robinthedev.catanjr.api.command.RollDice;
+import nl.robinthedev.catanjr.api.dto.BuoyDTO;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
@@ -269,7 +272,12 @@ class GameAggregateTest {
             new PlayerDTO(ACCOUNT_PLAYER_1, JOHN, new InventoryDTO(0, 0, 1, 0, 1)),
             new PlayerDTO(ACCOUNT_PLAYER_2, WICK, new InventoryDTO(0, 0, 1, 0, 1)),
             new InventoryDTO(17, 17, 15, 17, 15),
-            new InventoryDTO(1, 1, 1, 1, 1),
+            List.of(
+                new BuoyDTO(WOOD),
+                new BuoyDTO(GOLD),
+                new BuoyDTO(PINEAPPLE),
+                new BuoyDTO(SHEEP),
+                new BuoyDTO(SWORD)),
             INITIAL_COLOR_MAP));
   }
 }

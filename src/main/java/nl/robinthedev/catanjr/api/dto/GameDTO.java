@@ -7,13 +7,13 @@ public record GameDTO(
     PlayerDTO firstPlayer,
     PlayerDTO secondPlayer,
     InventoryDTO bankInventory,
-    InventoryDTO buoyInventory,
+    List<BuoyDTO> buoyInventory,
     List<ShipYardDTO> shipYards) {
   public static GameDTO of(Game game) {
     var firstPlayer = PlayerDTO.of(game.firstPlayer());
     var secondPlayer = PlayerDTO.of(game.secondPlayer());
     var bankInventory = InventoryDTO.of(game.bankInventory());
-    var buoyInventory = InventoryDTO.of(game.buoyInventory());
+    var buoyInventory = BuoyDTO.of(game.buoyInventory());
     return new GameDTO(
         firstPlayer,
         secondPlayer,
