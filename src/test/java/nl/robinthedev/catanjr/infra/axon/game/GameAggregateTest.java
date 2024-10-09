@@ -226,6 +226,42 @@ class GameAggregateTest {
         .expectEvents(new DiceRolled(GAME_ID, DiceRoll.FIVE, ACCOUNT_PLAYER_2));
   }
 
+  @Test
+  void returns_all_sheep_from_all_players_if_the_bank_cannot_afford_payout() {
+    diceRoller.nextRollIs(4);
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 7, 10, 0, 1)),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_2,
+                new InventoryDTO(0, 0, 1, 0, 1),
+                new InventoryDTO(0, 10, 7, 0, 1)),
+            new BankInventoryChanged(
+                GAME_ID, new InventoryDTO(17, 17, 15, 17, 15), new InventoryDTO(17, 0, 0, 17, 15)))
+        .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
+        .expectEvents(
+            new DiceRolled(GAME_ID, DiceRoll.FOUR, ACCOUNT_PLAYER_1),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 7, 10, 0, 1),
+                new InventoryDTO(0, 0, 0, 0, 1)),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_2,
+                new InventoryDTO(0, 10, 7, 0, 1),
+                new InventoryDTO(0, 0, 0, 0, 1)),
+            new BankInventoryChanged(
+                GAME_ID, new InventoryDTO(17, 0, 0, 17, 15), new InventoryDTO(17, 17, 17, 17, 15)))
+        .expectSuccessfulHandlerExecution();
+  }
+
   private static GameCreatedEvent getGameCreatedEvent() {
     return new GameCreatedEvent(
         GAME_ID,

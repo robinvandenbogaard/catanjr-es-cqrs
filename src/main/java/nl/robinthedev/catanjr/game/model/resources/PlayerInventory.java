@@ -23,7 +23,7 @@ public record PlayerInventory(Wood wood, Gold gold, PineApple pineApple, Sheep s
         new Sword(sword));
   }
 
-  public PlayerInventory add(ResourceCollection resources) {
+  public PlayerInventory add(ResourceChanges resources) {
     return new PlayerInventory(
         wood.add(resources.wood()),
         gold.add(resources.gold()),

@@ -46,21 +46,19 @@ public record Game(
   }
 
   public DiceRollReport diceRolled(DiceRoll diceRoll) {
-    var playerReports =
-        players().stream()
-            .map(
-                player -> {
-                  var currentInventory = player.inventory();
-                  var gainedResources = board.getResources(diceRoll, player.nr());
-                  return new PlayerReport(
-                      player.accountId(),
-                      currentInventory,
-                      gainedResources,
-                      currentInventory.add(gainedResources));
-                })
-            .toList();
-    var bankReport = BankReport.of(playerReports, bankInventory);
+    var payout =
+        players().stream().map(player -> PlayerPayout.of(player, board, diceRoll)).toList();
 
+    var allResourcesToTakeFrombank =
+        payout.stream()
+            .map(PlayerPayout::resources)
+            .reduce(ResourceChanges.EMPTY, ResourceChanges::add);
+
+    var exceeded = bankInventory.getExceedingResources(allResourcesToTakeFrombank);
+
+    var playerReports =
+        payout.stream().map(p -> p.confiscate(exceeded)).map(PlayerPayout::asReport).toList();
+    var bankReport = BankReport.of(playerReports, bankInventory);
     return new DiceRollReport(playerReports, bankReport);
   }
 
