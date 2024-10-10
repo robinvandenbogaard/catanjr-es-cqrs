@@ -1,41 +1,30 @@
 package nl.robinthedev.catanjr.application.rest;
 
-import java.util.Map;
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
 import nl.robinthedev.catanjr.api.command.EndTurn;
 import nl.robinthedev.catanjr.api.command.RollDice;
-import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
-import nl.robinthedev.catanjr.api.query.GetGameQuery;
 import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.axonframework.queryhandling.QueryGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.codec.ServerSentEvent;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("game")
 @ResponseBody
-class GameController {
+class GameCommandController {
 
-  private static final Logger log = LoggerFactory.getLogger(GameController.class);
+  private static final Logger log = LoggerFactory.getLogger(GameCommandController.class);
   private final CommandGateway commandGateway;
-  private final QueryGateway queryGateway;
 
-  public GameController(CommandGateway commandGateway, QueryGateway queryGateway) {
+  public GameCommandController(CommandGateway commandGateway) {
     this.commandGateway = commandGateway;
-    this.queryGateway = queryGateway;
   }
 
   @ResponseStatus(HttpStatus.CREATED)
@@ -83,36 +72,5 @@ class GameController {
     var accountId2 = UUID.fromString("d8bccdd1-abd3-4545-87da-eb9113222c68");
     commandGateway.sendAndWait(new EndTurn(gameId, accountId2));
     log.info("Turn ended for p2 {}", gameId);
-  }
-
-  @GetMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-  public Flux<ServerSentEvent<String>> subcribeToGame(@PathVariable("id") UUID id) {
-    var gameId = new GameId(id);
-    try (var queryResult =
-        queryGateway.subscriptionQuery(new GetGameQuery(gameId), GameDTO.class, GameDTO.class)) {
-      return queryResult
-          .initialResult()
-          .concatWith(queryResult.updates())
-          .map(this::toHtml)
-          .map(htmlSnippet -> ServerSentEvent.builder(htmlSnippet).build());
-    }
-  }
-
-  private String toHtml(GameDTO game) {
-    PlayerState player1 = PlayerState.of(game.firstPlayer());
-    PlayerState player2 = PlayerState.of(game.secondPlayer());
-    return PebbleTemplate.processTemplate(
-        "2pgame",
-        Map.of(
-            "firstPlayer",
-            player1,
-            "secondPlayer",
-            player2,
-            "buoys",
-            BuoysState.from(game.buoyInventory()),
-            "bank",
-            game.bankInventory(),
-            "shipYardColors",
-            BoardState.asMap(game.shipYards())));
   }
 }

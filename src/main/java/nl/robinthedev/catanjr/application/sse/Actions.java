@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.application.rest;
+package nl.robinthedev.catanjr.application.sse;
 
 import java.util.Set;
 import nl.robinthedev.catanjr.api.dto.ActionDTO;

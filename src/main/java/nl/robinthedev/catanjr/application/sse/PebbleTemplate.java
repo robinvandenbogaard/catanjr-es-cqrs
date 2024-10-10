@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.application.rest;
+package nl.robinthedev.catanjr.application.sse;
 
 import io.pebbletemplates.pebble.PebbleEngine;
 import java.io.IOException;

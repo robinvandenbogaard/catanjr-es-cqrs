@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.application.rest;
+package nl.robinthedev.catanjr.application.sse;
 
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.dto.PlayerDTO;

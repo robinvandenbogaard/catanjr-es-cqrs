@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.application.rest;
+package nl.robinthedev.catanjr.application.sse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
