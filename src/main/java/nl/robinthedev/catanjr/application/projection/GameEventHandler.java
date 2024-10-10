@@ -3,6 +3,7 @@ package nl.robinthedev.catanjr.application.projection;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
+import nl.robinthedev.catanjr.api.event.PlayerActionsChanged;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import nl.robinthedev.catanjr.api.query.GetGameQuery;
 import nl.robinthedev.catanjr.game.service.Games;
@@ -40,6 +41,12 @@ class GameEventHandler {
   @EventHandler
   public void on(BankInventoryChanged event) {
     games.updateBankInventory(event.gameId(), event.newInventory());
+    emitUpdate(event.gameId());
+  }
+
+  @EventHandler
+  public void on(PlayerActionsChanged event) {
+    games.updatePlayerActions(event.gameId(), event.playerAccountId(), event.actions());
     emitUpdate(event.gameId());
   }
 }

@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.game.model.round;
 
-enum Action {
+public enum Action {
   THROW_DICE,
   END_TURN,
 }

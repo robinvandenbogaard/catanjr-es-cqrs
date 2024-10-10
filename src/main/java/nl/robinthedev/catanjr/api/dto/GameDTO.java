@@ -1,6 +1,7 @@
 package nl.robinthedev.catanjr.api.dto;
 
 import java.util.List;
+import java.util.Set;
 import nl.robinthedev.catanjr.game.model.Game;
 
 public record GameDTO(
@@ -35,6 +36,24 @@ public record GameDTO(
     return new GameDTO(
         firstPlayer,
         secondPlayer.updateInventory(newInventory),
+        bankInventory,
+        buoyInventory,
+        shipYards);
+  }
+
+  public GameDTO setFirstPlayerActions(Set<ActionDTO> newActions) {
+    return new GameDTO(
+        firstPlayer.updateActions(newActions),
+        secondPlayer,
+        bankInventory,
+        buoyInventory,
+        shipYards);
+  }
+
+  public GameDTO setSecondPlayerActions(Set<ActionDTO> newActions) {
+    return new GameDTO(
+        firstPlayer,
+        secondPlayer.updateActions(newActions),
         bankInventory,
         buoyInventory,
         shipYards);

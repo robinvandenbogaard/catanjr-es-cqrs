@@ -1,8 +1,10 @@
 package nl.robinthedev.catanjr.infra.persistence;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import nl.robinthedev.catanjr.api.dto.ActionDTO;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
@@ -45,5 +47,17 @@ class InMemoryGames implements Games {
     game = game.setBankInventory(newInventory);
     games.put(gameId, game);
     log.info("Bank inventory updated {}", newInventory);
+  }
+
+  @Override
+  public void updatePlayerActions(GameId gameId, UUID playerAccount, Set<ActionDTO> newActions) {
+    var game = games.get(gameId);
+    if (game.firstPlayer().accountId().equals(playerAccount)) {
+      game = game.setFirstPlayerActions(newActions);
+    } else if (game.secondPlayer().accountId().equals(playerAccount)) {
+      game = game.setSecondPlayerActions(newActions);
+    }
+    games.put(gameId, game);
+    log.info("Player actions updated: {} to {}", playerAccount, newActions);
   }
 }

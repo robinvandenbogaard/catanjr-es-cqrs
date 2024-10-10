@@ -88,23 +88,26 @@ class GameController {
   @GetMapping(value = "/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
   public Flux<ServerSentEvent<String>> subcribeToGame(@PathVariable("id") UUID id) {
     var gameId = new GameId(id);
-    var queryResult =
-        queryGateway.subscriptionQuery(new GetGameQuery(gameId), GameDTO.class, GameDTO.class);
-    return queryResult
-        .initialResult()
-        .concatWith(queryResult.updates())
-        .map(this::toHtml)
-        .map(htmlSnippet -> ServerSentEvent.builder(htmlSnippet).build());
+    try (var queryResult =
+        queryGateway.subscriptionQuery(new GetGameQuery(gameId), GameDTO.class, GameDTO.class)) {
+      return queryResult
+          .initialResult()
+          .concatWith(queryResult.updates())
+          .map(this::toHtml)
+          .map(htmlSnippet -> ServerSentEvent.builder(htmlSnippet).build());
+    }
   }
 
   private String toHtml(GameDTO game) {
+    PlayerState player1 = PlayerState.of(game.firstPlayer());
+    PlayerState player2 = PlayerState.of(game.secondPlayer());
     return PebbleTemplate.processTemplate(
         "2pgame",
         Map.of(
             "firstPlayer",
-            game.firstPlayer(),
+            player1,
             "secondPlayer",
-            game.secondPlayer(),
+            player2,
             "buoys",
             BuoysState.from(game.buoyInventory()),
             "bank",

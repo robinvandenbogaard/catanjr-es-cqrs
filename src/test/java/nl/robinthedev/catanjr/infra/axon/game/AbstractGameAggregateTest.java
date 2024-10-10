@@ -8,6 +8,7 @@ import static nl.robinthedev.catanjr.api.dto.ResourceTypeDTO.WOOD;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.dto.BuoyDTO;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
@@ -66,8 +67,8 @@ abstract class AbstractGameAggregateTest {
     return new GameCreatedEvent(
         GAME_ID,
         new GameDTO(
-            new PlayerDTO(ACCOUNT_PLAYER_1, JOHN, new InventoryDTO(0, 0, 1, 0, 1)),
-            new PlayerDTO(ACCOUNT_PLAYER_2, WICK, new InventoryDTO(0, 0, 1, 0, 1)),
+            new PlayerDTO(ACCOUNT_PLAYER_1, JOHN, new InventoryDTO(0, 0, 1, 0, 1), Set.of()),
+            new PlayerDTO(ACCOUNT_PLAYER_2, WICK, new InventoryDTO(0, 0, 1, 0, 1), Set.of()),
             new InventoryDTO(17, 17, 15, 17, 15),
             List.of(
                 new BuoyDTO(WOOD),

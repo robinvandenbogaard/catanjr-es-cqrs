@@ -2,6 +2,7 @@ package nl.robinthedev.catanjr.application.projection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Set;
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
@@ -33,7 +34,7 @@ class GameEventHandlerTest {
     UUID p1Account = UUID.randomUUID();
     var game =
         new GameDTO(
-            new PlayerDTO(p1Account, null, new InventoryDTO(0, 0, 0, 0, 0)),
+            new PlayerDTO(p1Account, null, new InventoryDTO(0, 0, 0, 0, 0), Set.of()),
             null,
             null,
             null,
@@ -47,7 +48,7 @@ class GameEventHandlerTest {
     assertThat(games.get(gameId))
         .isEqualTo(
             new GameDTO(
-                new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5)),
+                new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), Set.of()),
                 null,
                 null,
                 null,
@@ -60,8 +61,8 @@ class GameEventHandlerTest {
     UUID p2Account = UUID.randomUUID();
     var game =
         new GameDTO(
-            new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5)),
-            new PlayerDTO(p2Account, null, new InventoryDTO(0, 0, 0, 0, 0)),
+            new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), Set.of()),
+            new PlayerDTO(p2Account, null, new InventoryDTO(0, 0, 0, 0, 0), Set.of()),
             null,
             null,
             null);
@@ -74,8 +75,8 @@ class GameEventHandlerTest {
     assertThat(games.get(gameId))
         .isEqualTo(
             new GameDTO(
-                new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5)),
-                new PlayerDTO(p2Account, null, new InventoryDTO(5, 4, 3, 2, 1)),
+                new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), Set.of()),
+                new PlayerDTO(p2Account, null, new InventoryDTO(5, 4, 3, 2, 1), Set.of()),
                 null,
                 null,
                 null));

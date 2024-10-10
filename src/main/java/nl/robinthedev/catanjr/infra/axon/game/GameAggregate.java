@@ -2,9 +2,12 @@ package nl.robinthedev.catanjr.infra.axon.game;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
+import java.util.Set;
+import java.util.stream.Collectors;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
 import nl.robinthedev.catanjr.api.command.EndTurn;
 import nl.robinthedev.catanjr.api.command.RollDice;
+import nl.robinthedev.catanjr.api.dto.ActionDTO;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
@@ -12,6 +15,7 @@ import nl.robinthedev.catanjr.api.dto.PlayerDTO;
 import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
+import nl.robinthedev.catanjr.api.event.PlayerActionsChanged;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import nl.robinthedev.catanjr.api.event.TurnEnded;
 import nl.robinthedev.catanjr.game.model.Game;
@@ -63,6 +67,8 @@ public class GameAggregate {
     this.round =
         Round.firstRound(
             AccountId.of(firstPlayer.accountId()), AccountId.of(secondPlayer.accountId()));
+    apply(new PlayerActionsChanged(gameId, firstPlayer.accountId(), getCurrentPlayerActions()));
+    apply(new PlayerActionsChanged(gameId, secondPlayer.accountId(), Set.of()));
   }
 
   @CommandHandler
@@ -108,6 +114,11 @@ public class GameAggregate {
   @EventSourcingHandler
   void on(DiceRolled event) {
     round = round.diceRolled();
+    apply(new PlayerActionsChanged(gameId, event.accountPlayerId(), getCurrentPlayerActions()));
+  }
+
+  private Set<ActionDTO> getCurrentPlayerActions() {
+    return round.actions().map(Enum::name).map(ActionDTO::valueOf).collect(Collectors.toSet());
   }
 
   @CommandHandler
@@ -122,6 +133,8 @@ public class GameAggregate {
   @EventSourcingHandler
   void on(TurnEnded event) {
     round = round.turnEnded(new AccountId(event.nextPlayer()));
+    apply(new PlayerActionsChanged(gameId, round.currentPlayer(), getCurrentPlayerActions()));
+    apply(new PlayerActionsChanged(gameId, round.nextPlayer(), Set.of()));
   }
 
   private PlayerInventory toPlayerInventory(InventoryDTO inventory) {

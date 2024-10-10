@@ -1,6 +1,7 @@
 package nl.robinthedev.catanjr.game.model.round;
 
 import java.util.UUID;
+import java.util.stream.Stream;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
 
 public final class Round {
@@ -38,6 +39,14 @@ public final class Round {
 
   public UUID nextPlayer() {
     return current.equals(p1) ? p2.value() : p1.value();
+  }
+
+  public UUID currentPlayer() {
+    return current.value();
+  }
+
+  public Stream<Action> actions() {
+    return actions.actions().stream();
   }
 
   public Round turnEnded(AccountId newPlayerAccountId) {

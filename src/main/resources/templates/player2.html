@@ -2,8 +2,12 @@
     <div class="panel-heading">Player 2: {{ secondPlayer.username }}</div>
     <div class="panel-body">
         <div class="button-bar">
-            <button class="btn btn-primary" id="endTurnBtnP2" hx-post="game/endTurnP2" hx-swap="none">End Turn</button>
-            <button class="btn btn-primary" id="rollDiceBtnP2" hx-post="game/rollp2" hx-swap="none">Roll Dice</button>
+            <button class="btn btn-primary" id="endTurnBtnP2" hx-post="game/endTurnP2" hx-swap="none" {{
+                    secondPlayer.actions.endTurn ?
+            "" : "disabled" }}>End Turn</button>
+            <button class="btn btn-primary" id="rollDiceBtnP2" hx-post="game/rollp2" hx-swap="none" {{
+                    secondPlayer.actions.rollDice ?
+            "" : "disabled" }}>Roll Dice</button>
         </div>
         <h4 class="list-group-heading">Inventory</h4>
         <ul class="list-group">

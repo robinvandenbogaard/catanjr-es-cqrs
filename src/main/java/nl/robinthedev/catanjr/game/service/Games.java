@@ -1,6 +1,8 @@
 package nl.robinthedev.catanjr.game.service;
 
+import java.util.Set;
 import java.util.UUID;
+import nl.robinthedev.catanjr.api.dto.ActionDTO;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
@@ -13,4 +15,6 @@ public interface Games {
   void updatePlayerInventory(GameId gameId, UUID playerAccount, InventoryDTO newInventory);
 
   void updateBankInventory(GameId gameId, InventoryDTO newInventory);
+
+  void updatePlayerActions(GameId gameId, UUID playerAccount, Set<ActionDTO> newActions);
 }
