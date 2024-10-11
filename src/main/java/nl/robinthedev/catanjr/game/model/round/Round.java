@@ -58,4 +58,8 @@ public final class Round {
     }
     return new Round(p1, p2, current, Actions.THROW_DICE_ONLY);
   }
+
+  public boolean allowedToBuyShip(AccountId playerAccountId) {
+    return isAllowed(playerAccountId, Action.BUY_SHIP);
+  }
 }

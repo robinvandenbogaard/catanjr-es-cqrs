@@ -13,7 +13,7 @@ import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import nl.robinthedev.catanjr.api.event.TurnEnded;
 import org.junit.jupiter.api.Test;
 
-public class RollDiceCommandTest extends AbstractGameAggregateTest {
+class RollDiceCommandTest extends AbstractGameAggregateTest {
 
   @Test
   void first_player_rolls_1() {

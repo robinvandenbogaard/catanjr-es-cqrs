@@ -13,6 +13,7 @@ import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.dto.PlayerDTO;
 import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
+import nl.robinthedev.catanjr.api.event.BuyShip;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
 import nl.robinthedev.catanjr.api.event.PlayerActionsChanged;
@@ -135,6 +136,13 @@ public class GameAggregate {
     round = round.turnEnded(new AccountId(event.nextPlayer()));
     apply(new PlayerActionsChanged(gameId, round.currentPlayer(), getCurrentPlayerActions()));
     apply(new PlayerActionsChanged(gameId, round.nextPlayer(), Set.of()));
+  }
+
+  @CommandHandler
+  void handle(BuyShip command) {
+    if (!round.allowedToBuyShip(AccountId.of(command.playerAccountId()))) {
+      throw new IllegalStateException("You are not allowed to buy a ship.");
+    }
   }
 
   private PlayerInventory toPlayerInventory(InventoryDTO inventory) {
