@@ -3,6 +3,7 @@ package nl.robinthedev.catanjr.game.model.round;
 import java.util.UUID;
 import java.util.stream.Stream;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
+import nl.robinthedev.catanjr.infra.axon.game.exception.ActionNotAllowedException;
 
 public final class Round {
   private final AccountId p1;
@@ -34,7 +35,13 @@ public final class Round {
   }
 
   private boolean isAllowed(AccountId playerAccountId, Action action) {
-    return current.equals(playerAccountId) && actions.contains(action);
+    if (!current.equals(playerAccountId)) throw new IllegalStateException("Its not your turn");
+
+    if (!actions.contains(action))
+      throw new ActionNotAllowedException(
+          "Not allowed to take action " + action + ". Available actions are " + actions);
+
+    return true;
   }
 
   public UUID nextPlayer() {
