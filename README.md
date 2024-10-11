@@ -1,6 +1,6 @@
 # Catan Junior with ES, CQRS, SSE and HTMX
 
-Catan Junior is a game I play often with my kid. Professionally I'm a software engineer hoe really likes messaging
+Catan Junior is a game I play often with my kid. Professionally I'm a software engineer who really likes messaging
 systems.
 This project brings two fun things together!
 
