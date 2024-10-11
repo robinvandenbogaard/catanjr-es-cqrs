@@ -3,7 +3,6 @@ package nl.robinthedev.catanjr.game.model.round;
 import java.util.UUID;
 import java.util.stream.Stream;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
-import nl.robinthedev.catanjr.infra.axon.game.exception.ActionNotAllowedException;
 
 public final class Round {
   private final AccountId p1;
@@ -22,26 +21,24 @@ public final class Round {
     return new Round(firstPlayer, secondPlayer, firstPlayer, Actions.THROW_DICE_ONLY);
   }
 
-  public boolean allowedToRoll(AccountId playerAccountId) {
-    return isAllowed(playerAccountId, Action.THROW_DICE);
+  public void isAllowedToRoll(AccountId playerAccountId) {
+    isAllowed(playerAccountId, Action.THROW_DICE);
   }
 
   public Round diceRolled() {
     return new Round(p1, p2, current, actions.diceRolled());
   }
 
-  public boolean allowedToEndTurn(AccountId playerAccountId) {
-    return isAllowed(playerAccountId, Action.END_TURN);
+  public void isAllowedToEndTurn(AccountId playerAccountId) {
+    isAllowed(playerAccountId, Action.END_TURN);
   }
 
-  private boolean isAllowed(AccountId playerAccountId, Action action) {
-    if (!current.equals(playerAccountId)) throw new IllegalStateException("Its not your turn");
+  private void isAllowed(AccountId playerAccountId, Action action) {
+    if (!current.equals(playerAccountId)) throw new NotYourTurnException("Its not your turn");
 
     if (!actions.contains(action))
       throw new ActionNotAllowedException(
           "Not allowed to take action " + action + ". Available actions are " + actions);
-
-    return true;
   }
 
   public UUID nextPlayer() {
@@ -66,7 +63,7 @@ public final class Round {
     return new Round(p1, p2, current, Actions.THROW_DICE_ONLY);
   }
 
-  public boolean allowedToBuyShip(AccountId playerAccountId) {
-    return isAllowed(playerAccountId, Action.BUY_SHIP);
+  public void isAllowedToBuyShip(AccountId playerAccountId) {
+    isAllowed(playerAccountId, Action.BUY_SHIP);
   }
 }

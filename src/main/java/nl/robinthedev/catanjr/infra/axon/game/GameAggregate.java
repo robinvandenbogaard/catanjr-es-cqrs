@@ -74,8 +74,7 @@ public class GameAggregate {
 
   @CommandHandler
   void handle(RollDice command, DiceRoller roller) {
-    if (!round.allowedToRoll(AccountId.of(command.accountPlayerId())))
-      throw new IllegalStateException("You are not allowed to make a dice roll in this round.");
+    round.isAllowedToRoll(AccountId.of(command.accountPlayerId()));
 
     var diceRoll = roller.roll();
     var diceRollReport = game.diceRolled(diceRoll);
@@ -124,9 +123,7 @@ public class GameAggregate {
 
   @CommandHandler
   void handle(EndTurn command) {
-    if (!round.allowedToEndTurn(AccountId.of(command.accountPlayerId())))
-      throw new IllegalStateException(
-          "You are not allowed to end your turn yet, please roll first.");
+    round.isAllowedToEndTurn(AccountId.of(command.accountPlayerId()));
 
     apply(new TurnEnded(gameId, round.nextPlayer()));
   }
@@ -140,9 +137,7 @@ public class GameAggregate {
 
   @CommandHandler
   void handle(BuyShip command) {
-    if (!round.allowedToBuyShip(AccountId.of(command.playerAccountId()))) {
-      throw new IllegalStateException("You are not allowed to buy a ship.");
-    }
+    round.isAllowedToBuyShip(AccountId.of(command.playerAccountId()));
   }
 
   private PlayerInventory toPlayerInventory(InventoryDTO inventory) {

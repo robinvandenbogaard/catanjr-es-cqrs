@@ -1,7 +1,8 @@
 package nl.robinthedev.catanjr.infra.axon.game;
 
 import nl.robinthedev.catanjr.api.event.BuyShip;
-import nl.robinthedev.catanjr.infra.axon.game.exception.ActionNotAllowedException;
+import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
+import nl.robinthedev.catanjr.game.model.round.NotYourTurnException;
 import org.junit.jupiter.api.Test;
 
 public class BuyShipCommandTest extends AbstractGameAggregateTest {
@@ -11,7 +12,7 @@ public class BuyShipCommandTest extends AbstractGameAggregateTest {
     fixture
         .given(getGameCreatedEvent())
         .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_2, 3))
-        .expectException(IllegalStateException.class);
+        .expectException(NotYourTurnException.class);
   }
 
   @Test

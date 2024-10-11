@@ -7,6 +7,7 @@ import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.PlayerActionsChanged;
 import nl.robinthedev.catanjr.api.event.TurnEnded;
+import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
 import org.junit.jupiter.api.Test;
 
 class EndTurnCommandTest extends AbstractGameAggregateTest {
@@ -16,7 +17,7 @@ class EndTurnCommandTest extends AbstractGameAggregateTest {
     fixture
         .given(getGameCreatedEvent())
         .when(new EndTurn(GAME_ID, ACCOUNT_PLAYER_1))
-        .expectException(IllegalStateException.class);
+        .expectException(ActionNotAllowedException.class);
   }
 
   @Test

@@ -11,6 +11,8 @@ import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.PlayerActionsChanged;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import nl.robinthedev.catanjr.api.event.TurnEnded;
+import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
+import nl.robinthedev.catanjr.game.model.round.NotYourTurnException;
 import org.junit.jupiter.api.Test;
 
 class RollDiceCommandTest extends AbstractGameAggregateTest {
@@ -138,7 +140,7 @@ class RollDiceCommandTest extends AbstractGameAggregateTest {
         .given(getGameCreatedEvent())
         .andGiven(new DiceRolled(GAME_ID, DiceRoll.FIVE, ACCOUNT_PLAYER_1))
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
-        .expectException(IllegalStateException.class);
+        .expectException(ActionNotAllowedException.class);
   }
 
   @Test
@@ -147,7 +149,7 @@ class RollDiceCommandTest extends AbstractGameAggregateTest {
     fixture
         .given(getGameCreatedEvent())
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_2))
-        .expectException(IllegalStateException.class);
+        .expectException(NotYourTurnException.class);
   }
 
   @Test

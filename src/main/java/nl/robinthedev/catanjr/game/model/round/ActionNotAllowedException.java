@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.infra.axon.game.exception;
+package nl.robinthedev.catanjr.game.model.round;
 
 public class ActionNotAllowedException extends RuntimeException {
   public ActionNotAllowedException(final String message) {
