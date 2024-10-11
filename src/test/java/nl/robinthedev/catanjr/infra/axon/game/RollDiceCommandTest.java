@@ -4,6 +4,7 @@ import static nl.robinthedev.catanjr.api.dto.ActionDTO.*;
 
 import java.util.Set;
 import nl.robinthedev.catanjr.api.command.RollDice;
+import nl.robinthedev.catanjr.api.dto.ActionDTO;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
@@ -17,6 +18,8 @@ import org.junit.jupiter.api.Test;
 
 class RollDiceCommandTest extends AbstractGameAggregateTest {
 
+  public static final Set<ActionDTO> ACTIONS_AFTER_DICE_ROLL = Set.of(END_TURN, BUY_SHIP);
+
   @Test
   void first_player_rolls_1() {
     whereNextDiceRollIs(1);
@@ -25,7 +28,7 @@ class RollDiceCommandTest extends AbstractGameAggregateTest {
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
         .expectEvents(
             new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, Set.of(END_TURN)),
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, ACTIONS_AFTER_DICE_ROLL),
             new PlayerInventoryChanged(
                 GAME_ID,
                 ACCOUNT_PLAYER_1,
@@ -51,7 +54,7 @@ class RollDiceCommandTest extends AbstractGameAggregateTest {
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
         .expectEvents(
             new DiceRolled(GAME_ID, DiceRoll.TWO, ACCOUNT_PLAYER_1),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, Set.of(END_TURN)),
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, ACTIONS_AFTER_DICE_ROLL),
             new PlayerInventoryChanged(
                 GAME_ID,
                 ACCOUNT_PLAYER_1,
@@ -77,7 +80,7 @@ class RollDiceCommandTest extends AbstractGameAggregateTest {
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
         .expectEvents(
             new DiceRolled(GAME_ID, DiceRoll.THREE, ACCOUNT_PLAYER_1),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, Set.of(END_TURN)),
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, ACTIONS_AFTER_DICE_ROLL),
             new PlayerInventoryChanged(
                 GAME_ID,
                 ACCOUNT_PLAYER_1,
@@ -103,7 +106,7 @@ class RollDiceCommandTest extends AbstractGameAggregateTest {
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
         .expectEvents(
             new DiceRolled(GAME_ID, DiceRoll.FOUR, ACCOUNT_PLAYER_1),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, Set.of(END_TURN)),
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, ACTIONS_AFTER_DICE_ROLL),
             new PlayerInventoryChanged(
                 GAME_ID,
                 ACCOUNT_PLAYER_1,
@@ -129,7 +132,7 @@ class RollDiceCommandTest extends AbstractGameAggregateTest {
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
         .expectEvents(
             new DiceRolled(GAME_ID, DiceRoll.FIVE, ACCOUNT_PLAYER_1),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, Set.of(END_TURN)))
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, ACTIONS_AFTER_DICE_ROLL))
         .expectSuccessfulHandlerExecution();
   }
 
@@ -162,7 +165,7 @@ class RollDiceCommandTest extends AbstractGameAggregateTest {
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_2))
         .expectEvents(
             new DiceRolled(GAME_ID, DiceRoll.FIVE, ACCOUNT_PLAYER_2),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_2, Set.of(END_TURN)));
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_2, ACTIONS_AFTER_DICE_ROLL));
   }
 
   @Test
@@ -186,7 +189,7 @@ class RollDiceCommandTest extends AbstractGameAggregateTest {
         .when(new RollDice(GAME_ID, ACCOUNT_PLAYER_1))
         .expectEvents(
             new DiceRolled(GAME_ID, DiceRoll.FOUR, ACCOUNT_PLAYER_1),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, Set.of(END_TURN)),
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, ACTIONS_AFTER_DICE_ROLL),
             new PlayerInventoryChanged(
                 GAME_ID,
                 ACCOUNT_PLAYER_1,
