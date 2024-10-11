@@ -62,4 +62,20 @@ public class BuyShipCommandTest extends AbstractGameAggregateTest {
         .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, 2))
         .expectException(ShiteSiteOccupiedException.class);
   }
+
+  @Test
+  void can_not_buy_ship_twice() {
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
+        .andGiven(
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 0, 0, 0),
+                new InventoryDTO(3, 3, 3, 3, 3)))
+        .andGiven(new ShipBought(GAME_ID, ACCOUNT_PLAYER_1, new ShipYardDTO("3", OwnerDTO.PLAYER1)))
+        .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, 3))
+        .expectException(ShiteSiteOccupiedException.class);
+  }
 }

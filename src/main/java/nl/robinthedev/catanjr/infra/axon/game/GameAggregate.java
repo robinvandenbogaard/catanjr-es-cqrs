@@ -149,6 +149,14 @@ public class GameAggregate {
     apply(new ShipBought(gameId, round.currentPlayer(), new ShipYardDTO("3", OwnerDTO.PLAYER1)));
   }
 
+  @EventSourcingHandler
+  void on(ShipBought event) {
+    game =
+        game.playerBought(
+            game.getPlayer(new AccountId(round.currentPlayer())),
+            new SiteId(Integer.valueOf(event.boughtShipYard().id())));
+  }
+
   private PlayerInventory toPlayerInventory(InventoryDTO inventory) {
     return PlayerInventory.of(
         inventory.wood(),

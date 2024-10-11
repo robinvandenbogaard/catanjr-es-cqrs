@@ -32,6 +32,10 @@ class FortSite {
     other.neighbours.add(bridge);
   }
 
+  public void updateOccupant(Occupant occupant) {
+    this.occupant = occupant;
+  }
+
   public void setOccupant(Occupant occupant, FortSite betweenFort) {
     this.occupant = occupant;
     var shipSite =

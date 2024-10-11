@@ -9,4 +9,6 @@ public interface Board {
   BoardPlayer getOwner(SiteId shipSite);
 
   ResourceChanges getResources(DiceRoll diceRoll, BoardPlayer nr);
+
+  void markSiteOwned(SiteId siteId, BoardPlayer nr);
 }

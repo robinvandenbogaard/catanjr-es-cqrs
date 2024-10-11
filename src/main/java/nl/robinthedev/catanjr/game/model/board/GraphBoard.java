@@ -7,6 +7,7 @@ import nl.robinthedev.catanjr.game.model.SiteId;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 class GraphBoard implements Board {
+
   private final Map<String, LandTile> landTiles;
   private final Map<Integer, FortSite> fortSites;
 
@@ -71,6 +72,11 @@ class GraphBoard implements Board {
         .filter(site -> site.belongsTo(occupant))
         .map(site -> site.getResources(diceRoll))
         .reduce(ResourceChanges.EMPTY, ResourceChanges::add);
+  }
+
+  @Override
+  public void markSiteOwned(SiteId shipSiteId, BoardPlayer nr) {
+    getFortById(shipSiteId.value()).updateOccupant(Occupant.of(nr));
   }
 
   @Override

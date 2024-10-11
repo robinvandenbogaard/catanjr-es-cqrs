@@ -84,4 +84,15 @@ public record Game(
       default -> throw new ShiteSiteOccupiedException("This shipsite is already occupied");
     }
   }
+
+  public Game playerBought(Player player, SiteId siteId) {
+    // board is full of side effects, should change this.
+    board.markSiteOwned(siteId, player.nr());
+    return new Game(players, buoyInventory, bankInventory, cocoTiles, board);
+  }
+
+  public Player getPlayer(AccountId id) {
+    if (firstPlayer().belongsTo(id)) return firstPlayer();
+    else return secondPlayer();
+  }
 }
