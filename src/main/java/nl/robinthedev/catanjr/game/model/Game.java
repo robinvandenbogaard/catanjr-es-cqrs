@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.game.model.board.Board;
+import nl.robinthedev.catanjr.game.model.board.ShiteSiteOccupiedException;
 import nl.robinthedev.catanjr.game.model.coco.CocoTiles;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
 import nl.robinthedev.catanjr.game.model.player.Player;
@@ -73,5 +74,14 @@ public record Game(
 
   public Game updateBankIventory(BankInventory bankInventory) {
     return new Game(players, buoyInventory, bankInventory, cocoTiles, board);
+  }
+
+  public void buyShipYard(SiteId siteId) {
+    switch (board.getOwner(siteId)) {
+      case NONE -> {
+        // Nothing to do yet.
+      }
+      default -> throw new ShiteSiteOccupiedException("This shipsite is already occupied");
+    }
   }
 }
