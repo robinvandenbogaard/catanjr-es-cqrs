@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.game.model.board;
 
-enum Occupant {
+public enum Occupant {
   EMPTY,
   CAPTAIN,
   PLAYER1,

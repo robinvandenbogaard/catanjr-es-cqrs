@@ -86,9 +86,8 @@ public record Game(
   }
 
   public Game playerBought(Player player, SiteId siteId) {
-    // board is full of side effects, should change this.
-    board.markSiteOwned(siteId, player.nr());
-    return new Game(players, buoyInventory, bankInventory, cocoTiles, board);
+    return new Game(
+        players, buoyInventory, bankInventory, cocoTiles, board.markFortOwned(siteId, player.nr()));
   }
 
   public Player getPlayer(AccountId id) {

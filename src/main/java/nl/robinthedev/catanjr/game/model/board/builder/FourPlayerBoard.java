@@ -1,11 +1,14 @@
-package nl.robinthedev.catanjr.game.model.board;
+package nl.robinthedev.catanjr.game.model.board.builder;
 
 import static nl.robinthedev.catanjr.game.model.board.RequiredDiceRoll.*;
 import static nl.robinthedev.catanjr.game.model.board.ResourceType.*;
 
+import nl.robinthedev.catanjr.game.model.board.Board;
+import nl.robinthedev.catanjr.game.model.board.Occupant;
+
 public class FourPlayerBoard {
   public static Board create() {
-    var board = new GraphBoard();
+    var board = new BoardBuilder();
     board.addLandTile("sheep5", SHEEP, FIVE);
     board.addLandTile("pineApple2", PINEAPPLE, TWO);
     board.addLandTile("pineApple4", PINEAPPLE, FOUR);
@@ -41,6 +44,6 @@ public class FourPlayerBoard {
     board.setOccupant(Occupant.PLAYER4, 10, 14);
     board.setOccupant(Occupant.PLAYER4, 29, 27);
 
-    return board;
+    return board.build();
   }
 }
