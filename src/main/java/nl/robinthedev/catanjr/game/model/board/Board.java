@@ -6,7 +6,7 @@ import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 public interface Board {
 
-  BoardPlayer getOwner(SiteId shipSite);
+  BoardPlayer getFortOwner(SiteId fortSiteId);
 
   ResourceChanges getResources(DiceRoll diceRoll, BoardPlayer nr);
 

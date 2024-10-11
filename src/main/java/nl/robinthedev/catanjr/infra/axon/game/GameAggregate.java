@@ -4,23 +4,23 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import nl.robinthedev.catanjr.api.command.BuyFort;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
 import nl.robinthedev.catanjr.api.command.EndTurn;
 import nl.robinthedev.catanjr.api.command.RollDice;
 import nl.robinthedev.catanjr.api.dto.ActionDTO;
+import nl.robinthedev.catanjr.api.dto.FortSiteDTO;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.dto.OwnerDTO;
 import nl.robinthedev.catanjr.api.dto.PlayerDTO;
-import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
 import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
-import nl.robinthedev.catanjr.api.event.BuyShip;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
+import nl.robinthedev.catanjr.api.event.FortBought;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
 import nl.robinthedev.catanjr.api.event.PlayerActionsChanged;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
-import nl.robinthedev.catanjr.api.event.ShipBought;
 import nl.robinthedev.catanjr.api.event.TurnEnded;
 import nl.robinthedev.catanjr.game.model.Game;
 import nl.robinthedev.catanjr.game.model.GameFactory;
@@ -140,21 +140,21 @@ public class GameAggregate {
   }
 
   @CommandHandler
-  void handle(BuyShip command) {
+  void handle(BuyFort command) {
     AccountId playerAccountId = AccountId.of(command.playerAccountId());
-    round.isAllowedToBuyShip(playerAccountId);
+    round.isAllowedToBuyFort(playerAccountId);
 
-    game.buyShipYard(new SiteId(command.shipYardId()));
+    game.buyFortAt(new SiteId(command.siteId()));
 
-    apply(new ShipBought(gameId, round.currentPlayer(), new ShipYardDTO("3", OwnerDTO.PLAYER1)));
+    apply(new FortBought(gameId, round.currentPlayer(), new FortSiteDTO("3", OwnerDTO.PLAYER1)));
   }
 
   @EventSourcingHandler
-  void on(ShipBought event) {
+  void on(FortBought event) {
     game =
         game.playerBought(
             game.getPlayer(new AccountId(round.currentPlayer())),
-            new SiteId(Integer.valueOf(event.boughtShipYard().id())));
+            new SiteId(Integer.valueOf(event.boughtFortAt().id())));
   }
 
   private PlayerInventory toPlayerInventory(InventoryDTO inventory) {

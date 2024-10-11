@@ -3,13 +3,13 @@ package nl.robinthedev.catanjr.application.sse;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import nl.robinthedev.catanjr.api.dto.FortSiteDTO;
 import nl.robinthedev.catanjr.api.dto.OwnerDTO;
-import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
 
 class BoardState {
-  public static Map<String, String> asMap(List<ShipYardDTO> shipYards) {
-    return shipYards.stream()
-        .collect(Collectors.toMap(ShipYardDTO::id, item -> toColor(item.owner())));
+  public static Map<String, String> asMap(List<FortSiteDTO> fortSites) {
+    return fortSites.stream()
+        .collect(Collectors.toMap(FortSiteDTO::id, item -> toColor(item.owner())));
   }
 
   private static String toColor(OwnerDTO owner) {

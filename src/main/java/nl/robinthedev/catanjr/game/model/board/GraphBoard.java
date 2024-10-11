@@ -54,8 +54,8 @@ class GraphBoard implements Board {
   }
 
   @Override
-  public BoardPlayer getOwner(SiteId shipSite) {
-    return switch (getFortById(shipSite.value()).getOccupant()) {
+  public BoardPlayer getFortOwner(SiteId fortSiteId) {
+    return switch (getFortById(fortSiteId.value()).getOccupant()) {
       case EMPTY -> BoardPlayer.NONE;
       case PLAYER1 -> BoardPlayer.PLAYER1;
       case PLAYER2 -> BoardPlayer.PLAYER2;

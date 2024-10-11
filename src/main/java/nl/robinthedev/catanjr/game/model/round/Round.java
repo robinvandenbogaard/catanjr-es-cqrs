@@ -63,7 +63,7 @@ public final class Round {
     return new Round(p1, p2, current, Actions.THROW_DICE_ONLY);
   }
 
-  public void isAllowedToBuyShip(AccountId playerAccountId) {
-    isAllowed(playerAccountId, Action.BUY_SHIP);
+  public void isAllowedToBuyFort(AccountId playerAccountId) {
+    isAllowed(playerAccountId, Action.BUY_FORT);
   }
 }

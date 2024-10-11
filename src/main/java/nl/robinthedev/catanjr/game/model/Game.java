@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.game.model.board.Board;
-import nl.robinthedev.catanjr.game.model.board.ShiteSiteOccupiedException;
+import nl.robinthedev.catanjr.game.model.board.FortSiteOccupiedException;
 import nl.robinthedev.catanjr.game.model.coco.CocoTiles;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
 import nl.robinthedev.catanjr.game.model.player.Player;
@@ -36,8 +36,8 @@ public record Game(
     return players.secondPlayer();
   }
 
-  public Optional<Owner> ownerOf(SiteId shipSite) {
-    var player = board.getOwner(shipSite);
+  public Optional<Owner> ownerOf(SiteId siteId) {
+    var player = board.getFortOwner(siteId);
     return Optional.ofNullable(
         switch (player) {
           case NONE, PLAYER3, PLAYER4 -> null;
@@ -76,12 +76,12 @@ public record Game(
     return new Game(players, buoyInventory, bankInventory, cocoTiles, board);
   }
 
-  public void buyShipYard(SiteId siteId) {
-    switch (board.getOwner(siteId)) {
+  public void buyFortAt(SiteId siteId) {
+    switch (board.getFortOwner(siteId)) {
       case NONE -> {
         // Nothing to do yet.
       }
-      default -> throw new ShiteSiteOccupiedException("This shipsite is already occupied");
+      default -> throw new FortSiteOccupiedException("This fort site is already occupied");
     }
   }
 

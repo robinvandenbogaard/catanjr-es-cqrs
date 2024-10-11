@@ -9,7 +9,7 @@ public record GameDTO(
     PlayerDTO secondPlayer,
     InventoryDTO bankInventory,
     List<BuoyDTO> buoyInventory,
-    List<ShipYardDTO> shipYards) {
+    List<FortSiteDTO> fortSites) {
   public static GameDTO of(Game game) {
     var firstPlayer = PlayerDTO.of(game.firstPlayer());
     var secondPlayer = PlayerDTO.of(game.secondPlayer());
@@ -20,7 +20,7 @@ public record GameDTO(
         secondPlayer,
         bankInventory,
         buoyInventory,
-        ShipYardDTO.from2PlayerGame(game.board()));
+        FortSiteDTO.from2PlayerGame(game.board()));
   }
 
   public GameDTO setFirstPlayerInventory(InventoryDTO newInventory) {
@@ -29,7 +29,7 @@ public record GameDTO(
         secondPlayer,
         bankInventory,
         buoyInventory,
-        shipYards);
+        fortSites);
   }
 
   public GameDTO setSecondPlayerInventory(InventoryDTO newInventory) {
@@ -38,7 +38,7 @@ public record GameDTO(
         secondPlayer.updateInventory(newInventory),
         bankInventory,
         buoyInventory,
-        shipYards);
+        fortSites);
   }
 
   public GameDTO setFirstPlayerActions(Set<ActionDTO> newActions) {
@@ -47,7 +47,7 @@ public record GameDTO(
         secondPlayer,
         bankInventory,
         buoyInventory,
-        shipYards);
+        fortSites);
   }
 
   public GameDTO setSecondPlayerActions(Set<ActionDTO> newActions) {
@@ -56,10 +56,10 @@ public record GameDTO(
         secondPlayer.updateActions(newActions),
         bankInventory,
         buoyInventory,
-        shipYards);
+        fortSites);
   }
 
   public GameDTO setBankInventory(InventoryDTO newInventory) {
-    return new GameDTO(firstPlayer, secondPlayer, newInventory, buoyInventory, shipYards);
+    return new GameDTO(firstPlayer, secondPlayer, newInventory, buoyInventory, fortSites);
   }
 }
