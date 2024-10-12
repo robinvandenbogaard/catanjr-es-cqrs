@@ -4,6 +4,15 @@ Catan Junior is a game I play often with my kid. Professionally I'm a software e
 systems.
 This project brings two fun things together!
 
+## Quickstart
+
+- Start an axon server. See `src/main/docker/docker-compose.yaml`
+- Run the application from class `CatanjrApplication`
+- Make a post request `curl -X POST http://localhost:8080/game` (this will start a fixed new game)
+- Goto http://localhost:8080/ to play a game. You control both players.
+
+To reset the game, reset axon by clicking on the reset event store button at http://localhost:8024/ and creating a new game with the post request. I'll add some buttons to make this easier eventually.
+
 ## Event Sourcing (ES)
 
 This project sets out to use ES for the games that are being played. Allowing for any future metrics based on events
