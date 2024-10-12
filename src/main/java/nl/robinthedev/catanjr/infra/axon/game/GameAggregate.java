@@ -146,7 +146,9 @@ public class GameAggregate {
 
     game.buyFortAt(new SiteId(command.siteId()));
 
-    apply(new FortBought(gameId, round.currentPlayer(), new FortSiteDTO("3", OwnerDTO.PLAYER1)));
+    apply(
+        new FortBought(
+            gameId, round.currentPlayer(), new FortSiteDTO(command.siteId(), OwnerDTO.PLAYER1)));
   }
 
   @EventSourcingHandler
@@ -154,7 +156,7 @@ public class GameAggregate {
     game =
         game.playerBought(
             game.getPlayer(new AccountId(round.currentPlayer())),
-            new SiteId(Integer.valueOf(event.boughtFortAt().id())));
+            new SiteId(event.boughtFortAt().id()));
   }
 
   private PlayerInventory toPlayerInventory(InventoryDTO inventory) {

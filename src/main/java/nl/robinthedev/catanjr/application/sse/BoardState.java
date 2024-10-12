@@ -9,7 +9,8 @@ import nl.robinthedev.catanjr.api.dto.OwnerDTO;
 class BoardState {
   public static Map<String, String> asMap(List<FortSiteDTO> fortSites) {
     return fortSites.stream()
-        .collect(Collectors.toMap(FortSiteDTO::id, item -> toColor(item.owner())));
+        .collect(
+            Collectors.toMap(item -> String.valueOf(item.id()), item -> toColor(item.owner())));
   }
 
   private static String toColor(OwnerDTO owner) {

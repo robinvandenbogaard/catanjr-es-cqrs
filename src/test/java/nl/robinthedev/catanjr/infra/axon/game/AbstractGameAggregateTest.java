@@ -32,22 +32,22 @@ abstract class AbstractGameAggregateTest {
 
   static {
     INITIAL_COLOR_MAP = new ArrayList<>();
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("1", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("2", OwnerDTO.PLAYER1));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("3", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("4", OwnerDTO.PLAYER2));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("5", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("6", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("7", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("8", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("9", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("10", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("11", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("12", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("13", OwnerDTO.PLAYER1));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("14", OwnerDTO.NONE));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("15", OwnerDTO.PLAYER2));
-    INITIAL_COLOR_MAP.add(new FortSiteDTO("16", OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(1, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(2, OwnerDTO.PLAYER1));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(3, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(4, OwnerDTO.PLAYER2));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(5, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(6, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(7, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(8, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(9, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(10, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(11, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(12, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(13, OwnerDTO.PLAYER1));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(14, OwnerDTO.NONE));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(15, OwnerDTO.PLAYER2));
+    INITIAL_COLOR_MAP.add(new FortSiteDTO(16, OwnerDTO.NONE));
   }
 
   private ManipulatableDiceRoller diceRoller;

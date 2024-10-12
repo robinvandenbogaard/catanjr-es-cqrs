@@ -44,7 +44,7 @@ public class BuyFortCommandTest extends AbstractGameAggregateTest {
                 new InventoryDTO(1, 1, 1, 1, 1)))
         .when(new BuyFort(GAME_ID, ACCOUNT_PLAYER_1, 3))
         .expectEvents(
-            new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO("3", OwnerDTO.PLAYER1)))
+            new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO(3, OwnerDTO.PLAYER1)))
         .expectSuccessfulHandlerExecution();
   }
 
@@ -74,7 +74,7 @@ public class BuyFortCommandTest extends AbstractGameAggregateTest {
                 ACCOUNT_PLAYER_1,
                 new InventoryDTO(0, 0, 0, 0, 0),
                 new InventoryDTO(3, 3, 3, 3, 3)))
-        .andGiven(new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO("3", OwnerDTO.PLAYER1)))
+        .andGiven(new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO(3, OwnerDTO.PLAYER1)))
         .when(new BuyFort(GAME_ID, ACCOUNT_PLAYER_1, 3))
         .expectException(FortSiteOccupiedException.class);
   }
