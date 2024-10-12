@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import nl.robinthedev.catanjr.api.dto.ActionDTO;
+import nl.robinthedev.catanjr.api.dto.FortSiteDTO;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
@@ -59,5 +60,13 @@ class InMemoryGames implements Games {
     }
     games.put(gameId, game);
     log.info("Player actions updated: {} to {}", playerAccount, newActions);
+  }
+
+  @Override
+  public void updateBoard(GameId gameId, FortSiteDTO fortSiteDTO) {
+    var game = games.get(gameId);
+    game = game.updateFort(fortSiteDTO);
+    games.put(gameId, game);
+    log.info("Board updated: {}", fortSiteDTO);
   }
 }

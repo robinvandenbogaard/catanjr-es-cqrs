@@ -1,5 +1,7 @@
 package nl.robinthedev.catanjr.api.dto;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import nl.robinthedev.catanjr.game.model.Game;
@@ -61,5 +63,17 @@ public record GameDTO(
 
   public GameDTO setBankInventory(InventoryDTO newInventory) {
     return new GameDTO(firstPlayer, secondPlayer, newInventory, buoyInventory, fortSites);
+  }
+
+  public GameDTO updateFort(FortSiteDTO fortSiteDTO) {
+    var newFortSites = new ArrayList<>(fortSites);
+    newFortSites.removeIf(site -> site.id() == fortSiteDTO.id());
+    newFortSites.add(fortSiteDTO);
+    return new GameDTO(
+        firstPlayer,
+        secondPlayer,
+        bankInventory,
+        buoyInventory,
+        Collections.unmodifiableList(newFortSites));
   }
 }
