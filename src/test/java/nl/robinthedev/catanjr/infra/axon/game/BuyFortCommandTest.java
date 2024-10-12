@@ -14,7 +14,7 @@ import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
 import nl.robinthedev.catanjr.game.model.round.NotYourTurnException;
 import org.junit.jupiter.api.Test;
 
-public class BuyFortCommandTest extends AbstractGameAggregateTest {
+class BuyFortCommandTest extends AbstractGameAggregateTest {
 
   @Test
   void cannot_buy_if_its_not_your_turn() {
@@ -42,10 +42,15 @@ public class BuyFortCommandTest extends AbstractGameAggregateTest {
                 GAME_ID,
                 ACCOUNT_PLAYER_1,
                 new InventoryDTO(0, 0, 0, 0, 0),
-                new InventoryDTO(1, 1, 0, 1, 1)))
+                new InventoryDTO(0, 1, 1, 1, 1)))
         .when(new BuyFort(GAME_ID, ACCOUNT_PLAYER_1, 3))
         .expectEvents(
-            new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO(3, OwnerDTO.PLAYER1)))
+            new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO(3, OwnerDTO.PLAYER1)),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 1, 1, 1, 1),
+                new InventoryDTO(0, 0, 0, 0, 0)))
         .expectSuccessfulHandlerExecution();
   }
 

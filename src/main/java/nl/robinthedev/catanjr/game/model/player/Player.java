@@ -37,7 +37,7 @@ public record Player(PlayerId id, PlayerInventory inventory, BoardPlayer nr) {
     try {
       inventory.minus(costs);
     } catch (IllegalArgumentException e) {
-      throw new NotEnoughResources("You do not have enough resources to pay " + costs);
+      throw new NotEnoughResources("You do not have enough resources to pay " + costs, e);
     }
   }
 }

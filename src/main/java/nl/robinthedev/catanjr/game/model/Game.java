@@ -75,7 +75,7 @@ public record Game(
     return new Game(players, buoyInventory, bankInventory, cocoTiles, board);
   }
 
-  public void buyFortAt(Player player, SiteId siteId) {
+  public void canBuyFortAt(Player player, SiteId siteId) {
     board.mustBeUnoccupied(siteId);
     board.mustHaveAdjecentShip(siteId, player.nr());
     player.mustBeAbleToPay(ResourceChanges.FORT);

@@ -30,6 +30,7 @@ import nl.robinthedev.catanjr.game.model.player.Player;
 import nl.robinthedev.catanjr.game.model.player.PlayerId;
 import nl.robinthedev.catanjr.game.model.resources.BankInventory;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
+import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 import nl.robinthedev.catanjr.game.model.round.Round;
 import nl.robinthedev.catanjr.game.service.DiceRoller;
 import org.axonframework.commandhandling.CommandHandler;
@@ -163,11 +164,17 @@ public class GameAggregate {
     AccountId playerAccountId = AccountId.of(command.playerAccountId());
     round.isAllowedToBuyFort(playerAccountId);
 
-    game.buyFortAt(getCurrentPlayer(), new SiteId(command.siteId()));
+    game.canBuyFortAt(getCurrentPlayer(), new SiteId(command.siteId()));
 
     apply(
         new FortBought(
             gameId, round.currentPlayer(), new FortSiteDTO(command.siteId(), OwnerDTO.PLAYER1)));
+    apply(
+        new PlayerInventoryChanged(
+            gameId,
+            round.currentPlayer(),
+            InventoryDTO.of(getCurrentPlayer().inventory()),
+            InventoryDTO.of(getCurrentPlayer().inventory().minus(ResourceChanges.FORT))));
   }
 
   private Player getCurrentPlayer() {
