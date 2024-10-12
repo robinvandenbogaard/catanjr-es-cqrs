@@ -42,7 +42,7 @@ public class BuyFortCommandTest extends AbstractGameAggregateTest {
                 GAME_ID,
                 ACCOUNT_PLAYER_1,
                 new InventoryDTO(0, 0, 0, 0, 0),
-                new InventoryDTO(1, 1, 1, 1, 1)))
+                new InventoryDTO(1, 1, 0, 1, 1)))
         .when(new BuyFort(GAME_ID, ACCOUNT_PLAYER_1, 3))
         .expectEvents(
             new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO(3, OwnerDTO.PLAYER1)))
@@ -65,7 +65,7 @@ public class BuyFortCommandTest extends AbstractGameAggregateTest {
   }
 
   @Test
-  void can_not_buy_fort_twice() {
+  void can_not_buy_same_fort_twice() {
     fixture
         .given(getGameCreatedEvent())
         .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
@@ -94,5 +94,20 @@ public class BuyFortCommandTest extends AbstractGameAggregateTest {
                 new InventoryDTO(3, 3, 3, 3, 3)))
         .when(new BuyFort(GAME_ID, ACCOUNT_PLAYER_1, disconnectedSiteId))
         .expectException(FortSiteIsMissingAdjecentShipException.class);
+  }
+
+  @Test
+  void can_not_buy_fort_if_player_does_not_have_enough_resources() {
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
+        .andGiven(
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 0, 0, 0),
+                new InventoryDTO(0, 0, 0, 0, 0)))
+        .when(new BuyFort(GAME_ID, ACCOUNT_PLAYER_1, 3))
+        .expectException(NotEnoughResources.class);
   }
 }

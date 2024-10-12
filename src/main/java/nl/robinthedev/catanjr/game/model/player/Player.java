@@ -4,6 +4,8 @@ import java.util.Objects;
 import java.util.UUID;
 import nl.robinthedev.catanjr.game.model.board.BoardPlayer;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
+import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
+import nl.robinthedev.catanjr.infra.axon.game.NotEnoughResources;
 
 public record Player(PlayerId id, PlayerInventory inventory, BoardPlayer nr) {
   public Player {
@@ -29,5 +31,13 @@ public record Player(PlayerId id, PlayerInventory inventory, BoardPlayer nr) {
 
   public Player setInventory(PlayerInventory inventory) {
     return new Player(id, inventory, nr);
+  }
+
+  public void mustBeAbleToPay(ResourceChanges costs) {
+    try {
+      inventory.minus(costs);
+    } catch (IllegalArgumentException e) {
+      throw new NotEnoughResources("You do not have enough resources to pay " + costs);
+    }
   }
 }

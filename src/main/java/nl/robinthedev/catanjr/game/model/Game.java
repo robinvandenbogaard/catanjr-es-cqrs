@@ -78,6 +78,7 @@ public record Game(
   public void buyFortAt(Player player, SiteId siteId) {
     board.mustBeUnoccupied(siteId);
     board.mustHaveAdjecentShip(siteId, player.nr());
+    player.mustBeAbleToPay(ResourceChanges.FORT);
   }
 
   public Game playerBought(Player player, SiteId siteId) {

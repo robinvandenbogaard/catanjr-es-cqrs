@@ -44,8 +44,8 @@ public class GameAggregate {
 
   @AggregateIdentifier GameId gameId;
 
-  private Game game;
-  private Round round;
+  Game game;
+  Round round;
 
   public GameAggregate() {
     // Required by axon

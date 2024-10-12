@@ -6,6 +6,7 @@ public record ResourceChanges(
     Integer wood, Integer gold, Integer pineApple, Integer sheep, Integer sword) {
 
   public static final ResourceChanges EMPTY = ResourceChanges.of(0, 0, 0, 0, 0);
+  public static final ResourceChanges FORT = ResourceChanges.of(1, 0, 1, 1, 1);
 
   public ResourceChanges {
     Objects.requireNonNull(wood);
