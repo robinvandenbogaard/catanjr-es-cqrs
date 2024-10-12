@@ -26,6 +26,7 @@ import nl.robinthedev.catanjr.game.model.Game;
 import nl.robinthedev.catanjr.game.model.GameFactory;
 import nl.robinthedev.catanjr.game.model.SiteId;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
+import nl.robinthedev.catanjr.game.model.player.Player;
 import nl.robinthedev.catanjr.game.model.player.PlayerId;
 import nl.robinthedev.catanjr.game.model.resources.BankInventory;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
@@ -110,9 +111,27 @@ public class GameAggregate {
             AccountId.of(event.accountPlayerId()), toPlayerInventory(event.newInventory()));
   }
 
+  private PlayerInventory toPlayerInventory(InventoryDTO inventory) {
+    return PlayerInventory.of(
+        inventory.wood(),
+        inventory.gold(),
+        inventory.pineApple(),
+        inventory.sheep(),
+        inventory.sword());
+  }
+
   @EventSourcingHandler
   void on(BankInventoryChanged event) {
     game = game.updateBankIventory(toBankInventory(event.newInventory()));
+  }
+
+  private BankInventory toBankInventory(InventoryDTO inventory) {
+    return BankInventory.of(
+        inventory.wood(),
+        inventory.gold(),
+        inventory.pineApple(),
+        inventory.sheep(),
+        inventory.sword());
   }
 
   @EventSourcingHandler
@@ -144,36 +163,19 @@ public class GameAggregate {
     AccountId playerAccountId = AccountId.of(command.playerAccountId());
     round.isAllowedToBuyFort(playerAccountId);
 
-    game.buyFortAt(new SiteId(command.siteId()));
+    game.buyFortAt(getCurrentPlayer(), new SiteId(command.siteId()));
 
     apply(
         new FortBought(
             gameId, round.currentPlayer(), new FortSiteDTO(command.siteId(), OwnerDTO.PLAYER1)));
   }
 
+  private Player getCurrentPlayer() {
+    return game.getPlayer(new AccountId(round.currentPlayer()));
+  }
+
   @EventSourcingHandler
   void on(FortBought event) {
-    game =
-        game.playerBought(
-            game.getPlayer(new AccountId(round.currentPlayer())),
-            new SiteId(event.boughtFortAt().id()));
-  }
-
-  private PlayerInventory toPlayerInventory(InventoryDTO inventory) {
-    return PlayerInventory.of(
-        inventory.wood(),
-        inventory.gold(),
-        inventory.pineApple(),
-        inventory.sheep(),
-        inventory.sword());
-  }
-
-  private BankInventory toBankInventory(InventoryDTO inventory) {
-    return BankInventory.of(
-        inventory.wood(),
-        inventory.gold(),
-        inventory.pineApple(),
-        inventory.sheep(),
-        inventory.sword());
+    game = game.playerBought(getCurrentPlayer(), new SiteId(event.boughtFortAt().id()));
   }
 }

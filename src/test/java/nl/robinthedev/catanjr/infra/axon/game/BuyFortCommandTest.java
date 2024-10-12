@@ -8,6 +8,7 @@ import nl.robinthedev.catanjr.api.dto.OwnerDTO;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.FortBought;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
+import nl.robinthedev.catanjr.game.model.board.FortSiteIsMissingAdjecentShipException;
 import nl.robinthedev.catanjr.game.model.board.FortSiteOccupiedException;
 import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
 import nl.robinthedev.catanjr.game.model.round.NotYourTurnException;
@@ -77,5 +78,21 @@ public class BuyFortCommandTest extends AbstractGameAggregateTest {
         .andGiven(new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO(3, OwnerDTO.PLAYER1)))
         .when(new BuyFort(GAME_ID, ACCOUNT_PLAYER_1, 3))
         .expectException(FortSiteOccupiedException.class);
+  }
+
+  @Test
+  void can_not_buy_fort_that_is_not_connected_by_ships() {
+    int disconnectedSiteId = 12;
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
+        .andGiven(
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 0, 0, 0),
+                new InventoryDTO(3, 3, 3, 3, 3)))
+        .when(new BuyFort(GAME_ID, ACCOUNT_PLAYER_1, disconnectedSiteId))
+        .expectException(FortSiteIsMissingAdjecentShipException.class);
   }
 }

@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.Optional;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.game.model.board.Board;
-import nl.robinthedev.catanjr.game.model.board.FortSiteOccupiedException;
 import nl.robinthedev.catanjr.game.model.coco.CocoTiles;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
 import nl.robinthedev.catanjr.game.model.player.Player;
@@ -76,13 +75,9 @@ public record Game(
     return new Game(players, buoyInventory, bankInventory, cocoTiles, board);
   }
 
-  public void buyFortAt(SiteId siteId) {
-    switch (board.getFortOwner(siteId)) {
-      case NONE -> {
-        // Nothing to do yet.
-      }
-      default -> throw new FortSiteOccupiedException("This fort site is already occupied");
-    }
+  public void buyFortAt(Player player, SiteId siteId) {
+    board.mustBeUnoccupied(siteId);
+    board.mustHaveAdjecentShip(siteId, player.nr());
   }
 
   public Game playerBought(Player player, SiteId siteId) {

@@ -34,7 +34,21 @@ public record Board(Map<String, LandTile> landTiles, Map<Integer, FortSite> fort
   }
 
   public Board markFortOwned(SiteId siteId, BoardPlayer nr) {
-    var updatedFort = getFortById(siteId.value()).updateOccupant(Occupant.of(nr));
-    return new Board(landTiles, fortSites.put(siteId.value(), updatedFort));
+    var fort = getFortById(siteId.value());
+    return new Board(
+        landTiles, fortSites.put(siteId.value(), fort.updateOccupant(Occupant.of(nr))));
+  }
+
+  public void mustBeUnoccupied(SiteId siteId) {
+    if (!getFortById(siteId.value()).occupant().equals(Occupant.EMPTY)) {
+      throw new FortSiteOccupiedException("This fort site is already occupied");
+    }
+  }
+
+  public void mustHaveAdjecentShip(SiteId siteId, BoardPlayer nr) {
+    Occupant occupant = Occupant.of(nr);
+    if (getFortById(siteId.value()).withShipsOwnedBy(occupant).isEmpty()) {
+      throw new FortSiteIsMissingAdjecentShipException("No ships belong to " + occupant);
+    }
   }
 }
