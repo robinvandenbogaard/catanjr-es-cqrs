@@ -3,6 +3,7 @@ package nl.robinthedev.catanjr.game.model.board;
 import io.vavr.collection.Map;
 import io.vavr.collection.Seq;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
+import nl.robinthedev.catanjr.game.model.ShipId;
 import nl.robinthedev.catanjr.game.model.SiteId;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
@@ -55,5 +56,15 @@ public record Board(Map<String, LandTile> landTiles, Map<Integer, FortSite> fort
 
   public Seq<ShipSite> shipSites() {
     return fortSites().values().flatMap(site->site.neighbours().toStream());
+  }
+
+  public void mustBeUnoccupied(ShipId shipId) {
+    if (!getShipById(shipId.value()).occupant().equals(Occupant.EMPTY)) {
+      throw new ShipYardOccupiedException("This ship yard is already occupied");
+    }
+  }
+
+  private ShipSite getShipById(String id) {
+    return shipSites().find(shipyard->shipyard.getBridgeId().equals(id)).get();
   }
 }

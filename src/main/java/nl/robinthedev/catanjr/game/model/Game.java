@@ -90,4 +90,8 @@ public record Game(
     if (firstPlayer().belongsTo(id)) return firstPlayer();
     else return secondPlayer();
   }
+
+  public void canBuyShipAt(ShipId shipId) {
+    board.mustBeUnoccupied(shipId);
+  }
 }

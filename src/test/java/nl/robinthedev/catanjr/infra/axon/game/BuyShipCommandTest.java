@@ -6,6 +6,7 @@ import nl.robinthedev.catanjr.api.dto.OwnerDTO;
 import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.ShipBought;
+import nl.robinthedev.catanjr.game.model.board.ShipYardOccupiedException;
 import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
 import nl.robinthedev.catanjr.game.model.round.NotYourTurnException;
 import org.junit.jupiter.api.Test;
@@ -37,5 +38,14 @@ class BuyShipCommandTest extends AbstractGameAggregateTest {
         .expectEvents(
             new ShipBought(GAME_ID, ACCOUNT_PLAYER_1, new ShipYardDTO("1-3", OwnerDTO.PLAYER1)))
         .expectSuccessfulHandlerExecution();
+  }
+
+  @Test
+  void can_not_buy_ship_on_spot_that_is_already_taken() {
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
+        .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, "4-6"))
+        .expectException(ShipYardOccupiedException.class);
   }
 }
