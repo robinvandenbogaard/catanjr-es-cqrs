@@ -1,8 +1,8 @@
 package nl.robinthedev.catanjr.application.sse;
 
-import java.util.List;
+import io.vavr.collection.List;
+import io.vavr.collection.Set;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import nl.robinthedev.catanjr.api.dto.FortSiteDTO;
 import nl.robinthedev.catanjr.api.dto.OwnerDTO;
@@ -10,15 +10,13 @@ import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
 
 class BoardState {
   public static Map<String, String> asFortSiteColors(List<FortSiteDTO> fortSites) {
-    return fortSites.stream()
-        .collect(
-            Collectors.toMap(item -> String.valueOf(item.id()), item -> toColor(item.owner())));
+    return fortSites.collect(
+        Collectors.toMap(item -> String.valueOf(item.id()), item -> toColor(item.owner())));
   }
 
   public static Map<String, String> asShipYardColors(Set<ShipYardDTO> shipYards) {
-    return shipYards.stream()
-        .collect(
-            Collectors.toMap(item -> String.valueOf(item.id()), item -> toColor(item.owner())));
+    return shipYards.collect(
+        Collectors.toMap(item -> String.valueOf(item.id()), item -> toColor(item.owner())));
   }
 
   private static String toColor(OwnerDTO owner) {

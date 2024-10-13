@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.infra.axon.game;
 
-import java.util.Set;
+import io.vavr.collection.HashSet;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
 import nl.robinthedev.catanjr.api.dto.ActionDTO;
 import nl.robinthedev.catanjr.api.event.PlayerActionsChanged;
@@ -15,8 +15,8 @@ class CreateNewGameCommandTest extends AbstractGameAggregateTest {
         .when(new CreateNewGame(GAME_ID, ACCOUNT_PLAYER_1, JOHN, ACCOUNT_PLAYER_2, WICK))
         .expectEvents(
             getGameCreatedEvent(),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, Set.of(ActionDTO.THROW_DICE)),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_2, Set.of()))
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, HashSet.of(ActionDTO.THROW_DICE)),
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_2, HashSet.of()))
         .expectSuccessfulHandlerExecution();
   }
 }

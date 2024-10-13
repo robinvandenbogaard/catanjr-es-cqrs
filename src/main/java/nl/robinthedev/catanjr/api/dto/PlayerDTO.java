@@ -1,6 +1,7 @@
 package nl.robinthedev.catanjr.api.dto;
 
-import java.util.Set;
+import io.vavr.collection.HashSet;
+import io.vavr.collection.Set;
 import java.util.UUID;
 import nl.robinthedev.catanjr.game.model.player.Player;
 
@@ -11,7 +12,7 @@ public record PlayerDTO(
         player.id().accountId().value(),
         player.id().username().value(),
         InventoryDTO.of(player.inventory()),
-        Set.of());
+        HashSet.empty());
   }
 
   public PlayerDTO updateInventory(InventoryDTO newInventory) {

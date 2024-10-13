@@ -2,7 +2,7 @@ package nl.robinthedev.catanjr.application.projection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Set;
+import io.vavr.collection.HashSet;
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
@@ -34,11 +34,12 @@ class GameEventHandlerTest {
     UUID p1Account = UUID.randomUUID();
     var game =
         new GameDTO(
-            new PlayerDTO(p1Account, null, new InventoryDTO(0, 0, 0, 0, 0), Set.of()),
+            new PlayerDTO(p1Account, null, new InventoryDTO(0, 0, 0, 0, 0), HashSet.of()),
             null,
             null,
             null,
-            null, null);
+            null,
+            null);
     var gameId = new GameId(UUID.randomUUID());
     games.save(gameId, game);
 
@@ -48,10 +49,11 @@ class GameEventHandlerTest {
     assertThat(games.get(gameId))
         .isEqualTo(
             new GameDTO(
-                new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), Set.of()),
+                new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), HashSet.of()),
                 null,
                 null,
-                null, null,
+                null,
+                null,
                 null));
   }
 
@@ -61,10 +63,11 @@ class GameEventHandlerTest {
     UUID p2Account = UUID.randomUUID();
     var game =
         new GameDTO(
-            new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), Set.of()),
-            new PlayerDTO(p2Account, null, new InventoryDTO(0, 0, 0, 0, 0), Set.of()),
+            new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), HashSet.of()),
+            new PlayerDTO(p2Account, null, new InventoryDTO(0, 0, 0, 0, 0), HashSet.of()),
             null,
-            null, null,
+            null,
+            null,
             null);
     var gameId = new GameId(UUID.randomUUID());
     games.save(gameId, game);
@@ -75,9 +78,10 @@ class GameEventHandlerTest {
     assertThat(games.get(gameId))
         .isEqualTo(
             new GameDTO(
-                new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), Set.of()),
-                new PlayerDTO(p2Account, null, new InventoryDTO(5, 4, 3, 2, 1), Set.of()),
-                null, null,
+                new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), HashSet.of()),
+                new PlayerDTO(p2Account, null, new InventoryDTO(5, 4, 3, 2, 1), HashSet.of()),
+                null,
+                null,
                 null,
                 null));
   }

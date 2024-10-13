@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.game.model;
 
-import java.util.Set;
+import io.vavr.collection.Set;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.game.model.board.Board;
 import nl.robinthedev.catanjr.game.model.board.ResourceType;

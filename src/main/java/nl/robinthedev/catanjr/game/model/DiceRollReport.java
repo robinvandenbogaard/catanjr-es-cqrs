@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.game.model;
 
-import java.util.List;
+import io.vavr.collection.List;
 import java.util.function.Consumer;
 
 public class DiceRollReport {
@@ -13,7 +13,7 @@ public class DiceRollReport {
   }
 
   public void forPlayers(Consumer<PlayerReport> consumer) {
-    playerReports.stream().filter(PlayerReport::inventoryChanged).forEach(consumer);
+    playerReports.filter(PlayerReport::inventoryChanged).forEach(consumer);
   }
 
   public void forBank(Consumer<BankReport> consumer) {

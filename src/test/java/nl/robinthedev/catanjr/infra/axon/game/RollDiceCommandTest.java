@@ -2,7 +2,8 @@ package nl.robinthedev.catanjr.infra.axon.game;
 
 import static nl.robinthedev.catanjr.api.dto.ActionDTO.*;
 
-import java.util.Set;
+import io.vavr.collection.HashSet;
+import io.vavr.collection.Set;
 import nl.robinthedev.catanjr.api.command.RollDice;
 import nl.robinthedev.catanjr.api.dto.ActionDTO;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
@@ -18,7 +19,7 @@ import org.junit.jupiter.api.Test;
 
 class RollDiceCommandTest extends AbstractGameAggregateTest {
 
-  public static final Set<ActionDTO> ACTIONS_AFTER_DICE_ROLL = Set.of(END_TURN, BUY_FORT);
+  public static final Set<ActionDTO> ACTIONS_AFTER_DICE_ROLL = HashSet.of(END_TURN, BUY_FORT);
 
   @Test
   void first_player_rolls_1() {

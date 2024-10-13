@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.game.model;
 
-import java.util.List;
+import io.vavr.collection.List;
 import nl.robinthedev.catanjr.game.model.board.BoardPlayer;
 import nl.robinthedev.catanjr.game.model.board.builder.TwoPlayerBoard;
 import nl.robinthedev.catanjr.game.model.coco.CocoTiles;

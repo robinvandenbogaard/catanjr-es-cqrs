@@ -1,8 +1,8 @@
 package nl.robinthedev.catanjr.game.model.player;
 
-import java.util.List;
+import io.vavr.collection.List;
+import io.vavr.collection.Stream;
 import java.util.Objects;
-import java.util.stream.Stream;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
 
 public class Players {
@@ -16,7 +16,7 @@ public class Players {
   }
 
   public Player firstPlayer() {
-    return players.getFirst();
+    return players.get();
   }
 
   public Player secondPlayer() {
@@ -24,7 +24,7 @@ public class Players {
   }
 
   public Stream<Player> stream() {
-    return players.stream();
+    return players.toStream();
   }
 
   @Override
@@ -43,7 +43,7 @@ public class Players {
 
   public Players updateInventory(AccountId accountId, PlayerInventory inventory) {
     var updatedPlayers =
-        players.stream()
+        players
             .map(
                 player -> {
                   if (player.belongsTo(accountId)) {

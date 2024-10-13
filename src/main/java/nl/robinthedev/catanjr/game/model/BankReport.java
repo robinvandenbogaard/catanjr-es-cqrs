@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.game.model;
 
-import java.util.List;
+import io.vavr.collection.List;
 import nl.robinthedev.catanjr.game.model.resources.BankInventory;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
@@ -8,9 +8,9 @@ public record BankReport(BankInventory currentInventory, BankInventory newInvent
 
   public static BankReport of(List<PlayerReport> playerReports, BankInventory bankInventory) {
     var allPlayerResourceChanges =
-        playerReports.stream()
+        playerReports
             .map(PlayerReport::resourceChanges)
-            .reduce(ResourceChanges.EMPTY, ResourceChanges::add);
+            .foldLeft(ResourceChanges.EMPTY, ResourceChanges::add);
     var newBankInventory =
         bankInventory
             .minus(allPlayerResourceChanges.additions())

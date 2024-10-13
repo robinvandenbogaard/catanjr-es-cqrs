@@ -1,8 +1,9 @@
 package nl.robinthedev.catanjr.game.model.resources;
 
-import java.util.HashSet;
+import io.vavr.Tuple;
+import io.vavr.collection.HashSet;
+import io.vavr.collection.Set;
 import java.util.Objects;
-import java.util.Set;
 import nl.robinthedev.catanjr.game.model.board.ResourceType;
 
 public record BankInventory(Wood wood, Gold gold, PineApple pineApple, Sheep sheep, Sword sword)
@@ -45,14 +46,13 @@ public record BankInventory(Wood wood, Gold gold, PineApple pineApple, Sheep she
         sword.add(changes.asSword()));
   }
 
-  public Set<ResourceType> getExceedingResources(ResourceChanges totalResources) {
-    var result = new HashSet<ResourceType>();
-    wood().ifNotReducable(totalResources.wood(), () -> result.add(ResourceType.WOOD));
-    gold().ifNotReducable(totalResources.gold(), () -> result.add(ResourceType.GOLD));
-    sword().ifNotReducable(totalResources.sword(), () -> result.add(ResourceType.SWORD));
-    pineApple()
-        .ifNotReducable(totalResources.pineApple(), () -> result.add(ResourceType.PINEAPPLE));
-    sheep().ifNotReducable(totalResources.sheep(), () -> result.add(ResourceType.SHEEP));
-    return result;
+  public Set<ResourceType> getExceedingResources(ResourceChanges requested) {
+    return HashSet.of(
+            Tuple.of(wood().lt(requested.wood()), ResourceType.WOOD),
+            Tuple.of(gold().lt(requested.gold()), ResourceType.GOLD),
+            Tuple.of(sword().lt(requested.sword()), ResourceType.SWORD),
+            Tuple.of(pineApple().lt(requested.pineApple()), ResourceType.PINEAPPLE),
+            Tuple.of(sheep().lt(requested.sheep()), ResourceType.SHEEP))
+        .foldLeft(HashSet.empty(), (result, tuple) -> tuple._1 ? result.add(tuple._2) : result);
   }
 }

@@ -1,12 +1,9 @@
 package nl.robinthedev.catanjr.application.sse;
 
-import java.util.Set;
+import io.vavr.collection.Set;
 import nl.robinthedev.catanjr.api.dto.ActionDTO;
 
 record Actions(boolean endTurn, boolean rollDice) {
-  public static Actions none() {
-    return new Actions(false, false);
-  }
 
   public static Actions of(Set<ActionDTO> actions) {
     return new Actions(

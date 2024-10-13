@@ -3,7 +3,8 @@ package nl.robinthedev.catanjr.game.model;
 import static nl.robinthedev.catanjr.game.model.board.ResourceType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Set;
+import io.vavr.collection.HashSet;
+import io.vavr.collection.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 import nl.robinthedev.catanjr.game.model.board.BoardPlayer;
@@ -23,33 +24,34 @@ class PlayerPayoutTest {
   public static Stream<Arguments> confiscation() {
     return Stream.of(
         Arguments.of(
-            Named.of("No resourceChanges from player inventory will be confiscated", Set.of()),
+            Named.of("No resourceChanges from player inventory will be confiscated", HashSet.of()),
             ResourceChanges.of(1, 1, 1, 1, 1)),
         Arguments.of(
-            Named.of("All 10 wood from player inventory will be confiscated", Set.of(WOOD)),
+            Named.of("All 10 wood from player inventory will be confiscated", HashSet.of(WOOD)),
             ResourceChanges.of(-10, 1, 1, 1, 1)),
         Arguments.of(
-            Named.of("All 10 gold from player inventory will be confiscated", Set.of(GOLD)),
+            Named.of("All 10 gold from player inventory will be confiscated", HashSet.of(GOLD)),
             ResourceChanges.of(1, -10, 1, 1, 1)),
         Arguments.of(
             Named.of(
-                "All 10 pineapple from player inventory will be confiscated", Set.of(PINEAPPLE)),
+                "All 10 pineapple from player inventory will be confiscated",
+                HashSet.of(PINEAPPLE)),
             ResourceChanges.of(1, 1, -10, 1, 1)),
         Arguments.of(
-            Named.of("All 10 sheep from player inventory will be confiscated", Set.of(SHEEP)),
+            Named.of("All 10 sheep from player inventory will be confiscated", HashSet.of(SHEEP)),
             ResourceChanges.of(1, 1, 1, -10, 1)),
         Arguments.of(
-            Named.of("All 10 swords from player inventory will be confiscated", Set.of(SWORD)),
+            Named.of("All 10 swords from player inventory will be confiscated", HashSet.of(SWORD)),
             ResourceChanges.of(1, 1, 1, 1, -10)),
         Arguments.of(
             Named.of(
                 "All 10 gold and sheep from player inventory will be confiscated",
-                Set.of(GOLD, SHEEP)),
+                HashSet.of(GOLD, SHEEP)),
             ResourceChanges.of(1, -10, 1, -10, 1)),
         Arguments.of(
             Named.of(
                 "All 10 wood, pineapple and swords from player inventory will be confiscated",
-                Set.of(WOOD, PINEAPPLE, SWORD)),
+                HashSet.of(WOOD, PINEAPPLE, SWORD)),
             ResourceChanges.of(-10, 1, -10, 1, -10)));
   }
 

@@ -4,16 +4,14 @@ import static nl.robinthedev.catanjr.game.model.round.Action.BUY_FORT;
 import static nl.robinthedev.catanjr.game.model.round.Action.END_TURN;
 import static nl.robinthedev.catanjr.game.model.round.Action.THROW_DICE;
 
-import java.util.Collections;
-import java.util.List;
+import io.vavr.collection.List;
 import java.util.Objects;
 
 record Actions(List<Action> actions) {
 
-  Actions(List<Action> actions) {
+  Actions {
     Objects.requireNonNull(actions);
     if (actions.isEmpty()) throw new IllegalArgumentException("Actions cannot be empty");
-    this.actions = Collections.unmodifiableList(actions);
   }
 
   public static final Actions THROW_DICE_ONLY = Actions.of(THROW_DICE);

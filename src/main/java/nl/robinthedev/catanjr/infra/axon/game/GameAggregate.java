@@ -2,8 +2,8 @@ package nl.robinthedev.catanjr.infra.axon.game;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import io.vavr.collection.HashSet;
+import io.vavr.collection.Set;
 import nl.robinthedev.catanjr.api.command.BuyFort;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
 import nl.robinthedev.catanjr.api.command.EndTurn;
@@ -75,7 +75,7 @@ public class GameAggregate {
         Round.firstRound(
             AccountId.of(firstPlayer.accountId()), AccountId.of(secondPlayer.accountId()));
     apply(new PlayerActionsChanged(gameId, firstPlayer.accountId(), getCurrentPlayerActions()));
-    apply(new PlayerActionsChanged(gameId, secondPlayer.accountId(), Set.of()));
+    apply(new PlayerActionsChanged(gameId, secondPlayer.accountId(), HashSet.empty()));
   }
 
   @CommandHandler
@@ -142,7 +142,7 @@ public class GameAggregate {
   }
 
   private Set<ActionDTO> getCurrentPlayerActions() {
-    return round.actions().map(Enum::name).map(ActionDTO::valueOf).collect(Collectors.toSet());
+    return round.actions().map(Enum::name).map(ActionDTO::valueOf).toSet();
   }
 
   @CommandHandler
@@ -156,7 +156,7 @@ public class GameAggregate {
   void on(TurnEnded event) {
     round = round.turnEnded(new AccountId(event.nextPlayer()));
     apply(new PlayerActionsChanged(gameId, round.currentPlayer(), getCurrentPlayerActions()));
-    apply(new PlayerActionsChanged(gameId, round.nextPlayer(), Set.of()));
+    apply(new PlayerActionsChanged(gameId, round.nextPlayer(), HashSet.of()));
   }
 
   @CommandHandler

@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.game.model.coco;
 
-import java.util.List;
+import io.vavr.collection.List;
 import java.util.Objects;
 
 public record CocoTiles(List<CocoTile> tiles) {
@@ -33,6 +33,6 @@ public record CocoTiles(List<CocoTile> tiles) {
   }
 
   public RemainingCocoTilesCount remainingTilesCount(CocoTile cocoTile) {
-    return new RemainingCocoTilesCount((int) tiles.stream().filter(cocoTile::equals).count());
+    return new RemainingCocoTilesCount(tiles.count(cocoTile::equals));
   }
 }

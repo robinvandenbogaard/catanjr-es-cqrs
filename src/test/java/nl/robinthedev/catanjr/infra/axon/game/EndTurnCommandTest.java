@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.infra.axon.game;
 
-import java.util.Set;
+import io.vavr.collection.HashSet;
 import nl.robinthedev.catanjr.api.command.EndTurn;
 import nl.robinthedev.catanjr.api.dto.ActionDTO;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
@@ -28,7 +28,7 @@ class EndTurnCommandTest extends AbstractGameAggregateTest {
         .when(new EndTurn(GAME_ID, ACCOUNT_PLAYER_1))
         .expectEvents(
             new TurnEnded(GAME_ID, ACCOUNT_PLAYER_2),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_2, Set.of(ActionDTO.THROW_DICE)),
-            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, Set.of()));
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_2, HashSet.of(ActionDTO.THROW_DICE)),
+            new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, HashSet.of()));
   }
 }

@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.game.service;
 
-import java.util.Set;
+import io.vavr.collection.Set;
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.dto.ActionDTO;
 import nl.robinthedev.catanjr.api.dto.FortSiteDTO;

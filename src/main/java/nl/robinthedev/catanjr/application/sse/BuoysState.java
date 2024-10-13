@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.application.sse;
 
-import java.util.List;
+import io.vavr.collection.List;
 import nl.robinthedev.catanjr.api.dto.BuoyDTO;
 
 record BuoysState(String buoy1, String buoy2, String buoy3, String buoy4, String buoy5) {

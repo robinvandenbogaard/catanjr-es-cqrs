@@ -2,7 +2,7 @@ package nl.robinthedev.catanjr.game.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
+import io.vavr.collection.List;
 import java.util.UUID;
 import nl.robinthedev.catanjr.game.model.resources.BankInventory;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;

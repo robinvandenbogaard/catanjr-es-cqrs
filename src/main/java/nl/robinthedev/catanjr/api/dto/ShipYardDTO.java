@@ -1,6 +1,6 @@
 package nl.robinthedev.catanjr.api.dto;
 
-import java.util.Set;
+import io.vavr.collection.Set;
 import nl.robinthedev.catanjr.game.model.board.Board;
 
 public record ShipYardDTO(String id, OwnerDTO owner) {
@@ -9,6 +9,6 @@ public record ShipYardDTO(String id, OwnerDTO owner) {
         .shipSites()
         .map(
             shipSite -> new ShipYardDTO(shipSite.getBridgeId(), OwnerDTO.from(shipSite.getOwner())))
-        .toJavaSet();
+        .toSet();
   }
 }

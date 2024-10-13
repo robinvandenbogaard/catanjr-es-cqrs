@@ -50,14 +50,14 @@ public record Game(
         players().stream().map(player -> PlayerPayout.of(player, board, diceRoll)).toList();
 
     var allResourcesToTakeFrombank =
-        payout.stream()
+        payout
             .map(PlayerPayout::resourceChanges)
-            .reduce(ResourceChanges.EMPTY, ResourceChanges::add);
+            .foldLeft(ResourceChanges.EMPTY, ResourceChanges::add);
 
     var exceeded = bankInventory.getExceedingResources(allResourcesToTakeFrombank);
 
     var playerReports =
-        payout.stream().map(p -> p.confiscate(exceeded)).map(PlayerPayout::asReport).toList();
+        payout.map(p -> p.confiscate(exceeded)).map(PlayerPayout::asReport).toList();
     var bankReport = BankReport.of(playerReports, bankInventory);
     return new DiceRollReport(playerReports, bankReport);
   }

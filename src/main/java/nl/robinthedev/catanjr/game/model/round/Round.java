@@ -1,7 +1,7 @@
 package nl.robinthedev.catanjr.game.model.round;
 
+import io.vavr.collection.List;
 import java.util.UUID;
-import java.util.stream.Stream;
 import nl.robinthedev.catanjr.game.model.player.AccountId;
 
 public final class Round {
@@ -49,8 +49,8 @@ public final class Round {
     return current.value();
   }
 
-  public Stream<Action> actions() {
-    return actions.actions().stream();
+  public List<Action> actions() {
+    return actions.actions();
   }
 
   public Round turnEnded(AccountId newPlayerAccountId) {
