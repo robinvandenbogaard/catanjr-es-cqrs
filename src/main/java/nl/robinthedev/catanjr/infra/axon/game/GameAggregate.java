@@ -16,12 +16,14 @@ import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.dto.OwnerDTO;
 import nl.robinthedev.catanjr.api.dto.PlayerDTO;
+import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
 import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.FortBought;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
 import nl.robinthedev.catanjr.api.event.PlayerActionsChanged;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
+import nl.robinthedev.catanjr.api.event.ShipBought;
 import nl.robinthedev.catanjr.api.event.TurnEnded;
 import nl.robinthedev.catanjr.game.model.Game;
 import nl.robinthedev.catanjr.game.model.GameFactory;
@@ -196,5 +198,12 @@ public class GameAggregate {
   void handle(BuyShip command) {
     AccountId playerAccountId = AccountId.of(command.playerAccountId());
     round.isAllowedToBuyShip(playerAccountId);
+
+    apply(
+        new ShipBought(
+            gameId,
+            command.playerAccountId(),
+            new ShipYardDTO(
+                command.shipYardId(), OwnerDTO.from(game.getPlayer(playerAccountId).nr()))));
   }
 }

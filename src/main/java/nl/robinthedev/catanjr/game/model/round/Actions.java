@@ -1,6 +1,7 @@
 package nl.robinthedev.catanjr.game.model.round;
 
 import static nl.robinthedev.catanjr.game.model.round.Action.BUY_FORT;
+import static nl.robinthedev.catanjr.game.model.round.Action.BUY_SHIP;
 import static nl.robinthedev.catanjr.game.model.round.Action.END_TURN;
 import static nl.robinthedev.catanjr.game.model.round.Action.THROW_DICE;
 
@@ -24,7 +25,7 @@ record Actions(List<Action> actions) {
     if (!actions.contains(THROW_DICE)) {
       throw new ActionNotAllowedException("Cannot roll dice if action THROW_DICE is not present");
     }
-    return Actions.of(END_TURN, BUY_FORT);
+    return Actions.of(END_TURN, BUY_FORT, BUY_SHIP);
   }
 
   public boolean contains(Action action) {

@@ -1,6 +1,11 @@
 package nl.robinthedev.catanjr.infra.axon.game;
 
 import nl.robinthedev.catanjr.api.command.BuyShip;
+import nl.robinthedev.catanjr.api.dto.DiceRoll;
+import nl.robinthedev.catanjr.api.dto.OwnerDTO;
+import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
+import nl.robinthedev.catanjr.api.event.DiceRolled;
+import nl.robinthedev.catanjr.api.event.ShipBought;
 import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
 import nl.robinthedev.catanjr.game.model.round.NotYourTurnException;
 import org.junit.jupiter.api.Test;
@@ -21,5 +26,16 @@ class BuyShipCommandTest extends AbstractGameAggregateTest {
         .given(getGameCreatedEvent())
         .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, "1-3"))
         .expectException(ActionNotAllowedException.class);
+  }
+
+  @Test
+  void can_buy_ship() {
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
+        .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, "1-3"))
+        .expectEvents(
+            new ShipBought(GAME_ID, ACCOUNT_PLAYER_1, new ShipYardDTO("1-3", OwnerDTO.PLAYER1)))
+        .expectSuccessfulHandlerExecution();
   }
 }
