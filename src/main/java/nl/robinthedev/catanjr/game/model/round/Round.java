@@ -66,4 +66,8 @@ public final class Round {
   public void isAllowedToBuyFort(AccountId playerAccountId) {
     isAllowed(playerAccountId, Action.BUY_FORT);
   }
+
+  public void isAllowedToBuyShip(AccountId playerAccountId) {
+    isAllowed(playerAccountId, Action.BUY_SHIP);
+  }
 }

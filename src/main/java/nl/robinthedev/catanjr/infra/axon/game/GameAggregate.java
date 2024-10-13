@@ -5,6 +5,7 @@ import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 import io.vavr.collection.HashSet;
 import io.vavr.collection.Set;
 import nl.robinthedev.catanjr.api.command.BuyFort;
+import nl.robinthedev.catanjr.api.command.BuyShip;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
 import nl.robinthedev.catanjr.api.command.EndTurn;
 import nl.robinthedev.catanjr.api.command.RollDice;
@@ -189,5 +190,11 @@ public class GameAggregate {
   @EventSourcingHandler
   void on(FortBought event) {
     game = game.playerBought(getCurrentPlayer(), new SiteId(event.boughtFortAt().id()));
+  }
+
+  @CommandHandler
+  void handle(BuyShip command) {
+    AccountId playerAccountId = AccountId.of(command.playerAccountId());
+    round.isAllowedToBuyShip(playerAccountId);
   }
 }

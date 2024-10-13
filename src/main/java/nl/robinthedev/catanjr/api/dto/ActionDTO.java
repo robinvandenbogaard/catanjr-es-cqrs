@@ -4,4 +4,5 @@ public enum ActionDTO {
   THROW_DICE,
   END_TURN,
   BUY_FORT,
+  BUY_SHIP,
 }
