@@ -171,7 +171,10 @@ public class GameAggregate {
 
     apply(
         new FortBought(
-            gameId, round.currentPlayer(), new FortSiteDTO(command.siteId(), OwnerDTO.PLAYER1)));
+            gameId,
+            round.currentPlayer(),
+            new FortSiteDTO(
+                command.siteId(), OwnerDTO.from(game.getPlayer(playerAccountId).nr()))));
     apply(
         new PlayerInventoryChanged(
             gameId,

@@ -9,6 +9,7 @@ import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.FortBought;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
+import nl.robinthedev.catanjr.api.event.TurnEnded;
 import nl.robinthedev.catanjr.game.model.board.FortSiteIsMissingAdjecentShipException;
 import nl.robinthedev.catanjr.game.model.board.FortSiteOccupiedException;
 import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
@@ -34,7 +35,7 @@ class BuyFortCommandTest extends AbstractGameAggregateTest {
   }
 
   @Test
-  void can_buy_fort() {
+  void p1_can_buy_fort() {
     fixture
         .given(getGameCreatedEvent())
         .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
@@ -50,6 +51,33 @@ class BuyFortCommandTest extends AbstractGameAggregateTest {
             new PlayerInventoryChanged(
                 GAME_ID,
                 ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 1, 1, 1, 1),
+                new InventoryDTO(0, 0, 0, 0, 0)),
+            new BankInventoryChanged(
+                GAME_ID,
+                new InventoryDTO(17, 17, 15, 17, 15),
+                new InventoryDTO(17, 18, 16, 18, 16)))
+        .expectSuccessfulHandlerExecution();
+  }
+
+  @Test
+  void p2_can_buy_fort() {
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new TurnEnded(GAME_ID, ACCOUNT_PLAYER_2))
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_2))
+        .andGiven(
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_2,
+                new InventoryDTO(0, 0, 0, 0, 0),
+                new InventoryDTO(0, 1, 1, 1, 1)))
+        .when(new BuyFort(GAME_ID, ACCOUNT_PLAYER_2, 6))
+        .expectEvents(
+            new FortBought(GAME_ID, ACCOUNT_PLAYER_2, new FortSiteDTO(6, OwnerDTO.PLAYER2)),
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_2,
                 new InventoryDTO(0, 1, 1, 1, 1),
                 new InventoryDTO(0, 0, 0, 0, 0)),
             new BankInventoryChanged(
