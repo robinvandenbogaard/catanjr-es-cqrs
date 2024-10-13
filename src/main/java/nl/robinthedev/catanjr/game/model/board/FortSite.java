@@ -1,6 +1,5 @@
 package nl.robinthedev.catanjr.game.model.board;
 
-import io.vavr.collection.List;
 import io.vavr.collection.Set;
 import io.vavr.control.Option;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
@@ -8,7 +7,7 @@ import nl.robinthedev.catanjr.game.model.SiteId;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 public record FortSite(
-    SiteId id, List<ShipSite> neighbours, Set<LandTile> landTiles, Occupant occupant) {
+    SiteId id, Set<ShipSite> neighbours, Set<LandTile> landTiles, Occupant occupant) {
 
   public boolean belongsTo(Occupant occupant) {
     return this.occupant == occupant;

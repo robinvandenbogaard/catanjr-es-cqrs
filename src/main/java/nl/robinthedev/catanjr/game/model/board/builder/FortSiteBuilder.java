@@ -45,7 +45,7 @@ class FortSiteBuilder {
   FortSite build() {
     return new FortSite(
         new SiteId(id),
-        neighbours.map(ShipSiteBuilder::build).toList(),
+        neighbours.map(ShipSiteBuilder::build).toSet(),
         landTiles.map(LandTileBuilder::build).toSet(),
         occupant);
   }
