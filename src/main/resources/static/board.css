@@ -1,3 +1,7 @@
 .fortNotOccupied {
     cursor: pointer;
 }
+
+.shipNotOccupied {
+     cursor: pointer;
+ }
