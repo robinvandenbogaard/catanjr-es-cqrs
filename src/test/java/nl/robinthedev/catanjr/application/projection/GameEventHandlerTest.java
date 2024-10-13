@@ -21,7 +21,7 @@ class GameEventHandlerTest {
 
   @Test
   void gameGetsCreated() {
-    var game = new GameDTO(null, null, null, null, null);
+    var game = new GameDTO(null, null, null, null, null, null);
     var gameId = new GameId(UUID.randomUUID());
 
     gameEventHandler.on(new GameCreatedEvent(gameId, game));
@@ -38,7 +38,7 @@ class GameEventHandlerTest {
             null,
             null,
             null,
-            null);
+            null, null);
     var gameId = new GameId(UUID.randomUUID());
     games.save(gameId, game);
 
@@ -51,7 +51,7 @@ class GameEventHandlerTest {
                 new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), Set.of()),
                 null,
                 null,
-                null,
+                null, null,
                 null));
   }
 
@@ -64,7 +64,7 @@ class GameEventHandlerTest {
             new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), Set.of()),
             new PlayerDTO(p2Account, null, new InventoryDTO(0, 0, 0, 0, 0), Set.of()),
             null,
-            null,
+            null, null,
             null);
     var gameId = new GameId(UUID.randomUUID());
     games.save(gameId, game);
@@ -77,14 +77,14 @@ class GameEventHandlerTest {
             new GameDTO(
                 new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), Set.of()),
                 new PlayerDTO(p2Account, null, new InventoryDTO(5, 4, 3, 2, 1), Set.of()),
-                null,
+                null, null,
                 null,
                 null));
   }
 
   @Test
   void updateBankInventory() {
-    var game = new GameDTO(null, null, new InventoryDTO(18, 18, 18, 18, 18), null, null);
+    var game = new GameDTO(null, null, new InventoryDTO(18, 18, 18, 18, 18), null, null, null);
     var gameId = new GameId(UUID.randomUUID());
     games.save(gameId, game);
 
@@ -92,6 +92,6 @@ class GameEventHandlerTest {
         new BankInventoryChanged(gameId, null, new InventoryDTO(16, 16, 16, 16, 16)));
 
     assertThat(games.get(gameId))
-        .isEqualTo(new GameDTO(null, null, new InventoryDTO(16, 16, 16, 16, 16), null, null));
+        .isEqualTo(new GameDTO(null, null, new InventoryDTO(16, 16, 16, 16, 16), null, null, null));
   }
 }

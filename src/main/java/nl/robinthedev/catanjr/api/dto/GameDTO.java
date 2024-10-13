@@ -11,7 +11,8 @@ public record GameDTO(
     PlayerDTO secondPlayer,
     InventoryDTO bankInventory,
     List<BuoyDTO> buoyInventory,
-    List<FortSiteDTO> fortSites) {
+    List<FortSiteDTO> fortSites,
+    Set<ShipYardDTO> shipYards) {
   public static GameDTO of(Game game) {
     var firstPlayer = PlayerDTO.of(game.firstPlayer());
     var secondPlayer = PlayerDTO.of(game.secondPlayer());
@@ -22,7 +23,8 @@ public record GameDTO(
         secondPlayer,
         bankInventory,
         buoyInventory,
-        FortSiteDTO.from2PlayerGame(game.board()));
+        FortSiteDTO.from2PlayerGame(game.board()),
+        ShipYardDTO.from2PlayerGame(game.board()));
   }
 
   public GameDTO setFirstPlayerInventory(InventoryDTO newInventory) {
@@ -31,7 +33,8 @@ public record GameDTO(
         secondPlayer,
         bankInventory,
         buoyInventory,
-        fortSites);
+        fortSites,
+        shipYards);
   }
 
   public GameDTO setSecondPlayerInventory(InventoryDTO newInventory) {
@@ -40,7 +43,8 @@ public record GameDTO(
         secondPlayer.updateInventory(newInventory),
         bankInventory,
         buoyInventory,
-        fortSites);
+        fortSites,
+        shipYards);
   }
 
   public GameDTO setFirstPlayerActions(Set<ActionDTO> newActions) {
@@ -49,7 +53,8 @@ public record GameDTO(
         secondPlayer,
         bankInventory,
         buoyInventory,
-        fortSites);
+        fortSites,
+        shipYards);
   }
 
   public GameDTO setSecondPlayerActions(Set<ActionDTO> newActions) {
@@ -58,11 +63,13 @@ public record GameDTO(
         secondPlayer.updateActions(newActions),
         bankInventory,
         buoyInventory,
-        fortSites);
+        fortSites,
+        shipYards);
   }
 
   public GameDTO setBankInventory(InventoryDTO newInventory) {
-    return new GameDTO(firstPlayer, secondPlayer, newInventory, buoyInventory, fortSites);
+    return new GameDTO(
+        firstPlayer, secondPlayer, newInventory, buoyInventory, fortSites, shipYards);
   }
 
   public GameDTO updateFort(FortSiteDTO fortSiteDTO) {
@@ -74,6 +81,7 @@ public record GameDTO(
         secondPlayer,
         bankInventory,
         buoyInventory,
-        Collections.unmodifiableList(newFortSites));
+        Collections.unmodifiableList(newFortSites),
+        shipYards);
   }
 }

@@ -1,6 +1,7 @@
 package nl.robinthedev.catanjr.game.model.board;
 
 import io.vavr.collection.Map;
+import io.vavr.collection.Seq;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
 import nl.robinthedev.catanjr.game.model.SiteId;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
@@ -50,5 +51,9 @@ public record Board(Map<String, LandTile> landTiles, Map<Integer, FortSite> fort
     if (getFortById(siteId.value()).withShipsOwnedBy(occupant).isEmpty()) {
       throw new FortSiteIsMissingAdjecentShipException("No ships belong to " + occupant);
     }
+  }
+
+  public Seq<ShipSite> shipSites() {
+    return fortSites().values().flatMap(site->site.neighbours().toStream());
   }
 }
