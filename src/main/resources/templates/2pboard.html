@@ -11,109 +11,74 @@
         <circle id="circle-shape-4" r="8" transform="translate(0,15)"/>
     </defs>
 
-    <!-- Group to contain the hexagons -->
-    <g id="hex" transform="translate(0, 0)">
-        <use href="#hex-sword" transform="translate(0, 25)"/>
-        <use href="#hex-sheep" transform="translate(125, 25)"/>
-        <use href="#hex-wood" transform="translate(250, 25)"/>
-    </g>
-    <g id="hex" transform="translate(63, 100)">
-        <use href="#hex-pineapple" transform="translate(0, 25)"/>
-        <use href="#hex-gold" transform="translate(125, 25)"/>
-        <use href="#hex-pineapple" transform="translate(250, 25)"/>
-    </g>
-    <g id="hex" transform="translate(126, 200)">
-        <use href="#hex-wood" transform="translate(0, 25)"/>
-        <use href="#hex-sheep" transform="translate(125, 25)"/>
-        <use href="#hex-sword" transform="translate(250, 25)"/>
+    <!-- Group to contain the hexagons for the landtiles -->
+    <g id="land-tiles">
+        <g id="hex-top" transform="translate(0, 0)">
+            <use href="#hex-sword" transform="translate(0, 25)"/>
+            <use href="#hex-sheep" transform="translate(125, 25)"/>
+            <use href="#hex-wood" transform="translate(250, 25)"/>
+        </g>
+        <g id="hex-middle" transform="translate(63, 100)">
+            <use href="#hex-pineapple" transform="translate(0, 25)"/>
+            <use href="#hex-gold" transform="translate(125, 25)"/>
+            <use href="#hex-pineapple" transform="translate(250, 25)"/>
+        </g>
+        <g id="hex-bottom" transform="translate(126, 200)">
+            <use href="#hex-wood" transform="translate(0, 25)"/>
+            <use href="#hex-sheep" transform="translate(125, 25)"/>
+            <use href="#hex-sword" transform="translate(250, 25)"/>
+        </g>
     </g>
 
-    <g id="row1-circles">
-        <use href="#circle-shape-2" id="2" fill="{{ fortSiteColors['2'] }}" transform="translate(100, 50)"
-             {% if fortSiteColors['2'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/2" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-2" id="7" fill="{{ fortSiteColors['7'] }}" transform="translate(225, 50)"
-             {% if fortSiteColors['7'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/7" hx-swap="none"
-        {% endif -%}
-        />
-    </g>
-    <g id="row2-circles">
-        <use href="#circle-shape-4" id="1" fill="{{ fortSiteColors['1'] }}" transform="translate(50, 125)"
-             {% if fortSiteColors['1'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/1" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-3" id="3" fill="{{ fortSiteColors['3'] }}" transform="translate(100, 100)"
-             {% if fortSiteColors['3'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/3" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-4" id="5" fill="{{ fortSiteColors['5'] }}" transform="translate(175, 125)"
-             {% if fortSiteColors['5'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/5" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-3" id="8" fill="{{ fortSiteColors['8'] }}" transform="translate(225, 100)"
-             {% if fortSiteColors['8'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/8" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-4" id="11" fill="{{ fortSiteColors['11'] }}" transform="translate(300, 125)"
-             {% if fortSiteColors['11'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/11" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-3" id="13" fill="{{ fortSiteColors['13'] }}" transform="translate(350, 100)"
-             {% if fortSiteColors['13'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/13" hx-swap="none"
-        {% endif -%}
-        />
-    </g>
-    <g id="row3-circles" transform="translate(63, 100)">
-        <use href="#circle-shape-4" id="4" fill="{{ fortSiteColors['4'] }}" transform="translate(50, 125)"
-             {% if fortSiteColors['4'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/4" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-3" id="6" fill="{{ fortSiteColors['6'] }}" transform="translate(100, 100)"
-             {% if fortSiteColors['6'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/6" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-4" id="9" fill="{{ fortSiteColors['9'] }}" transform="translate(175, 125)"
-             {% if fortSiteColors['9'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/9" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-3" id="12" fill="{{ fortSiteColors['12'] }}" transform="translate(225, 100)"
-             {% if fortSiteColors['12'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/12" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-4" id="14" fill="{{ fortSiteColors['14'] }}" transform="translate(300, 125)"
-             {% if fortSiteColors['14'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/14" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-3" id="16" fill="{{ fortSiteColors['16'] }}" transform="translate(350, 100)"
-             {% if fortSiteColors['16'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/16" hx-swap="none"
-        {% endif -%}
-        />
-    </g>
-    <g id="row4-circles" transform="translate(126, 200)">
-        <use href="#circle-shape-3" id="10" fill="{{ fortSiteColors['10'] }}" transform="translate(100, 100)"
-             {% if fortSiteColors['10'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/10" hx-swap="none"
-        {% endif -%}
-        />
-        <use href="#circle-shape-3" id="15" fill="{{ fortSiteColors['15'] }}" transform="translate(225, 100)"
-             {% if fortSiteColors['15'] == 'grey' -%}
-        class="fortNotOccupied" hx-post="game/buyFort/15" hx-swap="none"
-        {% endif -%}
-        />
+    <!-- Group to contain the circles for the fort sites -->
+    <g id="fort-sites">
+        <g id="row1-circles">
+            {% for id in ['2', '7'] %}
+            <use href="#circle-shape-2" id="{{ id }}" fill="{{ fortSiteColors[id] }}"
+                 transform="translate({{ 100 + (loop.index*125) }}, 50)"
+                 {% if fortSiteColors[id]=='grey' %}
+                 class="fortNotOccupied"
+                 hx-post="game/buyFort/{{ id }}"
+                 hx-swap="none"
+                 {% endif -%}
+            />
+            {% endfor -%}
+        </g>
+        <g id="row2-circles">
+            {% for id in ['1', '3', '5', '8', '11', '13'] %}
+            <use href="#circle-shape-{{ loop.index % 2 == 0 ? 4 : 3}}" id="{{ id }}" fill="{{ fortSiteColors[id] }}"
+                 transform="translate({{ 50 + (loop.index*50) + ((loop.index/2)*25) }}, {{ loop.index % 2 == 0 ? 125 : 100 }})"
+                 {% if fortSiteColors[id]=='grey' %}
+                 class="fortNotOccupied"
+                 hx-post="game/buyFort/{{ id }}"
+                 hx-swap="none"
+                 {% endif -%}
+            />
+            {% endfor -%}
+        </g>
+        <g id="row3-circles" transform="translate(63, 100)">
+            {% for id in ['4', '6', '9', '12', '14', '16'] %}
+            <use href="#circle-shape-{{ loop.index % 2 == 0 ? 4 : 3}}" id="{{ id }}" fill="{{ fortSiteColors[id] }}"
+                 transform="translate({{ 50 + (loop.index*50) + ((loop.index/2)*25) }}, {{ loop.index % 2 == 0 ? 125 : 100 }})"
+                 {% if fortSiteColors[id]=='grey' %}
+                 class="fortNotOccupied"
+                 hx-post="game/buyFort/{{ id }}"
+                 hx-swap="none"
+                 {% endif -%}
+            />
+            {% endfor -%}
+        </g>
+        <g id="row4-circles" transform="translate(126, 200)">
+            {% for id in ['10', '15'] %}
+            <use href="#circle-shape-3" id="{{ id }}" fill="{{ fortSiteColors[id] }}"
+                 transform="translate({{ 100 + (loop.index*125) }}, 100)"
+                 {% if fortSiteColors[id]=='grey' %}
+                 class="fortNotOccupied"
+                 hx-post="game/buyFort/{{ id }}"
+                 hx-swap="none"
+                 {% endif -%}
+            />
+            {% endfor -%}
+        </g>
     </g>
 </svg>
