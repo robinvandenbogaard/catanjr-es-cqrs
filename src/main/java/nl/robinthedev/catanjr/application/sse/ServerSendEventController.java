@@ -51,9 +51,9 @@ class ServerSendEventController {
             BuoysState.from(game.buoyInventory()),
             "bank",
             game.bankInventory(),
-                "fortSiteColors",
-                BoardState.asFortSiteColors(game.fortSites()),
-                "shipYardColors",
-                BoardState.asShipYardColors(game.shipYards())));
+            "fortSiteColors",
+            BoardState.asFortSiteColors(game.fortSites()),
+            "shipYardColors",
+            BoardState.asShipYardColors(game.shipYards())));
   }
 }

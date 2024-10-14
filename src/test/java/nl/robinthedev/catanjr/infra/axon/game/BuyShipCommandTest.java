@@ -42,23 +42,23 @@ class BuyShipCommandTest extends AbstractGameAggregateTest {
         .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
         .andGiven(new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO(3, OwnerDTO.PLAYER1)))
         .andGiven(
-                new PlayerInventoryChanged(
-                        GAME_ID,
-                        ACCOUNT_PLAYER_1,
-                        new InventoryDTO(0, 0, 0, 0, 0),
-                        new InventoryDTO(0, 0, 1, 1, 0)))
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 0, 0, 0),
+                new InventoryDTO(0, 0, 1, 1, 0)))
         .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, "1-3"))
         .expectEvents(
             new ShipBought(GAME_ID, ACCOUNT_PLAYER_1, new ShipYardDTO("1-3", OwnerDTO.PLAYER1)),
-                new PlayerInventoryChanged(
-                        GAME_ID,
-                        ACCOUNT_PLAYER_1,
-                        new InventoryDTO(0, 0, 1, 1, 0),
-                        new InventoryDTO(0, 0, 0, 0, 0)),
-                new BankInventoryChanged(
-                        GAME_ID,
-                        new InventoryDTO(17, 17, 15, 17, 15),
-                        new InventoryDTO(17, 17, 16, 18, 15)))
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 1, 1, 0),
+                new InventoryDTO(0, 0, 0, 0, 0)),
+            new BankInventoryChanged(
+                GAME_ID,
+                new InventoryDTO(17, 17, 15, 17, 15),
+                new InventoryDTO(17, 17, 16, 18, 15)))
         .expectSuccessfulHandlerExecution();
   }
 
@@ -94,15 +94,16 @@ class BuyShipCommandTest extends AbstractGameAggregateTest {
   @Test
   void can_not_buy_ship_if_player_does_not_have_enough_resources() {
     fixture
-            .given(getGameCreatedEvent())
-            .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
-            .andGiven(new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO(3, OwnerDTO.PLAYER1)))
-            .andGiven(
-                    new PlayerInventoryChanged(
-                            GAME_ID,
-                            ACCOUNT_PLAYER_1,
-                            new InventoryDTO(0, 0, 0, 0, 0),
-                            new InventoryDTO(0, 0, 0, 0, 0)))
-            .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, "1-3"))
-            .expectException(NotEnoughResources.class);}
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
+        .andGiven(new FortBought(GAME_ID, ACCOUNT_PLAYER_1, new FortSiteDTO(3, OwnerDTO.PLAYER1)))
+        .andGiven(
+            new PlayerInventoryChanged(
+                GAME_ID,
+                ACCOUNT_PLAYER_1,
+                new InventoryDTO(0, 0, 0, 0, 0),
+                new InventoryDTO(0, 0, 0, 0, 0)))
+        .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, "1-3"))
+        .expectException(NotEnoughResources.class);
+  }
 }

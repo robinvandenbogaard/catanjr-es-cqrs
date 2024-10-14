@@ -82,8 +82,10 @@ public record Board(Map<String, LandTile> landTiles, Map<Integer, FortSite> fort
   }
 
   public void mustHaveAdjecentFort(ShipId shipId, BoardPlayer nr) {
-    if (!getFortOwner(getShipById(shipId).from()).equals(nr) && !getFortOwner(getShipById(shipId).to()).equals(nr)) {
-      throw new ShipYardIsMissingAdjecentFortException("No adjecent forts belong to "+ Occupant.of(nr));
+    if (!getFortOwner(getShipById(shipId).from()).equals(nr)
+        && !getFortOwner(getShipById(shipId).to()).equals(nr)) {
+      throw new ShipYardIsMissingAdjecentFortException(
+          "No adjecent forts belong to " + Occupant.of(nr));
     }
   }
 }

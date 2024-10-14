@@ -19,7 +19,8 @@ import org.junit.jupiter.api.Test;
 
 class RollDiceCommandTest extends AbstractGameAggregateTest {
 
-  public static final Set<ActionDTO> ACTIONS_AFTER_DICE_ROLL = HashSet.of(END_TURN, BUY_FORT, BUY_SHIP);
+  public static final Set<ActionDTO> ACTIONS_AFTER_DICE_ROLL =
+      HashSet.of(END_TURN, BUY_FORT, BUY_SHIP);
 
   @Test
   void first_player_rolls_1() {

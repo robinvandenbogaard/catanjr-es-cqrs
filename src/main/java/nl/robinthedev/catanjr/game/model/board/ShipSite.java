@@ -13,6 +13,7 @@ public record ShipSite(SiteId from, SiteId to, Occupant occupant) {
     return new ShipId(
         Math.min(from.value(), to.value()) + "-" + Math.max(from.value(), to.value()));
   }
+
   public BoardPlayer getOwner() {
     return switch (occupant) {
       case EMPTY -> BoardPlayer.NONE;
