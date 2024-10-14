@@ -48,7 +48,12 @@ class BuyShipCommandTest extends AbstractGameAggregateTest {
                         new InventoryDTO(0, 0, 1, 1, 0)))
         .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, "1-3"))
         .expectEvents(
-            new ShipBought(GAME_ID, ACCOUNT_PLAYER_1, new ShipYardDTO("1-3", OwnerDTO.PLAYER1)))
+            new ShipBought(GAME_ID, ACCOUNT_PLAYER_1, new ShipYardDTO("1-3", OwnerDTO.PLAYER1)),
+                new PlayerInventoryChanged(
+                        GAME_ID,
+                        ACCOUNT_PLAYER_1,
+                        new InventoryDTO(0, 0, 1, 1, 0),
+                        new InventoryDTO(0, 0, 0, 0, 0)))
         .expectSuccessfulHandlerExecution();
   }
 

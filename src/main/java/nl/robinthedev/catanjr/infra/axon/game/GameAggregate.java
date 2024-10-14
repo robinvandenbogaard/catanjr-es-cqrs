@@ -210,6 +210,12 @@ public class GameAggregate {
             command.playerAccountId(),
             new ShipYardDTO(
                 command.shipYardId(), OwnerDTO.from(game.getPlayer(playerAccountId).nr()))));
+    apply(
+            new PlayerInventoryChanged(
+                    gameId,
+                    round.currentPlayer(),
+                    InventoryDTO.of(getCurrentPlayer().inventory()),
+                    InventoryDTO.of(getCurrentPlayer().inventory().minus(ResourceChanges.SHIP))));
   }
 
   @EventSourcingHandler
