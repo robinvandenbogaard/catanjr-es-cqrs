@@ -6,6 +6,7 @@ import nl.robinthedev.catanjr.api.event.FortBought;
 import nl.robinthedev.catanjr.api.event.GameCreatedEvent;
 import nl.robinthedev.catanjr.api.event.PlayerActionsChanged;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
+import nl.robinthedev.catanjr.api.event.ShipBought;
 import nl.robinthedev.catanjr.api.query.GetGameQuery;
 import nl.robinthedev.catanjr.game.service.Games;
 import org.axonframework.eventhandling.EventHandler;
@@ -54,6 +55,12 @@ class GameEventHandler {
   @EventHandler
   public void on(FortBought event) {
     games.updateBoard(event.gameId(), event.boughtFortAt());
+    emitUpdate(event.gameId());
+  }
+
+  @EventHandler
+  public void on(ShipBought event) {
+    games.updateBoard(event.gameId(), event.boughtShipAt());
     emitUpdate(event.gameId());
   }
 }

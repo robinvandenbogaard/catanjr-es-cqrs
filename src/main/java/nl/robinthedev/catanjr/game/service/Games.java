@@ -7,6 +7,7 @@ import nl.robinthedev.catanjr.api.dto.FortSiteDTO;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
+import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
 
 public interface Games {
   void save(GameId gameId, GameDTO game);
@@ -19,5 +20,7 @@ public interface Games {
 
   void updatePlayerActions(GameId gameId, UUID playerAccount, Set<ActionDTO> newActions);
 
-  void updateBoard(GameId gameId, FortSiteDTO fortSiteDTO);
+  void updateBoard(GameId gameId, FortSiteDTO fortSite);
+
+  void updateBoard(GameId gameId, ShipYardDTO shipYard);
 }

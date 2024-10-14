@@ -9,6 +9,7 @@ import nl.robinthedev.catanjr.api.dto.FortSiteDTO;
 import nl.robinthedev.catanjr.api.dto.GameDTO;
 import nl.robinthedev.catanjr.api.dto.GameId;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
+import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
 import nl.robinthedev.catanjr.game.service.Games;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,10 +64,18 @@ class InMemoryGames implements Games {
   }
 
   @Override
-  public void updateBoard(GameId gameId, FortSiteDTO fortSiteDTO) {
+  public void updateBoard(GameId gameId, FortSiteDTO fortSite) {
     var game = games.get(gameId);
-    game = game.updateFort(fortSiteDTO);
+    game = game.updateFort(fortSite);
     games.put(gameId, game);
-    log.info("Board updated: {}", fortSiteDTO);
+    log.info("Board updated: {}", fortSite);
+  }
+
+  @Override
+  public void updateBoard(GameId gameId, ShipYardDTO shipYard) {
+    var game = games.get(gameId);
+    game = game.updateShip(shipYard);
+    games.put(gameId, game);
+    log.info("Board updated: {}", shipYard);
   }
 }
