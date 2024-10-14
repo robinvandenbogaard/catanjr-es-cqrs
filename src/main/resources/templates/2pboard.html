@@ -1,11 +1,26 @@
 <svg width="1024" height="768" viewBox="0 0 476 300" xmlns="http://www.w3.org/2000/svg" class="board">
     <!-- Define the hexagon shape once -->
     <defs>
-        <polygon id="hex-sword" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: steelblue;"/>
-        <polygon id="hex-sheep" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: green;"/>
-        <polygon id="hex-gold" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: gold;"/>
-        <polygon id="hex-wood" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: saddlebrown;"/>
-        <polygon id="hex-pineapple" points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: orange;"/>
+        <g id="hex-sword">
+            <polygon points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: steelblue;"/>
+            <image href="resources/sword.svg" x="25" y="25" width="50" height="50"/>
+        </g>
+        <g id="hex-sheep">
+            <polygon points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: green;"/>
+            <image href="resources/sheep.svg" x="25" y="25" width="50" height="50"/>
+        </g>
+        <g id="hex-gold">
+            <polygon points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: gold;"/>
+            <image href="resources/goldbar.svg" x="25" y="25" width="50" height="50"/>
+        </g>
+        <g id="hex-wood">
+            <polygon points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: saddlebrown;"/>
+            <image href="resources/wood.svg" x="25" y="25" width="50" height="50"/>
+        </g>
+        <g id="hex-pineapple">
+            <polygon points="0,25 50,0 100,25 100,75 50,100 0,75" style="fill: orange;"/>
+            <image href="resources/pineapple.svg" x="25" y="25" width="50" height="50"/>
+        </g>
         <circle id="circle-shape-2" r="8" transform="translate(12,-5)"/>
         <circle id="circle-shape-3" r="8" transform="translate(12,10)"/>
         <circle id="circle-shape-4" r="8" transform="translate(0,15)"/>
@@ -17,22 +32,48 @@
     <!-- Group to contain the hexagons for the landtiles -->
     <g id="land-tiles">
         <g id="hex-top" transform="translate(0, 0)">
-            <use href="#hex-sword" transform="translate(0, 25)"/>
-            <use href="#hex-sheep" transform="translate(125, 25)"/>
-            <use href="#hex-wood" transform="translate(250, 25)"/>
+            <g transform="translate(0, 25)">
+                <use href="#hex-sword"/>
+                <image href="resources/1.svg" x="42" y="15" width="15" height="15"/>
+            </g>
+            <g transform="translate(125, 25)">
+                <use href="#hex-sheep"/>
+                <image href="resources/2.svg" x="42" y="15" width="15" height="15"/>
+            </g>
+            <g transform="translate(250, 25)">
+                <use href="#hex-wood"/>
+                <image href="resources/3.svg" x="42" y="15" width="15" height="15"/>
+            </g>
         </g>
         <g id="hex-middle" transform="translate(63, 100)">
-            <use href="#hex-pineapple" transform="translate(0, 25)"/>
-            <use href="#hex-gold" transform="translate(125, 25)"/>
-            <use href="#hex-pineapple" transform="translate(250, 25)"/>
+            <g transform="translate(0, 25)">
+                <use href="#hex-pineapple"/>
+                <image href="resources/3.svg" x="42" y="15" width="15" height="15"/>
+            </g>
+            <g transform="translate(125, 25)">
+                <use href="#hex-gold"/>
+                <image href="resources/5.svg" x="42" y="15" width="15" height="15"/>
+            </g>
+            <g transform="translate(250, 25)">
+                <use href="#hex-pineapple"/>
+                <image href="resources/4.svg" x="42" y="15" width="15" height="15"/>
+            </g>
         </g>
         <g id="hex-bottom" transform="translate(126, 200)">
-            <use href="#hex-wood" transform="translate(0, 25)"/>
-            <use href="#hex-sheep" transform="translate(125, 25)"/>
-            <use href="#hex-sword" transform="translate(250, 25)"/>
+            <g transform="translate(0, 25)">
+                <use href="#hex-wood"/>
+                <image href="resources/4.svg" x="42" y="15" width="15" height="15"/>
+            </g>
+            <g transform="translate(125, 25)">
+                <use href="#hex-sheep"/>
+                <image href="resources/1.svg" x="42" y="15" width="15" height="15"/>
+            </g>
+            <g transform="translate(250, 25)">
+                <use href="#hex-sword"/>
+                <image href="resources/2.svg" x="42" y="15" width="15" height="15"/>
+            </g>
         </g>
     </g>
-
     <!-- Group to contain the circles for the fort sites -->
     <g id="fort-sites">
         <g id="row1-forts">
