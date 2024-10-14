@@ -2,6 +2,7 @@ package nl.robinthedev.catanjr.application.rest;
 
 import java.util.UUID;
 import nl.robinthedev.catanjr.api.command.BuyFort;
+import nl.robinthedev.catanjr.api.command.BuyShip;
 import nl.robinthedev.catanjr.api.command.CreateNewGame;
 import nl.robinthedev.catanjr.api.command.EndTurn;
 import nl.robinthedev.catanjr.api.command.RollDice;
@@ -83,5 +84,14 @@ class GameCommandController {
     var accountId1 = UUID.fromString("069f188b-607d-4760-a81f-35e7478e176c");
     commandGateway.sendAndWait(new BuyFort(gameId, accountId1, fortSiteId));
     log.info("Buy fort {} for {}", fortSiteId, gameId);
+  }
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping("buyShip/{shipYardId}")
+  public void buyFort(@PathVariable String shipYardId) {
+    var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
+    var accountId1 = UUID.fromString("069f188b-607d-4760-a81f-35e7478e176c");
+    commandGateway.sendAndWait(new BuyShip(gameId, accountId1, shipYardId));
+    log.info("Buy ship {} for {}", shipYardId, gameId);
   }
 }
