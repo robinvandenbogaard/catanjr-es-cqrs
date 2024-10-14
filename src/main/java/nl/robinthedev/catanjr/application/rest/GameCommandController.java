@@ -70,8 +70,8 @@ class GameCommandController {
   @PostMapping("buyFort/{fortSiteId}")
   public void buyFort(@PathVariable Integer fortSiteId) {
     var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
-    var accountId1 = UUID.fromString("069f188b-607d-4760-a81f-35e7478e176c");
-    commandGateway.sendAndWait(new BuyFort(gameId, accountId1, fortSiteId));
+    var accountId = getCurrentPlayer(gameId);
+    commandGateway.sendAndWait(new BuyFort(gameId, accountId, fortSiteId));
     log.info("Buy fort {} for {}", fortSiteId, gameId);
   }
 
@@ -79,8 +79,8 @@ class GameCommandController {
   @PostMapping("buyShip/{shipYardId}")
   public void buyFort(@PathVariable String shipYardId) {
     var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
-    var accountId1 = UUID.fromString("069f188b-607d-4760-a81f-35e7478e176c");
-    commandGateway.sendAndWait(new BuyShip(gameId, accountId1, shipYardId));
+    var accountId = getCurrentPlayer(gameId);
+    commandGateway.sendAndWait(new BuyShip(gameId, accountId, shipYardId));
     log.info("Buy ship {} for {}", shipYardId, gameId);
   }
 }
