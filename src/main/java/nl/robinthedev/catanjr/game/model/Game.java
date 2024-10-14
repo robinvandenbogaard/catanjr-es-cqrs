@@ -94,4 +94,9 @@ public record Game(
   public void canBuyShipAt(ShipId shipId) {
     board.mustBeUnoccupied(shipId);
   }
+
+  public Game playerBought(Player player, ShipId shipId) {
+    return new Game(
+        players, buoyInventory, bankInventory, cocoTiles, board.markShipOwned(shipId, player.nr()));
+  }
 }

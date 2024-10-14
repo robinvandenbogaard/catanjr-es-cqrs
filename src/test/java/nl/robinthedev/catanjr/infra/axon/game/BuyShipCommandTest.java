@@ -48,4 +48,15 @@ class BuyShipCommandTest extends AbstractGameAggregateTest {
         .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, "4-6"))
         .expectException(ShipYardOccupiedException.class);
   }
+
+  @Test
+  void can_not_buy_same_ship_twice() {
+    fixture
+        .given(getGameCreatedEvent())
+        .andGiven(new DiceRolled(GAME_ID, DiceRoll.ONE, ACCOUNT_PLAYER_1))
+        .andGiven(
+            new ShipBought(GAME_ID, ACCOUNT_PLAYER_1, new ShipYardDTO("1-3", OwnerDTO.PLAYER1)))
+        .when(new BuyShip(GAME_ID, ACCOUNT_PLAYER_1, "1-3"))
+        .expectException(ShipYardOccupiedException.class);
+  }
 }

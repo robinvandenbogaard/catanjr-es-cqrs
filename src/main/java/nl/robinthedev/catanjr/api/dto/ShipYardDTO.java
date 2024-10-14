@@ -8,7 +8,8 @@ public record ShipYardDTO(String id, OwnerDTO owner) {
     return board
         .shipSites()
         .map(
-            shipSite -> new ShipYardDTO(shipSite.getBridgeId(), OwnerDTO.from(shipSite.getOwner())))
+            shipSite ->
+                new ShipYardDTO(shipSite.getShipId().value(), OwnerDTO.from(shipSite.getOwner())))
         .toSet();
   }
 }

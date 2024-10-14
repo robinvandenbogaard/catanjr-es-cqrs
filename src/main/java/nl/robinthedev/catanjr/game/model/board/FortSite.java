@@ -3,6 +3,7 @@ package nl.robinthedev.catanjr.game.model.board;
 import io.vavr.collection.Set;
 import io.vavr.control.Option;
 import nl.robinthedev.catanjr.api.dto.DiceRoll;
+import nl.robinthedev.catanjr.game.model.ShipId;
 import nl.robinthedev.catanjr.game.model.SiteId;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
@@ -29,5 +30,15 @@ public record FortSite(
       return Option.none();
     }
     return Option.of(this);
+  }
+
+  public boolean isNeighbour(ShipId shipId) {
+    return neighbours.find(shipSite -> shipSite.hasId(shipId)).isDefined();
+  }
+
+  public FortSite updateNeighbour(ShipSite ship) {
+    var updatedNeighbours =
+        neighbours.replace(neighbours.find(site -> site.hasId(ship.getShipId())).get(), ship);
+    return new FortSite(id, updatedNeighbours, landTiles, occupant);
   }
 }

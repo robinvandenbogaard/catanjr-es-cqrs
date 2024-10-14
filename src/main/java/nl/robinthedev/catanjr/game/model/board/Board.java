@@ -55,16 +55,29 @@ public record Board(Map<String, LandTile> landTiles, Map<Integer, FortSite> fort
   }
 
   public Seq<ShipSite> shipSites() {
-    return fortSites().values().flatMap(site->site.neighbours().toStream());
+    return fortSites().values().flatMap(site -> site.neighbours().toStream());
   }
 
   public void mustBeUnoccupied(ShipId shipId) {
-    if (!getShipById(shipId.value()).occupant().equals(Occupant.EMPTY)) {
+    if (!getShipById(shipId).occupant().equals(Occupant.EMPTY)) {
       throw new ShipYardOccupiedException("This ship yard is already occupied");
     }
   }
 
-  private ShipSite getShipById(String id) {
-    return shipSites().find(shipyard->shipyard.getBridgeId().equals(id)).get();
+  private ShipSite getShipById(ShipId id) {
+    return shipSites().find(shipyard -> shipyard.getShipId().equals(id)).get();
+  }
+
+  public Board markShipOwned(ShipId shipId, BoardPlayer nr) {
+    var shipWithNewOwner = getShipById(shipId).updateOccupant(Occupant.of(nr));
+    var updatedFortSites =
+        fortSites
+            .values()
+            .filter(site -> site.isNeighbour(shipId))
+            .map(site -> site.updateNeighbour(shipWithNewOwner))
+            .foldLeft(
+                fortSites,
+                (existing, updatedSite) -> existing.put(updatedSite.id().value(), updatedSite));
+    return new Board(landTiles, updatedFortSites);
   }
 }

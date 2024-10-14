@@ -211,4 +211,9 @@ public class GameAggregate {
             new ShipYardDTO(
                 command.shipYardId(), OwnerDTO.from(game.getPlayer(playerAccountId).nr()))));
   }
+
+  @EventSourcingHandler
+  void on(ShipBought event) {
+    game = game.playerBought(getCurrentPlayer(), new ShipId(event.boughtShipAt().id()));
+  }
 }

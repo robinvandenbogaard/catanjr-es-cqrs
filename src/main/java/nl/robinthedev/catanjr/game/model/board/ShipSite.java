@@ -1,5 +1,6 @@
 package nl.robinthedev.catanjr.game.model.board;
 
+import nl.robinthedev.catanjr.game.model.ShipId;
 import nl.robinthedev.catanjr.game.model.SiteId;
 
 public record ShipSite(SiteId from, SiteId to, Occupant occupant) {
@@ -8,8 +9,9 @@ public record ShipSite(SiteId from, SiteId to, Occupant occupant) {
     return this.occupant.equals(occupant);
   }
 
-  public String getBridgeId() {
-    return Math.min(from.value(), to.value()) + "-" + Math.max(from.value(), to.value());
+  public ShipId getShipId() {
+    return new ShipId(
+        Math.min(from.value(), to.value()) + "-" + Math.max(from.value(), to.value()));
   }
   public BoardPlayer getOwner() {
     return switch (occupant) {
@@ -20,5 +22,13 @@ public record ShipSite(SiteId from, SiteId to, Occupant occupant) {
       case PLAYER3 -> BoardPlayer.PLAYER3;
       case PLAYER4 -> BoardPlayer.PLAYER4;
     };
+  }
+
+  public boolean hasId(ShipId shipSite) {
+    return getShipId().equals(shipSite);
+  }
+
+  public ShipSite updateOccupant(Occupant occupant) {
+    return new ShipSite(from, to, occupant);
   }
 }
