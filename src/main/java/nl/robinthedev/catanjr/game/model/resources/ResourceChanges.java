@@ -7,6 +7,7 @@ public record ResourceChanges(
 
   public static final ResourceChanges EMPTY = ResourceChanges.of(0, 0, 0, 0, 0);
   public static final ResourceChanges FORT = ResourceChanges.of(1, 0, 1, 1, 1);
+  public static final ResourceChanges SHIP = ResourceChanges.of(1, 0, 0, 1, 0);
 
   public ResourceChanges {
     Objects.requireNonNull(wood);

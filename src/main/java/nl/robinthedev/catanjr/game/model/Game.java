@@ -94,6 +94,7 @@ public record Game(
   public void canBuyShipAt(Player player, ShipId shipId) {
     board.mustBeUnoccupied(shipId);
     board.mustHaveAdjecentFort(shipId, player.nr());
+    player.mustBeAbleToPay(ResourceChanges.SHIP);
   }
 
   public Game playerBought(Player player, ShipId shipId) {
