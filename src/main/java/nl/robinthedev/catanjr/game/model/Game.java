@@ -91,8 +91,9 @@ public record Game(
     else return secondPlayer();
   }
 
-  public void canBuyShipAt(ShipId shipId) {
+  public void canBuyShipAt(Player player, ShipId shipId) {
     board.mustBeUnoccupied(shipId);
+    board.mustHaveAdjecentFort(shipId, player.nr());
   }
 
   public Game playerBought(Player player, ShipId shipId) {

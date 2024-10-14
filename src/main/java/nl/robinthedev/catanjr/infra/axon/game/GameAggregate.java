@@ -202,7 +202,7 @@ public class GameAggregate {
   void handle(BuyShip command) {
     AccountId playerAccountId = AccountId.of(command.playerAccountId());
     round.isAllowedToBuyShip(playerAccountId);
-    game.canBuyShipAt(new ShipId(command.shipYardId()));
+    game.canBuyShipAt(getCurrentPlayer(), new ShipId(command.shipYardId()));
 
     apply(
         new ShipBought(
