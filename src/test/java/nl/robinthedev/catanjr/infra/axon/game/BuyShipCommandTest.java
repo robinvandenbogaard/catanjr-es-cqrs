@@ -6,6 +6,7 @@ import nl.robinthedev.catanjr.api.dto.FortSiteDTO;
 import nl.robinthedev.catanjr.api.dto.InventoryDTO;
 import nl.robinthedev.catanjr.api.dto.OwnerDTO;
 import nl.robinthedev.catanjr.api.dto.ShipYardDTO;
+import nl.robinthedev.catanjr.api.event.BankInventoryChanged;
 import nl.robinthedev.catanjr.api.event.DiceRolled;
 import nl.robinthedev.catanjr.api.event.FortBought;
 import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
@@ -53,7 +54,11 @@ class BuyShipCommandTest extends AbstractGameAggregateTest {
                         GAME_ID,
                         ACCOUNT_PLAYER_1,
                         new InventoryDTO(0, 0, 1, 1, 0),
-                        new InventoryDTO(0, 0, 0, 0, 0)))
+                        new InventoryDTO(0, 0, 0, 0, 0)),
+                new BankInventoryChanged(
+                        GAME_ID,
+                        new InventoryDTO(17, 17, 15, 17, 15),
+                        new InventoryDTO(17, 17, 16, 18, 15)))
         .expectSuccessfulHandlerExecution();
   }
 
