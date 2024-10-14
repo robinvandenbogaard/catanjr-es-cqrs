@@ -5,7 +5,7 @@
             <button class="btn btn-primary" id="endTurnBtnP1" hx-post="game/endTurnP1" hx-swap="none" {{
                     firstPlayer.actions.endTurn ?
             "" : "disabled" }}>End Turn</button>
-            <button class="btn btn-primary" id="rollDiceBtnP1" hx-post="game/rollp1" hx-swap="none" {{
+            <button class="btn btn-primary" id="rollDiceBtnP1" hx-post="game/rolldice" hx-swap="none" {{
                     firstPlayer.actions.rollDice ?
             "" : "disabled" }}>Roll Dice</button>
         </div>
