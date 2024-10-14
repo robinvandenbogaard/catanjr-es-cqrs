@@ -48,28 +48,22 @@ class GameCommandController {
   @PostMapping("rolldice")
   public void rollDice() {
     var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
-    var accountId =
-        turns.getCurrentPlayerAccount(gameId).getOrElseThrow(IllegalArgumentException::new);
+    var accountId = getCurrentPlayer(gameId);
     commandGateway.sendAndWait(new RollDice(gameId, accountId));
     log.info("Rolled dice for player {} in {}", accountId, gameId);
   }
 
-  @ResponseStatus(HttpStatus.OK)
-  @PostMapping("endTurnP1")
-  public void endTurnP1() {
-    var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
-    var accountId1 = UUID.fromString("069f188b-607d-4760-a81f-35e7478e176c");
-    commandGateway.sendAndWait(new EndTurn(gameId, accountId1));
-    log.info("Turn ended for p1 {}", gameId);
+  private UUID getCurrentPlayer(GameId gameId) {
+    return turns.getCurrentPlayerAccount(gameId).getOrElseThrow(IllegalArgumentException::new);
   }
 
   @ResponseStatus(HttpStatus.OK)
-  @PostMapping("endTurnP2")
-  public void endTurnP2() {
+  @PostMapping("endTurn")
+  public void endTurn() {
     var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
-    var accountId2 = UUID.fromString("d8bccdd1-abd3-4545-87da-eb9113222c68");
-    commandGateway.sendAndWait(new EndTurn(gameId, accountId2));
-    log.info("Turn ended for p2 {}", gameId);
+    var accountId = getCurrentPlayer(gameId);
+    commandGateway.sendAndWait(new EndTurn(gameId, accountId));
+    log.info("Turn ended for {} in {}", accountId, gameId);
   }
 
   @ResponseStatus(HttpStatus.OK)

@@ -2,7 +2,7 @@
     <div class="panel-heading">Player 2: {{ secondPlayer.username }}</div>
     <div class="panel-body">
         <div class="button-bar">
-            <button class="btn btn-primary" id="endTurnBtnP2" hx-post="game/endTurnP2" hx-swap="none" {{
+            <button class="btn btn-primary" id="endTurnBtnP2" hx-post="game/endTurn" hx-swap="none" {{
                     secondPlayer.actions.endTurn ?
             "" : "disabled" }}>End Turn</button>
             <button class="btn btn-primary" id="rollDiceBtnP2" hx-post="game/rolldice" hx-swap="none" {{
