@@ -6,7 +6,7 @@ import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TurnEventHandler {
+class TurnEventHandler {
   private final PlayerTurn turns;
 
   public TurnEventHandler(PlayerTurn turns) {
