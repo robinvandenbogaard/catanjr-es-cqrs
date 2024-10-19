@@ -13,6 +13,7 @@ import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import nl.robinthedev.catanjr.api.event.ShipBought;
 import nl.robinthedev.catanjr.game.model.board.ShipYardIsMissingAdjecentFortException;
 import nl.robinthedev.catanjr.game.model.board.ShipYardOccupiedException;
+import nl.robinthedev.catanjr.game.model.player.NotEnoughResources;
 import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
 import nl.robinthedev.catanjr.game.model.round.NotYourTurnException;
 import org.junit.jupiter.api.Test;

@@ -12,6 +12,7 @@ import nl.robinthedev.catanjr.api.event.PlayerInventoryChanged;
 import nl.robinthedev.catanjr.api.event.TurnEnded;
 import nl.robinthedev.catanjr.game.model.board.FortSiteIsMissingAdjecentShipException;
 import nl.robinthedev.catanjr.game.model.board.FortSiteOccupiedException;
+import nl.robinthedev.catanjr.game.model.player.NotEnoughResources;
 import nl.robinthedev.catanjr.game.model.round.ActionNotAllowedException;
 import nl.robinthedev.catanjr.game.model.round.NotYourTurnException;
 import org.junit.jupiter.api.Test;

@@ -5,7 +5,6 @@ import java.util.UUID;
 import nl.robinthedev.catanjr.game.model.board.BoardPlayer;
 import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
-import nl.robinthedev.catanjr.infra.axon.game.NotEnoughResources;
 
 public record Player(PlayerId id, PlayerInventory inventory, BoardPlayer nr) {
   public Player {

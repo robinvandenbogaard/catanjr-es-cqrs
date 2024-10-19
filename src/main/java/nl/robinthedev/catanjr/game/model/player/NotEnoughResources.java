@@ -1,4 +1,4 @@
-package nl.robinthedev.catanjr.infra.axon.game;
+package nl.robinthedev.catanjr.game.model.player;
 
 public class NotEnoughResources extends RuntimeException {
   public NotEnoughResources(String message, Throwable cause) {
