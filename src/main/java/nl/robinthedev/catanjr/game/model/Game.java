@@ -14,6 +14,7 @@ import nl.robinthedev.catanjr.game.model.resources.PlayerInventory;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 public record Game(
+    Title title,
     Players players,
     BuoyInventory buoyInventory,
     BankInventory bankInventory,
@@ -64,6 +65,7 @@ public record Game(
 
   public Game updateIventory(AccountId accountId, PlayerInventory inventory) {
     return new Game(
+        title,
         players.updateInventory(accountId, inventory),
         buoyInventory,
         bankInventory,
@@ -72,7 +74,7 @@ public record Game(
   }
 
   public Game updateBankIventory(BankInventory bankInventory) {
-    return new Game(players, buoyInventory, bankInventory, cocoTiles, board);
+    return new Game(title, players, buoyInventory, bankInventory, cocoTiles, board);
   }
 
   public void canBuyFortAt(Player player, SiteId siteId) {
@@ -83,7 +85,12 @@ public record Game(
 
   public Game playerBought(Player player, SiteId siteId) {
     return new Game(
-        players, buoyInventory, bankInventory, cocoTiles, board.markFortOwned(siteId, player.nr()));
+        title,
+        players,
+        buoyInventory,
+        bankInventory,
+        cocoTiles,
+        board.markFortOwned(siteId, player.nr()));
   }
 
   public Player getPlayer(AccountId id) {
@@ -99,6 +106,11 @@ public record Game(
 
   public Game playerBought(Player player, ShipId shipId) {
     return new Game(
-        players, buoyInventory, bankInventory, cocoTiles, board.markShipOwned(shipId, player.nr()));
+        title,
+        players,
+        buoyInventory,
+        bankInventory,
+        cocoTiles,
+        board.markShipOwned(shipId, player.nr()));
   }
 }

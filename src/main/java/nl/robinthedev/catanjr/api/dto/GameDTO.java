@@ -6,6 +6,7 @@ import java.util.Objects;
 import nl.robinthedev.catanjr.game.model.Game;
 
 public record GameDTO(
+    String title,
     PlayerDTO firstPlayer,
     PlayerDTO secondPlayer,
     InventoryDTO bankInventory,
@@ -18,6 +19,7 @@ public record GameDTO(
     var bankInventory = InventoryDTO.of(game.bankInventory());
     var buoyInventory = BuoyDTO.of(game.buoyInventory());
     return new GameDTO(
+        game.title().value(),
         firstPlayer,
         secondPlayer,
         bankInventory,
@@ -28,6 +30,7 @@ public record GameDTO(
 
   public GameDTO setFirstPlayerInventory(InventoryDTO newInventory) {
     return new GameDTO(
+        title,
         firstPlayer.updateInventory(newInventory),
         secondPlayer,
         bankInventory,
@@ -38,6 +41,7 @@ public record GameDTO(
 
   public GameDTO setSecondPlayerInventory(InventoryDTO newInventory) {
     return new GameDTO(
+        title,
         firstPlayer,
         secondPlayer.updateInventory(newInventory),
         bankInventory,
@@ -48,6 +52,7 @@ public record GameDTO(
 
   public GameDTO setFirstPlayerActions(Set<ActionDTO> newActions) {
     return new GameDTO(
+        title,
         firstPlayer.updateActions(newActions),
         secondPlayer,
         bankInventory,
@@ -58,6 +63,7 @@ public record GameDTO(
 
   public GameDTO setSecondPlayerActions(Set<ActionDTO> newActions) {
     return new GameDTO(
+        title,
         firstPlayer,
         secondPlayer.updateActions(newActions),
         bankInventory,
@@ -68,19 +74,19 @@ public record GameDTO(
 
   public GameDTO setBankInventory(InventoryDTO newInventory) {
     return new GameDTO(
-        firstPlayer, secondPlayer, newInventory, buoyInventory, fortSites, shipYards);
+        title, firstPlayer, secondPlayer, newInventory, buoyInventory, fortSites, shipYards);
   }
 
   public GameDTO updateFort(FortSiteDTO fortSite) {
     var newFortSites = fortSites.removeFirst(site -> site.id() == fortSite.id()).append(fortSite);
     return new GameDTO(
-        firstPlayer, secondPlayer, bankInventory, buoyInventory, newFortSites, shipYards);
+        title, firstPlayer, secondPlayer, bankInventory, buoyInventory, newFortSites, shipYards);
   }
 
   public GameDTO updateShip(ShipYardDTO shipYard) {
     var oldShip = shipYards.find(ship -> Objects.equals(ship.id(), shipYard.id())).get();
     var newShipYards = shipYards.remove(oldShip).add(shipYard);
     return new GameDTO(
-        firstPlayer, secondPlayer, bankInventory, buoyInventory, fortSites, newShipYards);
+        title, firstPlayer, secondPlayer, bankInventory, buoyInventory, fortSites, newShipYards);
   }
 }

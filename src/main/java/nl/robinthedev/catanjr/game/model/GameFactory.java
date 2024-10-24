@@ -12,7 +12,7 @@ import nl.robinthedev.catanjr.game.model.resources.BuoyInventory;
 import nl.robinthedev.catanjr.game.model.resources.ResourceChanges;
 
 public class GameFactory {
-  public static Game of(PlayerId playerOne, PlayerId playerTwo) {
+  public static Game of(String title, PlayerId playerOne, PlayerId playerTwo) {
     Player player1 = Player.of(playerOne, BoardPlayer.PLAYER1);
     Player player2 = Player.of(playerTwo, BoardPlayer.PLAYER2);
     var players = new Players(List.of(player1, player2));
@@ -20,6 +20,7 @@ public class GameFactory {
     var board = TwoPlayerBoard.create();
 
     return new Game(
+        new Title(title),
         players,
         buoyInventory,
         BankInventory.FULL

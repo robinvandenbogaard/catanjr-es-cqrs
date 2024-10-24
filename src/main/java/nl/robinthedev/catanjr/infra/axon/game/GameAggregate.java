@@ -61,6 +61,7 @@ public class GameAggregate {
   void handle(CreateNewGame command) {
     var game =
         GameFactory.of(
+            command.title(),
             PlayerId.from(command.accountPlayer1(), command.usernamePlayer1()),
             PlayerId.from(command.accountPlayer2(), command.usernamePlayer2()));
     apply(new GameCreatedEvent(command.gameId(), GameDTO.of(game)));
@@ -73,6 +74,7 @@ public class GameAggregate {
     PlayerDTO secondPlayer = event.game().secondPlayer();
     this.game =
         GameFactory.of(
+            event.game().title(),
             PlayerId.from(firstPlayer.accountId(), firstPlayer.username()),
             PlayerId.from(secondPlayer.accountId(), secondPlayer.username()));
     this.round =

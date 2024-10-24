@@ -39,7 +39,8 @@ class GameCommandController {
     var gameId = GameId.fromString("e09883fb-aa87-4f6d-a0a3-1caff0aeced8");
     var accountId1 = UUID.fromString("069f188b-607d-4760-a81f-35e7478e176c");
     var accountId2 = UUID.fromString("d8bccdd1-abd3-4545-87da-eb9113222c68");
-    commandGateway.sendAndWait(new CreateNewGame(gameId, accountId1, "Robin", accountId2, "Jim"));
+    commandGateway.sendAndWait(
+        new CreateNewGame(gameId, "My new Game", accountId1, "Robin", accountId2, "Jim"));
     log.info("Created new game {}", gameId);
     return gameId;
   }

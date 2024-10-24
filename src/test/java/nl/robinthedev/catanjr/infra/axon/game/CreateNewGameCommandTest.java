@@ -12,7 +12,8 @@ class CreateNewGameCommandTest extends AbstractGameAggregateTest {
   void creates_a_new_game() {
     fixture
         .givenNoPriorActivity()
-        .when(new CreateNewGame(GAME_ID, ACCOUNT_PLAYER_1, JOHN, ACCOUNT_PLAYER_2, WICK))
+        .when(
+            new CreateNewGame(GAME_ID, GAME_TITLE, ACCOUNT_PLAYER_1, JOHN, ACCOUNT_PLAYER_2, WICK))
         .expectEvents(
             getGameCreatedEvent(),
             new PlayerActionsChanged(GAME_ID, ACCOUNT_PLAYER_1, HashSet.of(ActionDTO.THROW_DICE)),

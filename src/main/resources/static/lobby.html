@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Manager</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <!-- Create Game Form -->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Create a New Game</div>
+                <div class="panel-body">
+                    <form action="/create_game" method="POST">
+                        <div class="form-group">
+                            <label for="gameName">Game Name</label>
+                            <input type="text" id="gameName" name="gameName" class="form-control"
+                                   placeholder="Enter game name" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Create Game</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Games Tabs -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Active Games</div>
+                <div class="panel-body">
+                    <!-- Tab navigation -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active">
+                            <a href="#allGames" role="tab" data-toggle="tab">All Games</a>
+                        </li>
+                        <li>
+                            <a href="#myGames" role="tab" data-toggle="tab">My Games</a>
+                        </li>
+                        <li>
+                            <a href="#recentGames" role="tab" data-toggle="tab">Recent Games</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <!-- All Games Tab -->
+                        <div class="tab-pane fade in active" id="allGames">
+                            <ul class="list-group">
+                                <!-- Example of active games, replace with dynamic content -->
+                                <li class="list-group-item">
+                                    <a href="/game/123e4567-e89b-12d3-a456-426614174000">Game 1 (UUID:
+                                        123e4567-e89b-12d3-a456-426614174000)</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="/game/123e4567-e89b-12d3-a456-426614174001">Game 2 (UUID:
+                                        123e4567-e89b-12d3-a456-426614174001)</a>
+                                </li>
+                                <!-- Additional game links will go here -->
+                            </ul>
+                        </div>
+
+                        <!-- My Games Tab -->
+                        <div class="tab-pane fade" id="myGames">
+                            <ul class="list-group">
+                                <!-- Example of my games, replace with dynamic content -->
+                                <li class="list-group-item">
+                                    <a href="/game/123e4567-e89b-12d3-a456-426614174002">My Game 1 (UUID:
+                                        123e4567-e89b-12d3-a456-426614174002)</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="/game/123e4567-e89b-12d3-a456-426614174003">My Game 2 (UUID:
+                                        123e4567-e89b-12d3-a456-426614174003)</a>
+                                </li>
+                                <!-- Additional game links will go here -->
+                            </ul>
+                        </div>
+
+                        <!-- Recent Games Tab -->
+                        <div class="tab-pane fade" id="recentGames">
+                            <ul class="list-group">
+                                <!-- Example of recent games, replace with dynamic content -->
+                                <li class="list-group-item">
+                                    <a href="/game/123e4567-e89b-12d3-a456-426614174004">Recent Game 1 (UUID:
+                                        123e4567-e89b-12d3-a456-426614174004)</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="/game/123e4567-e89b-12d3-a456-426614174005">Recent Game 2 (UUID:
+                                        123e4567-e89b-12d3-a456-426614174005)</a>
+                                </li>
+                                <!-- Additional game links will go here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -21,7 +21,7 @@ class GameEventHandlerTest {
 
   @Test
   void gameGetsCreated() {
-    var game = new GameDTO(null, null, null, null, null, null);
+    var game = new GameDTO(null, null, null, null, null, null, null);
     var gameId = new GameId(UUID.randomUUID());
 
     gameEventHandler.on(new GameCreatedEvent(gameId, game));
@@ -34,6 +34,7 @@ class GameEventHandlerTest {
     UUID p1Account = UUID.randomUUID();
     var game =
         new GameDTO(
+            null,
             new PlayerDTO(p1Account, null, new InventoryDTO(0, 0, 0, 0, 0), HashSet.of()),
             null,
             null,
@@ -49,6 +50,7 @@ class GameEventHandlerTest {
     assertThat(games.get(gameId))
         .isEqualTo(
             new GameDTO(
+                null,
                 new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), HashSet.of()),
                 null,
                 null,
@@ -63,6 +65,7 @@ class GameEventHandlerTest {
     UUID p2Account = UUID.randomUUID();
     var game =
         new GameDTO(
+            null,
             new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), HashSet.of()),
             new PlayerDTO(p2Account, null, new InventoryDTO(0, 0, 0, 0, 0), HashSet.of()),
             null,
@@ -78,6 +81,7 @@ class GameEventHandlerTest {
     assertThat(games.get(gameId))
         .isEqualTo(
             new GameDTO(
+                null,
                 new PlayerDTO(p1Account, null, new InventoryDTO(1, 2, 3, 4, 5), HashSet.of()),
                 new PlayerDTO(p2Account, null, new InventoryDTO(5, 4, 3, 2, 1), HashSet.of()),
                 null,
@@ -88,7 +92,8 @@ class GameEventHandlerTest {
 
   @Test
   void updateBankInventory() {
-    var game = new GameDTO(null, null, new InventoryDTO(18, 18, 18, 18, 18), null, null, null);
+    var game =
+        new GameDTO(null, null, null, new InventoryDTO(18, 18, 18, 18, 18), null, null, null);
     var gameId = new GameId(UUID.randomUUID());
     games.save(gameId, game);
 
@@ -96,6 +101,7 @@ class GameEventHandlerTest {
         new BankInventoryChanged(gameId, null, new InventoryDTO(16, 16, 16, 16, 16)));
 
     assertThat(games.get(gameId))
-        .isEqualTo(new GameDTO(null, null, new InventoryDTO(16, 16, 16, 16, 16), null, null, null));
+        .isEqualTo(
+            new GameDTO(null, null, null, new InventoryDTO(16, 16, 16, 16, 16), null, null, null));
   }
 }

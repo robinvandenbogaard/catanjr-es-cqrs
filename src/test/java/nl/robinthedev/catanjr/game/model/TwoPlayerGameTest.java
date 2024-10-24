@@ -31,7 +31,7 @@ class TwoPlayerGameTest {
 
   public static final PlayerId PLAYER_ONE = Scenario.Player.PLAYER_ONE.playerId;
   public static final PlayerId PLAYER_TWO = Scenario.Player.PLAYER_TWO.playerId;
-  public static final Game TWO_PLAYER_GAME = GameFactory.of(PLAYER_ONE, PLAYER_TWO);
+  public static final Game TWO_PLAYER_GAME = GameFactory.of("My new game", PLAYER_ONE, PLAYER_TWO);
 
   @Test
   void bouy_inventory_has_one_of_each() {

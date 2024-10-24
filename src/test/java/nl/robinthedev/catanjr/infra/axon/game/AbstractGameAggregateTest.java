@@ -30,6 +30,7 @@ abstract class AbstractGameAggregateTest {
   protected static final String WICK = "Wick";
   protected static final List<FortSiteDTO> INITIAL_FORT_MAP;
   protected static final Set<ShipYardDTO> INITIAL_SHIP_MAP;
+  public static final String GAME_TITLE = "My new game";
   protected AggregateTestFixture<GameAggregate> fixture;
 
   static {
@@ -89,6 +90,7 @@ abstract class AbstractGameAggregateTest {
     return new GameCreatedEvent(
         GAME_ID,
         new GameDTO(
+            GAME_TITLE,
             new PlayerDTO(ACCOUNT_PLAYER_1, JOHN, new InventoryDTO(0, 0, 1, 0, 1), HashSet.of()),
             new PlayerDTO(ACCOUNT_PLAYER_2, WICK, new InventoryDTO(0, 0, 1, 0, 1), HashSet.of()),
             new InventoryDTO(17, 17, 15, 17, 15),
