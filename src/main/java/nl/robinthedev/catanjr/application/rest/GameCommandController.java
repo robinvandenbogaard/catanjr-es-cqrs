@@ -55,7 +55,9 @@ class GameCommandController {
   }
 
   private UUID getCurrentPlayer(GameId gameId) {
-    return turns.getCurrentPlayerAccount(gameId).getOrElseThrow(IllegalArgumentException::new);
+    return turns
+        .getCurrentPlayerAccount(gameId)
+        .getOrElseThrow(CannotDetermineCurrentPlayerException::new);
   }
 
   @ResponseStatus(HttpStatus.OK)
